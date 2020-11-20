@@ -33,7 +33,6 @@
                             <th>Phone</th>
                             <th>Phương thức thanh toán</th>
                             <th>Trạng thái</th>
-                            <th></th>
                         </tr>
                         </thead>
                         <tbody>

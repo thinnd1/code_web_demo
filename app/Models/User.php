@@ -53,9 +53,9 @@ class User extends Eloquent implements Authenticatable
 
         $addUser->save();
     }
-    public function getInformation()
+    public function getInformation($id)
     {
-        return User::where('_id', '5fb4e7d5986a000045007362')->first();
+        return User::where('_id', $id)->first();
     }
     public function updateInformation($id, $request)
     {

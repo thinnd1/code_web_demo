@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Product;
-use App\Models\Order;
-use App\Models\Shop;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    //
     protected $user;
 
     public function __construct(User $user)
@@ -21,17 +18,18 @@ class UserController extends Controller
 
     public function getInformation()
     {
-        $user = $this->user->getInformation();
+        $id = Auth::user()->id;
+        $user = $this->user->getInformation($id);
         return view('admin.information', compact('user'));
     }
     public function viewEditInformation()
     {
-        $user = $this->user->getInformation();
+        $user = $this->user->getInformation(Auth::user()->id);
         return view('admin.editinformation', compact('user'));
     }
     public function updateInformation(Request $request)
     {
-        $id = '5fb4e7d5986a000045007362';
+        $id = Auth::user()->id;
         $this->user->updateInformation($id, $request);
         return redirect()->route('home')->with('key', 'Cập nhật thông tin thành công');
     }
@@ -44,6 +42,15 @@ class UserController extends Controller
     {
         $this->user->deleteUser($id);
         return redirect()->route('listcustomer');
+    }
+    public function viewEditCustomer($id)
+    {
+        $user = $this->user->getInformation(Auth::user()->id);
+        return view('admin.edit_customer', compact('user'));
+    }
+    public function editCustomer($id)
+    {
+
     }
 
 }

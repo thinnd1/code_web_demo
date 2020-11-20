@@ -30,6 +30,8 @@ Route::get('/editinfor', 'App\Http\Controllers\UserController@viewEditinformatio
 Route::post('/editinfor', 'App\Http\Controllers\UserController@updateInformation')->name('editinfor');
 Route::get('/listcustomer', 'App\Http\Controllers\UserController@listCustomer')->name('listcustomer');
 Route::get('/delete/{id}', 'App\Http\Controllers\UserController@removeCustomer')->name('removecustomer');
+Route::get('/editcustomer/{id}', 'App\Http\Controllers\UserController@viewEditCustomer')->name('vieweditcustomer');
+Route::post('/editcustomer/{id}', 'App\Http\Controllers\UserController@editCustomer')->name('editcustomer');
 
 //product
 Route::get('/product', 'App\Http\Controllers\ProductController@getProduct')->name('product');

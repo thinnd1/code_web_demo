@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-lg-12sdf">
                 <ol class="breadcrumb">
-                    <li class="active"><i class="fa fa-dashboard"></i> Danh sach khach hang</li>
+                    <li class="active"><i class="fa fa-dashboard"></i> Danh sách khách hàng</li>
                 </ol>
             </div>
         </div><!-- /.row -->
@@ -18,7 +18,7 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <h2>Danh sách tài khoản</h2>
+                <h2>Danh sách khách hàng</h2>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover tablesorter">
                         <thead>
@@ -51,9 +51,8 @@
                                     <td>{{ $listCustomer->company }}</td>
                                     <td>{{ \Carbon\Carbon::parse($listCustomer->created_at)->format('d/m/Y') }}</td>
                                     <td>
-                                        <a class="btn btn-danger"
-                                           href="{{ route('removecustomer', ['id' => $listCustomer->id ]) }}">Xóa</a>
-                                        <a class="btn btn-warning" href="">Sửa</a>
+                                        <a class="btn btn-danger" href="{{ route('removecustomer', ['id' => $listCustomer->id ]) }}">Xóa</a>
+                                        <a class="btn btn-warning" href="{{ route('vieweditcustomer', ['id' => $listCustomer->id ]) }}">Sửa</a>
                                     </td>
                                 </tr>
                             @endforeach

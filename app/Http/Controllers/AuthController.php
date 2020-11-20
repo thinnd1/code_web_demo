@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use phpDocumentor\Reflection\DocBlock\Tags\Generic;
 
 class AuthController extends Controller
 {
@@ -16,6 +17,8 @@ class AuthController extends Controller
     {
         $this->user = $user;
     }
+
+
 
     public function viewSignup()
     {
@@ -37,12 +40,14 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
-            // login thành công
-            // check xem user này thuộc cái nào. và chuyển hướng tới cái đó.
-            dd(Auth::user());
-            dd("234234234234");
+            return redirect()->route('home')->with('key', 'Đăng nhập thành công');
         } else {
-            dd("sai nhe 12 ");
+            return redirect()->route('login')->with('error', 'Sai username hoặc mật khẩu');
         }
+    }
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login');
     }
 }
