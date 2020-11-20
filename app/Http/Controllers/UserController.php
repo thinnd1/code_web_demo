@@ -45,12 +45,13 @@ class UserController extends Controller
     }
     public function viewEditCustomer($id)
     {
-        $user = $this->user->getInformation(Auth::user()->id);
+        $user = $this->user->getInformation($id);
         return view('admin.edit_customer', compact('user'));
     }
-    public function editCustomer($id)
+    public function editCustomer($id, Request $request)
     {
-
+        $this->user->editCustomer($id, $request);
+        return redirect()->route('listcustomer');
     }
 
 }
