@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -22,6 +23,16 @@ class OrderController extends Controller
     public function createOrder()
     {
         return $this->order->createOrder();
+    }
+    public function updateOrder(Request $request, $id)
+    {
+        $this->order->editOrder($id, $request);
+        return redirect()->route('order');
+    }
+    public function deleteOrder($id)
+    {
+        $this->order->deleteOrder($id);
+        return redirect()->route('order');
     }
 
 }

@@ -41,4 +41,24 @@ class Order extends Eloquent
         ];
         Order::create($data);
     }
+    public function editOrder($id, $request)
+    {
+        $data = [
+            'id_user' => $request->id_user,
+            'id_product' => $request->id_product,
+            'total_price' => $request->total_price,
+            'address' => $request->address,
+            'orderdate' => $request->orderdate,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'status' => $request->status,
+            'payment' => $request->payment,
+        ];
+        $this->where('_id', $id)->update($data);
+    }
+    public function deleteOrder($id)
+    {
+        $deleteOrder = Order::find($id);
+        $deleteOrder->delete();
+    }
 }

@@ -73,7 +73,6 @@
                             <input type="text" name="company" class="form-control" value="{{ $user->company }}" id="inputCompany">
                         </div>
                     </div>
-                    <p>{{ $user->id }}</p>
 
                     <a class="btn btn-primary" href="{{ URL::previous() }}">Go Back</a>
                     <button type="submit" class="btn btn-warning">Cập nhật thông tin</button>
