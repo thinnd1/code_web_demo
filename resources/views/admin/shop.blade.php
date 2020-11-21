@@ -53,6 +53,7 @@
                         @endif
                         </tbody>
                     </table>
+                    {{ $shops->links() }}
                 </div>
             </div>
         </div><!-- /.row -->

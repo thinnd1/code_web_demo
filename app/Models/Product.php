@@ -23,7 +23,7 @@ class Product extends Eloquent
 
     public function getProduct()
     {
-        return Product::all();
+        return Product::paginate(5);
     }
     public function getProductDetail($id)
     {

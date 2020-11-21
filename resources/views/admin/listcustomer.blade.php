@@ -59,6 +59,7 @@
                         @endif
                         </tbody>
                     </table>
+                    {{ $listCustomers->links() }}
                     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -69,7 +70,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     <a href="{{ route('removecustomer', ['id' => $listCustomer->id ]) }}"
-                                       data-dismiss="modal" class="btn btn-primary">Xoa</a>
+                                       data-dismiss="modal" class="btn btn-primary">Xóa</a>
                                 </div>
                             </div>
                         </div>

@@ -78,7 +78,7 @@ class User extends Eloquent implements Authenticatable
     }
     public function listCustomer()
     {
-        return User::all();
+        return User::paginate(5);
     }
     public function deleteUser($id)
     {

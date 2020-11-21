@@ -24,7 +24,7 @@ class Order extends Eloquent
     ];
     public function getOrder()
     {
-        return Order::all();
+        return Order::paginate(5);
     }
     public function createOrder()
     {
