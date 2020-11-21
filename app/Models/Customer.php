@@ -15,7 +15,7 @@ class Customer extends Eloquent
 
     public function listCustomer()
     {
-        return Customer::paginate(5);
+        return Customer::orderBy('created_at', 'desc')->paginate(5);
     }
     public function createCustomer()
     {
@@ -46,7 +46,7 @@ class Customer extends Eloquent
             'job' => $request->job,
             'company' => $request->company,
         ];
-        return User::where('_id', $id)->update($data);
+        return Customer::where('_id', $id)->update($data);
     }
     public function detailCustomer($id)
     {

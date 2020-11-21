@@ -19,6 +19,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h2>Danh sách khách hàng</h2>
+{{--                {{ Auth::user()->role == 1 }}--}}
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover tablesorter">
                         <thead>
@@ -32,7 +33,9 @@
                             <th>Job</th>
                             <th>Company</th>
                             <th>Ngày đăng ký</th>
-                            <th></th>
+                            @if(Auth::user()->role == 1)
+                                <th></th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody>
@@ -50,10 +53,12 @@
                                     <td>{{ $listCustomer->job }}</td>
                                     <td>{{ $listCustomer->company }}</td>
                                     <td>{{ \Carbon\Carbon::parse($listCustomer->created_at)->format('d/m/Y') }}</td>
-                                    <td>
-                                        <a class="btn btn-danger" href="{{ route('removecustomer', ['id' => $listCustomer->id ]) }}">Xóa</a>
-                                        <a class="btn btn-warning" href="{{ route('vieweditcustomer', ['id' => $listCustomer->id ]) }}">Sửa</a>
-                                    </td>
+                                    @if(Auth::user()->role == 1)
+                                        <td>
+                                            <a class="btn btn-danger" href="{{ route('removecustomer', ['id' => $listCustomer->id ]) }}">Xóa</a>
+                                            <a class="btn btn-warning" href="{{ route('vieweditcustomer', ['id' => $listCustomer->id ]) }}">Sửa</a>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         @endif
