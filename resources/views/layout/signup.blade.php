@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
 
-    <title>Document</title>
+    <title> Đặng ký </title>
 </head>
 <body>
 <div class="container">
@@ -19,28 +19,36 @@
             <label for="inputUsername">Tên Đăng Nhập*</label>
             <input type="text" name="username" class="form-control username" id="inputUsername"
                    placeholder="Nhập tên">
-            <p class="error-msg"></p>
+            @error('username')
+            <p class="text-danger">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="inputPassword">Mật Khẩu*</label>
             <input type="password" name="password" class="form-control password" id="inputPassword"
                    placeholder="Nhập mật khẩu">
-            <p class="error-msg"></p>
+            @error('password')
+            <p class="text-danger">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="inputFullName">Họ Và Tên*</label>
             <input type="text" name="full_name" class="form-control full-name" id="inputFullName"
                    placeholder="Nhập họ và tên">
-            <p class="error-msg"></p>
+            @error('full_name')
+            <p class="text-danger">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="inputEmail">Email</label>
             <input type="email" name="email" class="form-control email" id="inputEmail"
                    placeholder="Nhập email">
-            <p class="error-msg"></p>
+            @error('email')
+            <p class="text-danger">{{ $message }}</p>
+            @enderror
         </div>
 
         <p>Đã có tài khoản, <a href="{{ route('viewlogin') }}">Đăng nhập</a></p>

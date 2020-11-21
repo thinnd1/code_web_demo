@@ -25,8 +25,9 @@ class UserRequest extends FormRequest
     {
         return [
             //
-            'username' => 'required|exists:users|min:10|max:50',
+            'username' => 'required|unique:users|min:5|max:20',
             'full_name' => 'required',
+            'password' => 'required',
             'email' => 'required|email|unique:users'
         ];
     }
@@ -34,11 +35,13 @@ class UserRequest extends FormRequest
     {
         return [
             'username.required' => 'Không được để trống',
-            'username.exists' => 'Tài khoản đã tồn tại',
-            'username.min' => 'Nhập ký tự nhiều hơn 10',
-            'username.max' => 'Nhập ký tự ít hơn 50',
+            'username.unique' => 'Tài khoản đã tồn tại',
+            'username.min' => 'Nhập ký tự nhiều hơn 5',
+            'username.max' => 'Nhập ký tự ít hơn 20',
+            'password.required' => 'Không được để trống',
             'full_name.required' => 'Không được để trống',
             'email.required' => 'Không được để trống',
+            'email.exist' => 'Nhập đúng định dạng mail',
             ];
     }
 }

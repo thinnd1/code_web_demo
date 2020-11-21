@@ -76,29 +76,6 @@ class User extends Eloquent implements Authenticatable
 
         $updateUser->save();
     }
-    public function listCustomer()
-    {
-        return User::paginate(5);
-    }
-    public function deleteUser($id)
-    {
-        $deleteUser = User::find($id);
-        return $deleteUser->delete();
-    }
-    public function editCustomer($id, $request)
-    {
-        $data = [
-            'username' => $request->username,
-            'full_name' => $request->full_name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'age' => $request->age,
-            'gender' => $request->age,
-            'address' => $request->address,
-            'job' => $request->job,
-            'company' => $request->company,
-        ];
-        return User::where('_id', $id)->update($data);
-    }
+
 
 }
