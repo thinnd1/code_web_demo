@@ -20,7 +20,7 @@ class Shop extends Eloquent
     ];
     public function getShop()
     {
-        return Shop::all();
+        return Shop::paginate(5);
     }
     public function createShop()
     {

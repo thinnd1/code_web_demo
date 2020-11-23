@@ -22,9 +22,13 @@ class Order extends Eloquent
     protected $fillable = [
         'id_user', 'id_product', 'total_price', 'address', 'orderdate', 'phone', 'email', 'status','payment'
     ];
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'id_custumor');
+    }
     public function getOrder()
     {
-        return Order::all();
+        return Order::paginate(5);
     }
     public function createOrder()
     {
@@ -40,5 +44,25 @@ class Order extends Eloquent
             'status' => 4
         ];
         Order::create($data);
+    }
+    public function editOrder($id, $request)
+    {
+        $data = [
+            'id_user' => $request->id_user,
+            'id_product' => $request->id_product,
+            'total_price' => $request->total_price,
+            'address' => $request->address,
+            'orderdate' => $request->orderdate,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'status' => $request->status,
+            'payment' => $request->payment,
+        ];
+        $this->where('_id', $id)->update($data);
+    }
+    public function deleteOrder($id)
+    {
+        $deleteOrder = Order::find($id);
+        $deleteOrder->delete();
     }
 }

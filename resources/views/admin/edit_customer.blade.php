@@ -1,22 +1,19 @@
 @extends('layout.index')
 @section('content')
+
 <div id="wrapper">
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12sdf">
                 <ol class="breadcrumb">
-                    <li class="active"><i class="fa fa-dashboard"></i> Tạo tài khoản mới</li>
+                    <li class="active"><i class="fa fa-dashboard"></i> Cập nhật thông tin khách hàng </li>
                 </ol>
             </div>
         </div><!-- /.row -->
-        @if (session('key'))
-            <div class="alert alert-success" role="alert">
-                {{ session('key') }}
-            </div>
-        @endif
+
         <div class="row">
             <div class="col-lg-9">
-                <form action="{{ route('editinfor') }}" method="post">
+                <form action="{{ route('editcustomer', ['id' => $user->id]) }}" method="post">
                     @csrf
                     <div class="form-group row">
                         <label for="inputUser" class="col-sm-2 col-form-label">Tên Đăng Nhập*</label>
@@ -55,7 +52,7 @@
                     <div class="form-group row">
                         <label for="inputPhone" class="col-sm-2 col-form-label">Phone*</label>
                         <div class="col-sm-10">
-                            <input type="number" name="phone" class="form-control" value="{{ $user->phone }}" id="inputPhone">
+                            <input type="number" name="phone" class="form-control" value="{{ $user->email }}" id="inputPhone">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -84,4 +81,5 @@
         </div>
     </div>
 </div>
+
 @endsection
