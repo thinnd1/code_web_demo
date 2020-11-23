@@ -57,6 +57,7 @@
                                         <td>
                                             <a class="btn btn-danger" href="{{ route('removecustomer', ['id' => $listCustomer->id ]) }}">Xóa</a>
                                             <a class="btn btn-warning" href="{{ route('vieweditcustomer', ['id' => $listCustomer->id ]) }}">Sửa</a>
+                                            <a class="btn btn-warning" href="{{ route('viewuserorder', ['id' => $listCustomer->id ]) }}">Xem</a>
                                         </td>
                                     @endif
                                 </tr>

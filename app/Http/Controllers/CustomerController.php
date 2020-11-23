@@ -37,4 +37,9 @@ class CustomerController extends Controller
         $this->customer->editCustomer($id, $request);
         return redirect()->route('listcustomer');
     }
+    public function viewUserOrder($id)
+    {
+        $listCustomers = $this->customer->getUserorder($id);
+        return view('admin.user_order_detail', compact('listCustomers'));
+    }
 }

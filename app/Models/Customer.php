@@ -19,7 +19,16 @@ class Customer extends Eloquent
 
     public function listCustomer()
     {
-        return Customer::with('order')->orderBy('created_at', 'desc')->paginate(5);
+        return Customer::with('order')
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
+    }
+    public function getUserorder($id)
+    {
+        return Customer::with('order')
+            ->orderBy('created_at', 'desc')
+            ->where('_id', $id)
+            ->get();
     }
     public function createCustomer()
     {
