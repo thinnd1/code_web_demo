@@ -10,12 +10,16 @@ class Customer extends Eloquent
     protected $collection = 'customers';
 
     protected $fillable = [
-        'full_name', 'username', 'email', 'password', 'age', 'gender', 'phone', 'address', 'job', 'role', 'company'
+        'full_name', 'username', 'email', 'password', 'age', 'gender', 'phone', 'address', 'job', 'role', 'company', 'id_custumor'
     ];
+    public function order()
+    {
+        return $this->hasMany(Order::class, 'id_user');
+    }
 
     public function listCustomer()
     {
-        return Customer::orderBy('created_at', 'desc')->paginate(5);
+        return Customer::with('order')->orderBy('created_at', 'desc')->paginate(5);
     }
     public function createCustomer()
     {
@@ -54,7 +58,7 @@ class Customer extends Eloquent
     }
     public function deleteUser($id)
     {
-        $deleteUser = User::find($id);
+        $deleteUser = Customer::find($id);
         return $deleteUser->delete();
     }
 }

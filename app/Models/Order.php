@@ -22,6 +22,10 @@ class Order extends Eloquent
     protected $fillable = [
         'id_user', 'id_product', 'total_price', 'address', 'orderdate', 'phone', 'email', 'status','payment'
     ];
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'id_custumor');
+    }
     public function getOrder()
     {
         return Order::paginate(5);
