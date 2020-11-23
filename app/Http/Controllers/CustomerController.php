@@ -42,4 +42,40 @@ class CustomerController extends Controller
         $listCustomers = $this->customer->getUserorder($id);
         return view('admin.user_order_detail', compact('listCustomers'));
     }
+    public function exportCsv(Request $request, Customer $customer)
+    {
+        $fileName = 'tasks.csv';
+        $tasks = Customer::all();
+
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+
+        $columns = array('Họ và tên', 'Username', 'Email', 'Tuổi', 'Số điện thoại', 'Địa chỉ', 'Nghề nghiệp', 'Công ty');
+
+        $callback = function() use($tasks, $columns, $fileName) {
+
+            $file = fopen('php://output', 'w');
+
+            fputcsv($file, $columns);
+
+            foreach ($tasks as $task) {
+                $row['Họ và tên']  = $task->full_name;
+                $row['Username']    = $task->username;
+                $row['Email']    = $task->email;
+                $row['Tuổi']  = $task->age;
+                $row['Số điện thoại']  = $task->phone;
+                $row['Địa chỉ']  = $task->address;
+                $row['Nghề nghiệp']  = $task->job;
+                $row['Công ty']  = $task->company;
+                fputcsv($file, array($row['Họ và tên'], $row['Username'], $row['Email'], $row['Tuổi'], $row['Số điện thoại'], $row['Địa chỉ'],$row['Nghề nghiệp'], $row['Công ty']));
+            }
+            fclose($file);
+        };
+        return response()->stream($callback, 200, $headers);
+    }
 }
