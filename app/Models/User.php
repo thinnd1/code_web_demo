@@ -77,5 +77,8 @@ class User extends Eloquent implements Authenticatable
         $updateUser->save();
     }
 
+    public function importCsv($request)
+    {
 
+    }
 }

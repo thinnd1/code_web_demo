@@ -19,9 +19,13 @@
         <div class="row">
             <div class="col-lg-12">
                 <h2>Danh sách khách hàng</h2>
-                <form action=""  method="post" enctype="multipart/form-data">
-                    <span data-href="{{ route('exportcsv') }}" id="export" class="btn btn-success btn-sm" onclick="exportTasks(event.target);">Export</span>
-                    <span data-href="" id="export" class="btn btn-success btn-sm" >Import</span>
+                <form action="" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div>
+                        <span data-href="{{ route('exportcsvcustomer') }}" id="export" class="btn btn-success btn-sm" onclick="exportTasks(event.target);">Export</span>
+                        <input id="csv_file" type="file" name="csv_file" required>
+                        <button class="btn btn-info" type="submit">Submit</button>
+                    </div>
                     <p></p>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover tablesorter">
