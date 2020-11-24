@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
 class Shop extends Eloquent
@@ -16,23 +15,33 @@ class Shop extends Eloquent
      * @var array
      */
     protected $fillable = [
-        'name_shop', 'address', 'mail', 'phone', 'quantity_product'
+        'name_shop', 'address', 'email', 'phone', 'quantity_product'
     ];
     public function getShop()
     {
         return Shop::paginate(5);
     }
-    public function createShop()
+    public function createShop($request)
     {
         $data = [
-            'name_company' => 'Iphone 6',
-            'address' => '85 Vu Trong Phung',
-            'mail' => 'hapulico@vccorp.com',
-            'phone' => 987654321,
-            'user_company' => "nguyenthin",
-            'quantity_product' => 100,
+            'name_shop' => $request->name_shop,
+            'address' => $request->address,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'quantity_product' => $request->quantity_product,
         ];
         Shop::create($data);
+    }
+    public function updateCompany($id)
+    {
+        $data = [
+            'name_shop' => $request->name_shop,
+            'address' => $request->address,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'quantity_product' => $request->quantity_product,
+        ];
+        return Shop::where('_id', $id)->update($data);
     }
     public function deleteShop($id)
     {

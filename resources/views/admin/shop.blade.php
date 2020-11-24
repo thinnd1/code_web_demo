@@ -18,7 +18,15 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <h2>Danh sách Công ty</h2>
+
+                <div class="row">
+                    <div class="col-lg-6 h2">
+                        Danh sách công ty
+                    </div>
+                    <div class="col-lg-6 text-right h2">
+                        <a class="btn btn-info" href="{{ route('viewcreatecompany') }}">Thêm công ty</a>
+                    </div>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover tablesorter">
                         <thead>
@@ -29,23 +37,26 @@
                             <th>Số điện thoại</th>
                             <th>Địa chỉ</th>
                             <th>Số hàng đã mua</th>
-                            <th></th>
+                            <th>Hành động</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @if(!$shops)
-                            not data
+                        @if(count($shops) == 0)
+                            <tr class="borderless">
+                                <td colspan="7" class="text-center">Not data</td>
+                            </tr>
                         @else
                             @foreach ($shops as $index => $shop)
                                 <tr>
                                     <td>{{ $index+ 1 }}</td>
                                     <td>{{ $shop->name_shop }}</td>
-                                    <td>{{ $shop->mail }}</td>
+                                    <td>{{ $shop->email }}</td>
                                     <td>{{ $shop->phone }}</td>
                                     <td>{{ $shop->address }}</td>
                                     <td>{{ $shop->quantity_product }}</td>
 {{--                                    <td>{{ $shop->id }}</td>--}}
                                     <td>
+                                        <a href="{{ route('deleteshop', ['id' => $shop->id ]) }}" class="btn btn-danger">Sửa</a>
                                         <a href="{{ route('deleteshop', ['id' => $shop->id ]) }}" class="btn btn-danger">Xóa</a>
                                     </td>
                                 </tr>
