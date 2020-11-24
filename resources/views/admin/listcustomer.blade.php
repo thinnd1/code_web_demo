@@ -33,12 +33,12 @@
                             <tr>
                                 <th>Stt</th>
                                 <th>Họ và tên</th>
-                                <th>Tên Đăng Nhập</th>
+                                <th>Tên đăng nhập</th>
                                 <th>Email</th>
-                                <th>Phone</th>
-                                <th>Address</th>
-                                <th>Job</th>
-                                <th>Company</th>
+                                <th>Số điện thoại</th>
+                                <th>Địa chỉ</th>
+                                <th>Nghề nghiệp</th>
+                                <th>Công ty</th>
                                 <th>Ngày đăng ký</th>
                                 @if(Auth::user()->role == 1)
                                     <th></th>
@@ -62,9 +62,9 @@
                                         <td>{{ \Carbon\Carbon::parse($listCustomer->created_at)->format('d/m/Y') }}</td>
                                         @if(Auth::user()->role == 1)
                                             <td>
-                                                <a class="btn btn-danger" href="{{ route('removecustomer', ['id' => $listCustomer->id ]) }}">Xóa</a>
+                                                <a class="btn btn-primary" href="{{ route('viewuserorder', ['id' => $listCustomer->id ]) }}">Xem</a>
                                                 <a class="btn btn-warning" href="{{ route('vieweditcustomer', ['id' => $listCustomer->id ]) }}">Sửa</a>
-                                                <a class="btn btn-warning" href="{{ route('viewuserorder', ['id' => $listCustomer->id ]) }}">Xem</a>
+                                                <a class="btn btn-danger" href="{{ route('removecustomer', ['id' => $listCustomer->id ]) }}">Xóa</a>
                                             </td>
                                         @endif
                                     </tr>

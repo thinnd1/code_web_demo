@@ -33,7 +33,7 @@
                                 <th width="50%">Miêu tả</th>
                                 <th>Số lượng</th>
                                 <th>Giá</th>
-                                <th>Vote</th>
+                                <th>Đánh giá</th>
                                 <th></th>
                             </tr>
                             </thead>

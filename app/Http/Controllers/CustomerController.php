@@ -96,6 +96,7 @@ class CustomerController extends Controller
             }
             fclose($handle);
         }
+//        dd($data);
 
         return $data;
     }
@@ -105,6 +106,7 @@ class CustomerController extends Controller
         $file = public_path('upload/tasks1.csv');
 
         $customerArr = $this->csvToArray($file);
+        dd($customerArr);
 
         for ($i = 0; $i < count($customerArr); $i ++)
         {

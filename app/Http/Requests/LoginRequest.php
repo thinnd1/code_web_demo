@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,25 +24,15 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            //
-            'username' => 'required|unique:users|min:5|max:20',
-            'full_name' => 'required',
+            'username' => 'required',
             'password' => 'required',
-            'email' => 'required|email|unique:users'
         ];
     }
     public function messages()
     {
         return [
             'username.required' => 'Không được để trống tên đăng nhập',
-            'username.unique' => 'Tài khoản đã tồn tại',
-            'username.min' => 'Nhập ký tự nhiều hơn 5',
-            'username.max' => 'Nhập ký tự ít hơn 20',
             'password.required' => 'Không được để trống mật khẩu',
-            'full_name.required' => 'Không được để trống họ tên',
-            'email.required' => 'Không được để trống email',
-            'email.exist' => 'Nhập đúng định dạng mail',
-            'email.unique' => 'Email đã tồn tại',
-            ];
+        ];
     }
 }

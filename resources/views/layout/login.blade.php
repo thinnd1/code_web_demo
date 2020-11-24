@@ -23,13 +23,17 @@
         <div class="form-group">
             <label for="inputUsername">Tên Đăng Nhập</label>
             <input type="text" name="username" class="form-control username" id="inputUsername" aria-describedby="emailHelp" placeholder="Nhập tên">
-            <p class="error-msg"></p>
+            @error('username')
+            <p class="text-danger">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="form-group">
-            <label for="inputPassword">Mật khẩu</label>
-            <input type="password" name="password" class="form-control password" id="inputPassword" placeholder="Mật khẩu">
-            <p class="error-msg"></p>
+            <label for="inputPassword">Mật Khẩu</label>
+            <input type="password" name="password" class="form-control password" id="inputPassword" placeholder="Nhập mật khẩu">
+            @error('password')
+            <p class="text-danger">{{ $message }}</p>
+            @enderror
         </div>
 
         <a href="{{ route('viewregister') }}">Đăng ký tài khoản</a>
