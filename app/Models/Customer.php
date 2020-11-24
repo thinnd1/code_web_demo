@@ -30,18 +30,18 @@ class Customer extends Eloquent
             ->where('_id', $id)
             ->get();
     }
-    public function createCustomer()
+    public function createCustomer($request)
     {
         $data = [
-            'username' => 'thinnd',
-            'full_name' => 'The Fault in Our Stars',
-            'gender' => 1,
-            'email' => 'nguyendangthin@gmail.com',
-            'age' => 30,
-            'phone' => 123456789,
-            'address' => '58 nguyen khanh toan, quan cau giay, ha noi',
-            'job' => 'it',
-            'company' => 'zalo',
+            'username' => $request->username,
+            'full_name' => $request->full_name,
+            'gender' => $request->gender,
+            'email' => $request->email,
+            'age' => $request->age,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'job' => $request->job,
+            'company' => $request->company,
         ];
         return Customer::create($data);
     }

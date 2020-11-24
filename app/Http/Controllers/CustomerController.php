@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUserRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
@@ -13,9 +14,14 @@ class CustomerController extends Controller
     {
         $this->customer = $customer;
     }
-    public function createCustomer()
+    public function viewCreateCustomer()
     {
-        $this->customer->createCustomer();
+        return view('admin.create_customer');
+    }
+    public function createCustomer(CreateUserRequest $request)
+    {
+        $this->customer->createCustomer($request);
+        return redirect()->route('listcustomer');
     }
     public function listCustomer()
     {
@@ -106,7 +112,7 @@ class CustomerController extends Controller
         $file = public_path('upload/tasks1.csv');
 
         $customerArr = $this->csvToArray($file);
-        dd($customerArr);
+//        dd($customerArr);
 
         for ($i = 0; $i < count($customerArr); $i ++)
         {

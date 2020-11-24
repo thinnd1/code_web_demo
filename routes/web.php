@@ -32,7 +32,8 @@ Route::middleware(['checklogin::class'])->prefix('admin')->group(function(){
     Route::post('/editinfor', 'App\Http\Controllers\AuthController@updateInformation')->name('editinfor');
     Route::get('/listcustomer', 'App\Http\Controllers\CustomerController@listCustomer')->name('listcustomer');
     Route::get('/delete/{id}', 'App\Http\Controllers\CustomerController@removeCustomer')->name('removecustomer');
-    Route::get('/createcustomer', 'App\Http\Controllers\CustomerController@createCustomer')->name('createcustomer');
+    Route::get('/createcustomer', 'App\Http\Controllers\CustomerController@viewCreateCustomer')->name('viewcreatecustomer');
+    Route::post('/createcustomer', 'App\Http\Controllers\CustomerController@createCustomer')->name('createcustomer');
     Route::get('/editcustomer/{id}', 'App\Http\Controllers\CustomerController@viewEditCustomer')->name('vieweditcustomer');
     Route::post('/editcustomer/{id}', 'App\Http\Controllers\CustomerController@editCustomer')->name('editcustomer');
     Route::get('/viewuserorder/{id}', 'App\Http\Controllers\CustomerController@viewUserOrder')->name('viewuserorder');

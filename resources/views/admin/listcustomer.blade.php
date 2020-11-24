@@ -18,7 +18,15 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <h2>Danh sách khách hàng</h2>
+                <div class="row">
+                    <div class="coL-lg-6 h2">
+                        Danh sách khách hàng
+                    </div>
+                    <div class="coL-lg-6 text-right h2">
+                        <a class="btn btn-info" href="{{ route('createcustomer') }}">Thêm khách hàng</a>
+                    </div>
+                </div>
+
                 <form action="" method="post" enctype="multipart/form-data">
                     @csrf
                     <div>
