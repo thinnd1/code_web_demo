@@ -56,7 +56,7 @@
                                     <td>{{ $shop->quantity_product }}</td>
 {{--                                    <td>{{ $shop->id }}</td>--}}
                                     <td>
-                                        <a href="{{ route('deleteshop', ['id' => $shop->id ]) }}" class="btn btn-danger">Sửa</a>
+                                        <a href="{{ route('editcompany', ['id' => $shop->id ]) }}" class="btn btn-primary">Sửa</a>
                                         <a href="{{ route('deleteshop', ['id' => $shop->id ]) }}" class="btn btn-danger">Xóa</a>
                                     </td>
                                 </tr>

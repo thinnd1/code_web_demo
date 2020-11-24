@@ -60,5 +60,7 @@ Route::middleware(['checklogin::class'])->prefix('admin')->group(function(){
     Route::get('/deleteshop/{id}', 'App\Http\Controllers\ShopController@deleteShop')->name('deleteshop');
     Route::get('/createcompany', 'App\Http\Controllers\ShopController@viewCreateShop')->name('viewcreatecompany');
     Route::post('/createcompany', 'App\Http\Controllers\ShopController@createShop')->name('createcompany');
+    Route::get('/editcompany/{id}', 'App\Http\Controllers\ShopController@editCompany')->name('editcompany');
+    Route::post('/editcompany/{id}', 'App\Http\Controllers\ShopController@updateCompany')->name('updatecompany');
 
 });

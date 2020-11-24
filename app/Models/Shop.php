@@ -21,6 +21,10 @@ class Shop extends Eloquent
     {
         return Shop::paginate(5);
     }
+    public function getShopDetail($id)
+    {
+        return Shop::where('_id', $id)->first();
+    }
     public function createShop($request)
     {
         $data = [
@@ -32,7 +36,7 @@ class Shop extends Eloquent
         ];
         Shop::create($data);
     }
-    public function updateCompany($id)
+    public function updateCompany($request, $id)
     {
         $data = [
             'name_shop' => $request->name_shop,

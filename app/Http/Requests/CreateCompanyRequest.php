@@ -27,7 +27,7 @@ class CreateCompanyRequest extends FormRequest
             'name_shop' => 'required',
             'address' => 'required',
             'phone' => 'required',
-            'email' => 'required',
+            'email' => 'required|email|unique:shops',
             'quantity_product' => 'required',
         ];
     }
