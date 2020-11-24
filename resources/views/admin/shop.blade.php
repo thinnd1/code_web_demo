@@ -24,7 +24,7 @@
                         <thead>
                         <tr>
                             <th>Stt</th>
-                            <th>Tên Công ty</th>
+                            <th>Tên công ty</th>
                             <th>Email</th>
                             <th>Số điện thoại</th>
                             <th>Địa chỉ</th>

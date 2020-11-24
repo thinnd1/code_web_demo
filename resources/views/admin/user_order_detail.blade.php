@@ -25,7 +25,7 @@
                                     <th>Địa chỉ</th>
                                     <th>Ngày đặt hàng</th>
                                     <th>Email</th>
-                                    <th>Phone</th>
+                                    <th>Số điện thoại</th>
                                     <th>Phương thức thanh toán</th>
                                     <th>Trạng thái</th>
                                 </tr>

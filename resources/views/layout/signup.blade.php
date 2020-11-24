@@ -18,7 +18,7 @@
         <div class="form-group">
             <label for="inputUsername">Tên Đăng Nhập*</label>
             <input type="text" name="username" class="form-control username" id="inputUsername"
-                   placeholder="Nhập tên">
+                   placeholder="Nhập tên đăng nhập">
             @error('username')
             <p class="text-danger">{{ $message }}</p>
             @enderror
