@@ -57,7 +57,7 @@
 {{--                                    <td>{{ $shop->id }}</td>--}}
                                     <td>
                                         <a href="{{ route('editcompany', ['id' => $shop->id ]) }}" class="btn btn-warning">Sửa</a>
-                                        <a href="{{ route('deleteshop', ['id' => $shop->id ]) }}" class="btn btn-danger">Xóa</a>
+                                        <a href="{{ route('deleteshop', ['id' => $shop->id ]) }}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa công ty này không?')">Xóa</a>
                                     </td>
                                 </tr>
                             @endforeach
