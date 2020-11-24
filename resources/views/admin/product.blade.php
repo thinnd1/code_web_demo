@@ -34,7 +34,7 @@
                                 <th>Số lượng</th>
                                 <th>Giá</th>
                                 <th>Đánh giá</th>
-                                <th></th>
+                                <th width="10%"></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -51,10 +51,11 @@
                                         <td>{{ $product->price }}</td>
                                         <td>{{ $product->vote }}</td>
                                         <td>
-                                            <a class="btn btn-danger"
-                                               href="{{ route('deleteproduct', ['id' => $product->id ]) }}">Xóa</a>
                                             <a class="btn btn-warning"
                                                href="{{ route('vieweditproduct', ['id' => $product->id ]) }}">Sửa</a>
+
+                                            <a class="btn btn-danger"
+                                               href="{{ route('deleteproduct', ['id' => $product->id ]) }}">Xóa</a>
                                         </td>
                                     </tr>
                                 @endforeach

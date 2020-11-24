@@ -50,7 +50,9 @@ Route::middleware(['checklogin::class'])->prefix('admin')->group(function(){
 
 // order
     Route::get('/order', 'App\Http\Controllers\OrderController@index')->name('order');
-    Route::get('/createorder', 'App\Http\Controllers\OrderController@createOrder')->name('createorder');
+    Route::get('/createorder', 'App\Http\Controllers\OrderController@viewCreateOrder')->name('viewcreateorder');
+    Route::post('/createorder', 'App\Http\Controllers\OrderController@createOrder')->name('createorder');
+    Route::get('/editorder/{id}', 'App\Http\Controllers\OrderController@editOrder')->name('editorder');
     Route::post('/updateorder', 'App\Http\Controllers\OrderController@updateOrder')->name('updateorder');
     Route::get('/removeorder', 'App\Http\Controllers\OrderController@deleteOrder')->name('removeorder');
 

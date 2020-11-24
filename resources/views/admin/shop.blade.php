@@ -37,7 +37,7 @@
                             <th>Số điện thoại</th>
                             <th>Địa chỉ</th>
                             <th>Số hàng đã mua</th>
-                            <th>Hành động</th>
+                            <th width="10%">Hành động</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -56,7 +56,7 @@
                                     <td>{{ $shop->quantity_product }}</td>
 {{--                                    <td>{{ $shop->id }}</td>--}}
                                     <td>
-                                        <a href="{{ route('editcompany', ['id' => $shop->id ]) }}" class="btn btn-primary">Sửa</a>
+                                        <a href="{{ route('editcompany', ['id' => $shop->id ]) }}" class="btn btn-warning">Sửa</a>
                                         <a href="{{ route('deleteshop', ['id' => $shop->id ]) }}" class="btn btn-danger">Xóa</a>
                                     </td>
                                 </tr>

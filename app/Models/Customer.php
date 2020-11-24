@@ -16,6 +16,10 @@ class Customer extends Eloquent
     {
         return $this->hasMany(Order::class, 'id_user');
     }
+    public function getAll()
+    {
+        return Customer::all();
+    }
 
     public function listCustomer()
     {

@@ -30,22 +30,11 @@ class Order extends Eloquent
     {
         return Order::paginate(5);
     }
-    public function createOrder()
+    public function getOrderDetail($id)
     {
-        $data = [
-            'id_user' => '5fb4e7d5986a000045007362',
-            'id_product' => 'The Fault in Our Stars',
-            'total_price' => 150000,
-            'address' => '58 nguyen khanh toan, quan cau giay, ha noi',
-            'orderdate' => '',
-            'phone' => 123456789,
-            'email' => 'nguyendangthin@gmail.com',
-            'payment' => 'zalo',
-            'status' => 4
-        ];
-        Order::create($data);
+        return Order::where('_id', $id)->first();
     }
-    public function editOrder($id, $request)
+    public function createOrder($request)
     {
         $data = [
             'id_user' => $request->id_user,
@@ -55,8 +44,23 @@ class Order extends Eloquent
             'orderdate' => $request->orderdate,
             'phone' => $request->phone,
             'email' => $request->email,
-            'status' => $request->status,
             'payment' => $request->payment,
+            'status' => 4
+        ];
+        Order::create($data);
+    }
+    public function updateOrder($id, $request)
+    {
+        $data = [
+            'id_user' => $request->id_user,
+            'id_product' => $request->id_product,
+            'total_price' => $request->total_price,
+            'address' => $request->address,
+            'orderdate' => $request->orderdate,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'payment' => $request->payment,
+            'status' => 4
         ];
         $this->where('_id', $id)->update($data);
     }
