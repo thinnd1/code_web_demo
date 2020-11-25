@@ -57,6 +57,9 @@
                             <label for="inputage" class="col-sm-2 col-form-label">Tuổi</label>
                             <div class="col-sm-10">
                                 <input type="number" name="age" class="form-control" value="" id="inputage">
+                                @error('age')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
@@ -83,7 +86,7 @@
                         <div class="form-group row">
                             <label for="inputjob" class="col-sm-2 col-form-label">Nghề nghiệp</label>
                             <div class="col-sm-10">
-                                <input type="number" name="job" class="form-control" value="" id="inputjob">
+                                <input type="text" name="job" class="form-control" value="" id="inputjob">
                             </div>
                         </div>
 
