@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\AccountRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,7 +63,7 @@ class AuthController extends Controller
         $user = $this->user->getInformation(Auth::user()->id);
         return view('admin.editinformation', compact('user'));
     }
-    public function updateInformation(Request $request)
+    public function updateInformation(AccountRequest $request)
     {
         $id = Auth::user()->id;
         $this->user->updateInformation($id, $request);

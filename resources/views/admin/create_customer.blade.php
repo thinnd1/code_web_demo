@@ -69,7 +69,11 @@
                                 <select name="gender" class="form-control">
                                     <option value="1">Nam</option>
                                     <option value="2">Nữ</option>
+                                    <option value="3">Khác</option>
                                 </select>
+                                @error('gender')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
@@ -87,6 +91,9 @@
                             <label for="inputjob" class="col-sm-2 col-form-label">Nghề nghiệp</label>
                             <div class="col-sm-10">
                                 <input type="text" name="job" class="form-control" value="" id="inputjob">
+                                @error('job')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
@@ -94,6 +101,9 @@
                             <label for="inputcompany" class="col-sm-2 col-form-label">Công ty</label>
                             <div class="col-sm-10">
                                 <input type="text" name="company" class="form-control" value="" id="inputcompany">
+                                @error('company')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
