@@ -58,7 +58,7 @@ class Product extends Eloquent
     }
     public function deleteProduct($id)
     {
-        $deleteProduct = Product::find($id);
+        $deleteProduct = Product::findOrFail($id);
         $deleteProduct->delete();
     }
 }

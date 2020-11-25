@@ -40,7 +40,9 @@
                             <tbody>
                             <tr>
                                 @if (!$products)
-                                    <td rowspan="9"> not data</td>
+                                    <tr class="borderless">
+                                        <td colspan="7" class="text-center">Không có dữ liệu</td>
+                                    </tr>
                                 @else
                                 @foreach ($products as $index =>$product)
                                     <tr>
@@ -54,8 +56,8 @@
                                             <a class="btn btn-warning"
                                                href="{{ route('vieweditproduct', ['id' => $product->id ]) }}">Sửa</a>
 
-                                            <a class="btn btn-danger"
-                                               href="{{ route('deleteproduct', ['id' => $product->id ]) }}">Xóa</a>
+                                            <a class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa sản phẩm này không?')"
+                                               href="{{ route('deleteproduct', ['id' => $product->id ])  }}">Xóa</a>
                                         </td>
                                     </tr>
                                 @endforeach

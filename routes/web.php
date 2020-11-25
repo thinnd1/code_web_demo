@@ -14,9 +14,6 @@ use App\Http\Middleware\CheckLogin;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 //login register
 Route::get('/register','App\Http\Controllers\AuthController@viewSignup')->name('viewregister');
@@ -54,7 +51,7 @@ Route::middleware(['checklogin::class'])->prefix('admin')->group(function(){
     Route::post('/createorder', 'App\Http\Controllers\OrderController@createOrder')->name('createorder');
     Route::get('/editorder/{id}', 'App\Http\Controllers\OrderController@editOrder')->name('editorder');
     Route::post('/updateorder', 'App\Http\Controllers\OrderController@updateOrder')->name('updateorder');
-    Route::get('/removeorder', 'App\Http\Controllers\OrderController@deleteOrder')->name('removeorder');
+    Route::get('/removeorder/{id}', 'App\Http\Controllers\OrderController@deleteOrder')->name('removeorder');
 
 // shop
     Route::get('/shop', 'App\Http\Controllers\ShopController@getShop')->name('shop');

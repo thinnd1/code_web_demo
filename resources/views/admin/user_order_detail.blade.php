@@ -33,7 +33,7 @@
                                 <tbody>
                                 @if(count($listCustomer['order']) == 0)
                                     <tr class="borderless">
-                                        <td colspan="10" class="text-center">Not data</td>
+                                        <td colspan="10" class="text-center">Không có dữ liệu</td>
                                     </tr>
                                 @else
                                     @foreach ($listCustomer->order as $index => $order)

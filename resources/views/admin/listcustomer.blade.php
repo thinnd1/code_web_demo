@@ -31,8 +31,6 @@
                     @csrf
                     <div>
                         <span data-href="{{ route('exportcsvcustomer') }}" id="export" class="btn btn-success btn-sm" onclick="exportTasks(event.target);">Export</span>
-                        <input id="csv_file" type="file" name="csv_file" required>
-                        <button class="btn btn-info" type="submit">Submit</button>
                     </div>
                     <p></p>
                     <div class="table-responsive">
@@ -55,7 +53,9 @@
                             </thead>
                             <tbody>
                             @if(!$listCustomers)
-                                not data
+                                <tr class="borderless">
+                                    <td colspan="10" class="text-center">Không có dữ liệu</td>
+                                </tr>
                             @else
                                 @foreach ($listCustomers as $index => $listCustomer)
                                     <tr>
@@ -72,7 +72,7 @@
                                             <td>
                                                 <a class="btn btn-primary" href="{{ route('viewuserorder', ['id' => $listCustomer->id ]) }}">Xem</a>
                                                 <a class="btn btn-warning" href="{{ route('vieweditcustomer', ['id' => $listCustomer->id ]) }}">Sửa</a>
-                                                <a class="btn btn-danger" href="{{ route('removecustomer', ['id' => $listCustomer->id ]) }}">Xóa</a>
+                                                <a class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa khách hàng này không?')" href="{{ route('removecustomer', ['id' => $listCustomer->id ]) }}">Xóa</a>
                                             </td>
                                         @endif
                                     </tr>

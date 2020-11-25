@@ -71,7 +71,7 @@ class Customer extends Eloquent
     }
     public function deleteUser($id)
     {
-        $deleteUser = Customer::find($id);
+        $deleteUser = Customer::findOrFail($id);
         return $deleteUser->delete();
     }
 }

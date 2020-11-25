@@ -66,7 +66,7 @@ class Order extends Eloquent
     }
     public function deleteOrder($id)
     {
-        $deleteOrder = Order::find($id);
+        $deleteOrder = Order::findOrFail($id);
         $deleteOrder->delete();
     }
 }

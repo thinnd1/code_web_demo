@@ -66,7 +66,7 @@
                                 </td>
                                 <td>
                                     <a class="btn btn-warning" href="{{ route('editorder', ['id' => $order->id ]) }}">Sửa</a>
-                                    <a class="btn btn-danger" href="{{ route('removeorder', ['id' => $order->id ]) }}">Xóa</a>
+                                    <a class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa đơn hàng này không?')" href="{{ route('removeorder', ['id' => $order->id ]) }}">Xóa</a>
                                 </td>
                             </tr>
                         @endforeach

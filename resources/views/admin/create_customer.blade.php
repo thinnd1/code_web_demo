@@ -90,7 +90,7 @@
                         <div class="form-group row">
                             <label for="inputcompany" class="col-sm-2 col-form-label">Công ty</label>
                             <div class="col-sm-10">
-                                <input type="number" name="company" class="form-control" value="" id="inputcompany">
+                                <input type="text" name="company" class="form-control" value="" id="inputcompany">
                             </div>
                         </div>
 

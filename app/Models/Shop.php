@@ -49,7 +49,7 @@ class Shop extends Eloquent
     }
     public function deleteShop($id)
     {
-        $removeShop = Shop::find($id);
+        $removeShop = Shop::findOrFail($id);
         return $removeShop->delete();
     }
 }
