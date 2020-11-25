@@ -55,9 +55,12 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="inputage" class="col-sm-2 col-form-label">Số hàng đã mua</label>
+                            <label for="inputage" class="col-sm-2 col-form-label">Số hàng đã mua*</label>
                             <div class="col-sm-10">
                                 <input type="number" name="quantity_product" class="form-control" value="" id="inputage">
+                                @error('quantity_product')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 

@@ -28,7 +28,7 @@ class AccountRequest extends FormRequest
             'username' => 'required|min:5|max:20',
             'full_name' => 'required|min:5|max:50',
             'email' => 'required|email',
-            'phone' => 'required|numeric',
+            'phone' => 'required|numeric|min:11',
             'age' => 'required|numeric|integer|min:0',
             'gender' => 'required|in:1,2,3',
             'adđress' => 'max:500',

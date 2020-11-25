@@ -27,7 +27,7 @@ class CustomerRequest extends FormRequest
             //
             'username' => 'required|min:5|max:20',
             'full_name' => 'required|min:5|max:60',
-            'phone' => 'required|numeric',
+            'phone' => 'required|numeric|min:11',
             'email' => 'required|email',
             'age' => 'required|numeric|integer|min:0',
             'address' => 'required',
