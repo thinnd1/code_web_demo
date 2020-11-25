@@ -5,29 +5,45 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ol class="breadcrumb">
-                        <li class="active"><i class="fa fa-dashboard"></i> Tạo khách hàng </li>
+                        <li class="active"><i class="fa fa-dashboard"></i> Tạo đơn hàng </li>
                     </ol>
                 </div>
             </div><!-- /.row -->
             <div class="row">
                 <div class="col-lg-9">
-                    <form action="{{ route('createcustomer') }}" method="post">
+                    <form action="{{ route('createorder') }}" method="post">
                         @csrf
+
                         <div class="form-group row">
-                            <label for="inputname" class="col-sm-2 col-form-label">Họ và tên*</label>
+                            <label for="inputname" class="col-sm-2 col-form-label">Tên khách hàng</label>
                             <div class="col-sm-10">
-                                <input type="text" name="full_name" class="form-control" value="" id="inputname">
-                                @error('full_name')
+                                <select name="id_user" class="form-control">
+                                    <option value="0">--Khách hàng--</option>
+                                    @foreach($customers as $customer)
+                                        <option value="{{ $customer->id }}">{{ $customer->full_name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('id_user')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="inputusername" class="col-sm-2 col-form-label">Tên đăng nhập*</label>
+                            <label for="inputusername" class="col-sm-2 col-form-label">Sản phẩm*</label>
                             <div class="col-sm-10">
-                                <input type="text" name="username" class="form-control" value="" id="inputusername">
-                                @error('username')
+                                <input type="text" name="id_product" class="form-control" value="" id="inputusername">
+                                @error('id_product')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputusername" class="col-sm-2 col-form-label">Tổng tiền</label>
+                            <div class="col-sm-10">
+                                <input type="number" name="total_price" class="form-control" value="" id="inputusername">
+                                @error('total_price')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -54,26 +70,9 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="inputage" class="col-sm-2 col-form-label">Tuổi</label>
+                            <label for="inputage" class="col-sm-2 col-form-label">Ngày đặt</label>
                             <div class="col-sm-10">
-                                <input type="number" name="age" class="form-control" value="" id="inputage">
-                                @error('age')
-                                <p class="text-danger">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Giới tính</label>
-                            <div class="col-sm-10">
-                                <select name="gender" class="form-control">
-                                    <option value="1">Nam</option>
-                                    <option value="2">Nữ</option>
-                                    <option value="3">Khác</option>
-                                </select>
-                                @error('gender')
-                                <p class="text-danger">{{ $message }}</p>
-                                @enderror
+                                <input type="date" name="orderdate" class="form-control" value="" id="inputage">
                             </div>
                         </div>
 
@@ -88,22 +87,13 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="inputjob" class="col-sm-2 col-form-label">Nghề nghiệp</label>
+                            <label for="inputjob" class="col-sm-2 col-form-label">Hình thức thanh toán</label>
                             <div class="col-sm-10">
-                                <input type="text" name="job" class="form-control" value="" id="inputjob">
-                                @error('job')
-                                <p class="text-danger">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="inputcompany" class="col-sm-2 col-form-label">Công ty</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="company" class="form-control" value="" id="inputcompany">
-                                @error('company')
-                                <p class="text-danger">{{ $message }}</p>
-                                @enderror
+                                <select name="payment" class="form-control">
+                                    <option value="1">Tiền mặt</option>
+                                    <option value="2">Zalo Pay</option>
+                                    <option value="3">Khác</option>
+                                </select>
                             </div>
                         </div>
 

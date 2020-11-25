@@ -14,9 +14,6 @@ use App\Http\Middleware\CheckLogin;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 //login register
 Route::get('/register','App\Http\Controllers\AuthController@viewSignup')->name('viewregister');
@@ -50,9 +47,11 @@ Route::middleware(['checklogin::class'])->prefix('admin')->group(function(){
 
 // order
     Route::get('/order', 'App\Http\Controllers\OrderController@index')->name('order');
-    Route::get('/createorder', 'App\Http\Controllers\OrderController@createOrder')->name('createorder');
+    Route::get('/createorder', 'App\Http\Controllers\OrderController@viewCreateOrder')->name('viewcreateorder');
+    Route::post('/createorder', 'App\Http\Controllers\OrderController@createOrder')->name('createorder');
+    Route::get('/editorder/{id}', 'App\Http\Controllers\OrderController@editOrder')->name('editorder');
     Route::post('/updateorder', 'App\Http\Controllers\OrderController@updateOrder')->name('updateorder');
-    Route::get('/removeorder', 'App\Http\Controllers\OrderController@deleteOrder')->name('removeorder');
+    Route::get('/removeorder/{id}', 'App\Http\Controllers\OrderController@deleteOrder')->name('removeorder');
 
 // shop
     Route::get('/shop', 'App\Http\Controllers\ShopController@getShop')->name('shop');
@@ -60,5 +59,7 @@ Route::middleware(['checklogin::class'])->prefix('admin')->group(function(){
     Route::get('/deleteshop/{id}', 'App\Http\Controllers\ShopController@deleteShop')->name('deleteshop');
     Route::get('/createcompany', 'App\Http\Controllers\ShopController@viewCreateShop')->name('viewcreatecompany');
     Route::post('/createcompany', 'App\Http\Controllers\ShopController@createShop')->name('createcompany');
+    Route::get('/editcompany/{id}', 'App\Http\Controllers\ShopController@editCompany')->name('editcompany');
+    Route::post('/editcompany/{id}', 'App\Http\Controllers\ShopController@updateCompany')->name('updatecompany');
 
 });

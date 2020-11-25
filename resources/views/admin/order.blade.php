@@ -3,7 +3,7 @@
 <div id="wrapper">
     <div id="page-wrapper">
         <div class="row">
-            <div class="col-lg-12sdf">
+            <div class="col-lg-12">
                 <ol class="breadcrumb">
                     <li class="active"><i class="fa fa-dashboard"></i> Quản lý đơn hàng </li>
                 </ol>
@@ -18,7 +18,12 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <h2>Danh sách order</h2>
+                <div class="row">
+                    <h2 class="col-lg-6 float-left">Danh sách đơn hàng</h2>
+                    <div class="col-lg-6 text-right h2">
+                        <a href="{{ route('viewcreateorder') }}" class="btn btn-info">Tạo mới</a>
+                    </div>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover tablesorter">
                         <thead>
@@ -30,9 +35,10 @@
                             <th>Địa chỉ</th>
                             <th>Ngày đặt hàng</th>
                             <th>Email</th>
-                            <th>Phone</th>
+                            <th>Số điện thoại</th>
                             <th>Phương thức thanh toán</th>
                             <th>Trạng thái</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -57,6 +63,10 @@
                                     @else
                                         Hủy đơn hàng
                                     @endif
+                                </td>
+                                <td>
+                                    <a class="btn btn-warning" href="{{ route('editorder', ['id' => $order->id ]) }}">Sửa</a>
+                                    <a class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa đơn hàng này không?')" href="{{ route('removeorder', ['id' => $order->id ]) }}">Xóa</a>
                                 </td>
                             </tr>
                         @endforeach

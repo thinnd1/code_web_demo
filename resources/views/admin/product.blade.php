@@ -3,7 +3,7 @@
     <div id="wrapper">
         <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12sdf">
+                <div class="col-lg-12">
                     <ol class="breadcrumb">
                         <li class="active"><i class="fa fa-dashboard"></i> Danh sách sản phẩm</li>
                     </ol>
@@ -34,13 +34,15 @@
                                 <th>Số lượng</th>
                                 <th>Giá</th>
                                 <th>Đánh giá</th>
-                                <th></th>
+                                <th width="10%"></th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
                                 @if (!$products)
-                                    <td rowspan="9"> not data</td>
+                                    <tr class="borderless">
+                                        <td colspan="7" class="text-center">Không có dữ liệu</td>
+                                    </tr>
                                 @else
                                 @foreach ($products as $index =>$product)
                                     <tr>
@@ -51,10 +53,11 @@
                                         <td>{{ $product->price }}</td>
                                         <td>{{ $product->vote }}</td>
                                         <td>
-                                            <a class="btn btn-danger"
-                                               href="{{ route('deleteproduct', ['id' => $product->id ]) }}">Xóa</a>
                                             <a class="btn btn-warning"
                                                href="{{ route('vieweditproduct', ['id' => $product->id ]) }}">Sửa</a>
+
+                                            <a class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa sản phẩm này không?')"
+                                               href="{{ route('deleteproduct', ['id' => $product->id ])  }}">Xóa</a>
                                         </td>
                                     </tr>
                                 @endforeach

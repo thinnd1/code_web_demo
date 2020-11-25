@@ -4,9 +4,9 @@
 <div id="wrapper">
     <div id="page-wrapper">
         <div class="row">
-            <div class="col-lg-12sdf">
+            <div class="col-lg-12">
                 <ol class="breadcrumb">
-                    <li class="active"><i class="fa fa-dashboard"></i> Quản lý shop</li>
+                    <li class="active"><i class="fa fa-dashboard"></i> Quản lý công ty</li>
                 </ol>
             </div>
         </div><!-- /.row -->
@@ -37,13 +37,13 @@
                             <th>Số điện thoại</th>
                             <th>Địa chỉ</th>
                             <th>Số hàng đã mua</th>
-                            <th>Hành động</th>
+                            <th width="10%">Hành động</th>
                         </tr>
                         </thead>
                         <tbody>
                         @if(count($shops) == 0)
                             <tr class="borderless">
-                                <td colspan="7" class="text-center">Not data</td>
+                                <td colspan="7" class="text-center">Không có dữ liệu</td>
                             </tr>
                         @else
                             @foreach ($shops as $index => $shop)
@@ -56,8 +56,8 @@
                                     <td>{{ $shop->quantity_product }}</td>
 {{--                                    <td>{{ $shop->id }}</td>--}}
                                     <td>
-                                        <a href="{{ route('deleteshop', ['id' => $shop->id ]) }}" class="btn btn-danger">Sửa</a>
-                                        <a href="{{ route('deleteshop', ['id' => $shop->id ]) }}" class="btn btn-danger">Xóa</a>
+                                        <a href="{{ route('editcompany', ['id' => $shop->id ]) }}" class="btn btn-warning">Sửa</a>
+                                        <a href="{{ route('deleteshop', ['id' => $shop->id ]) }}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa công ty này không?')">Xóa</a>
                                     </td>
                                 </tr>
                             @endforeach

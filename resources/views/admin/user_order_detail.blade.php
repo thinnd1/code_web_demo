@@ -4,7 +4,7 @@
     <div id="wrapper">
         <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12sdf">
+                <div class="col-lg-12">
                     <ol class="breadcrumb">
                         <li class="active"><i class="fa fa-dashboard"></i> Danh sách order theo cá nhân</li>
                     </ol>
@@ -33,7 +33,7 @@
                                 <tbody>
                                 @if(count($listCustomer['order']) == 0)
                                     <tr class="borderless">
-                                        <td colspan="10" class="text-center">Not data</td>
+                                        <td colspan="10" class="text-center">Không có dữ liệu</td>
                                     </tr>
                                 @else
                                     @foreach ($listCustomer->order as $index => $order)

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\CustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
@@ -18,7 +18,7 @@ class CustomerController extends Controller
     {
         return view('admin.create_customer');
     }
-    public function createCustomer(CreateUserRequest $request)
+    public function createCustomer(CustomerRequest $request)
     {
         $this->customer->createCustomer($request);
         return redirect()->route('listcustomer');
@@ -38,7 +38,7 @@ class CustomerController extends Controller
         $user = $this->customer->detailCustomer($id);
         return view('admin.edit_customer', compact('user'));
     }
-    public function editCustomer($id, Request $request)
+    public function editCustomer($id, CustomerRequest $request)
     {
         $this->customer->editCustomer($id, $request);
         return redirect()->route('listcustomer');

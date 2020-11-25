@@ -16,6 +16,10 @@ class Customer extends Eloquent
     {
         return $this->hasMany(Order::class, 'id_user');
     }
+    public function getAll()
+    {
+        return Customer::all();
+    }
 
     public function listCustomer()
     {
@@ -67,7 +71,7 @@ class Customer extends Eloquent
     }
     public function deleteUser($id)
     {
-        $deleteUser = Customer::find($id);
+        $deleteUser = Customer::findOrFail($id);
         return $deleteUser->delete();
     }
 }
