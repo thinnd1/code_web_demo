@@ -17,35 +17,50 @@
                         <label for="inputname" class="col-sm-2 col-form-label">Tên Sản phẩm</label>
                         <div class="col-sm-10">
                             <input type="text" name="name" class="form-control" value="" id="inputname">
+                            @error('name')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputquantity" class="col-sm-2 col-form-label">Số Lượng </label>
                         <div class="col-sm-10">
                             <input type="number" name="quantity" class="form-control" value="" id="inputquantity">
+                            @error('quantity')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputdescription" class="col-sm-2 col-form-label">Miêu tả</label>
                         <div class="col-sm-10">
-                            <input type="text" name="description" class="form-control" value="" id="inputdescription">
+                            <textarea class="form-control" name="description" id="inputdescription" aria-label="With textarea"></textarea>
+                            @error('description')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputPrice" class="col-sm-2 col-form-label">Giá</label>
                         <div class="col-sm-10">
                             <input type="number" name="price" class="form-control" value="" id="inputPrice">
+                            @error('price')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputPrice" class="col-sm-2 col-form-label">Loại sản phẩm</label>
                         <div class="col-sm-10">
-                            <select class="form-control">
+                            <select name="type" class="form-control">
                                 <option value="1">Điện thoại</option>
                                 <option value="2">Máy tính</option>
                                 <option value="3">Phụ kiện</option>
                                 <option value="4">Điện tử</option>
                             </select>
+                            @error('type')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                     <a class="btn btn-primary" href="{{ URL::previous() }}">Go Back</a>

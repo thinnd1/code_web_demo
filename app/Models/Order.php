@@ -28,7 +28,7 @@ class Order extends Eloquent
     }
     public function getOrder()
     {
-        return Order::paginate(5);
+        return Order::paginate(10);
     }
     public function getOrderDetail($id)
     {

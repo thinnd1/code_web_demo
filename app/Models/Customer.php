@@ -25,7 +25,7 @@ class Customer extends Eloquent
     {
         return Customer::with('order')
             ->orderBy('created_at', 'desc')
-            ->paginate(20);
+            ->paginate(10);
     }
     public function getUserorder($id)
     {
