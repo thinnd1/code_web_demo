@@ -39,7 +39,7 @@
                             </thead>
                             <tbody>
                             <tr>
-                                @if (!$products)
+                                @if (count($products) == 0)
                                     <tr class="borderless">
                                         <td colspan="7" class="text-center">Không có dữ liệu</td>
                                     </tr>

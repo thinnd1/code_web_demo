@@ -54,10 +54,10 @@
                         <label for="inputPrice" class="col-sm-2 col-form-label">Loại sản phẩm</label>
                         <div class="col-sm-10">
                             <select name="type" class="form-control">
-                                <option value="1">Điện thoại</option>
-                                <option value="2">Máy tính</option>
-                                <option value="3">Phụ kiện</option>
-                                <option value="4">Điện tử</option>
+                                <option value="1" {{ $products->type == 1 ? 'selected' : '' }}>Điện thoại</option>
+                                <option value="2" {{ $products->type == 2 ? 'selected' : '' }}>Máy tính</option>
+                                <option value="3" {{ $products->type == 3 ? 'selected' : '' }}>Phụ kiện</option>
+                                <option value="4" {{ $products->type == 4 ? 'selected' : '' }}>Điện tử</option>
                             </select>
                             @error('type')
                             <p class="text-danger">{{ $message }}</p>

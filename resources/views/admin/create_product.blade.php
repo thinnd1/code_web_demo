@@ -16,7 +16,7 @@
                     <div class="form-group row">
                         <label for="inputname" class="col-sm-2 col-form-label">Tên Sản phẩm</label>
                         <div class="col-sm-10">
-                            <input type="text" name="name" class="form-control" value="" id="inputname">
+                            <input type="text" name="name" class="form-control" value="{{ old("name") }}" id="inputname">
                             @error('name')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -25,7 +25,7 @@
                     <div class="form-group row">
                         <label for="inputquantity" class="col-sm-2 col-form-label">Số Lượng </label>
                         <div class="col-sm-10">
-                            <input type="number" name="quantity" class="form-control" value="" id="inputquantity">
+                            <input type="number" name="quantity" class="form-control" value="{{ old("quantity") }}" id="inputquantity">
                             @error('quantity')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -34,7 +34,7 @@
                     <div class="form-group row">
                         <label for="inputdescription" class="col-sm-2 col-form-label">Miêu tả</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" name="description" id="inputdescription" aria-label="With textarea"></textarea>
+                            <textarea class="form-control" name="description" id="inputdescription" aria-label="With textarea">{{ old("description") }}</textarea>
                             @error('description')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -43,7 +43,7 @@
                     <div class="form-group row">
                         <label for="inputPrice" class="col-sm-2 col-form-label">Giá</label>
                         <div class="col-sm-10">
-                            <input type="number" name="price" class="form-control" value="" id="inputPrice">
+                            <input type="number" name="price" class="form-control" value="{{ old("price") }}" id="inputPrice">
                             @error('price')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
