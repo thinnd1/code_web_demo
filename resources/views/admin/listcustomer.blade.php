@@ -80,7 +80,8 @@
                             @endif
                             </tbody>
                         </table>
-                        {{ $listCustomers->links() }}
+                        {{ $listCustomers->render() }}
+
                         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
                              aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">

@@ -20,7 +20,7 @@
                     <div class="row">
                         <h2 class="col-lg-6 float-left">Danh sách sản phẩm</h2>
                         <div class="col-lg-6 text-right h2">
-                            <a href="{{ route('viewcreateproduct') }}" class="btn btn-info">Tạo mới</a>
+                            <a href="{{ route('viewcreateproduct') }}" class="btn btn-info">Tạo sản phẩm mới</a>
                         </div>
                     </div>
 

@@ -21,7 +21,7 @@
                 <div class="row">
                     <h2 class="col-lg-6 float-left">Danh sách đơn hàng</h2>
                     <div class="col-lg-6 text-right h2">
-                        <a href="{{ route('viewcreateorder') }}" class="btn btn-info">Tạo mới</a>
+                        <a href="{{ route('viewcreateorder') }}" class="btn btn-info">Tạo đơn hàng mới</a>
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -38,10 +38,15 @@
                             <th>Số điện thoại</th>
                             <th>Phương thức thanh toán</th>
                             <th>Trạng thái</th>
-                            <th></th>
+                            <th width="10%"></th>
                         </tr>
                         </thead>
                         <tbody>
+                        @if(count($orders) == 0)
+                            <tr class="borderless">
+                                <td colspan="11" class="text-center">Không có dữ liệu</td>
+                            </tr>
+                        @else
                         @foreach ($orders as $index => $order)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
@@ -70,6 +75,7 @@
                                 </td>
                             </tr>
                         @endforeach
+                        @endif
                         </tbody>
                     </table>
                     {{ $orders->links() }}

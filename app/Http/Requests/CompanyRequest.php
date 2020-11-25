@@ -25,9 +25,9 @@ class CompanyRequest extends FormRequest
     {
         return [
             'name_shop' => 'required|min:5|max:50',
-            'address' => 'required|max:200',
-            'phone' => 'required|numeric|min:9',
-            'email' => 'required|email',
+            'address' => 'required|max:500',
+            'phone' => ['required','regex: /^\+?\d{10,11}$/i'],
+            'email' => ['required','regex: /^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix'],
             'quantity_product' => 'required|numeric',
         ];
     }
@@ -42,11 +42,9 @@ class CompanyRequest extends FormRequest
             'quantity_product.required' => 'Không được để trống số hàng đã mua',
             'quantity_product.numeric' => 'Nhập số hàng đã mua',
             'phone.required' => 'Không được để trống số điện thoại',
-            'phone.numeric' => 'Nhập số điện thoại',
-            'phone.min' => 'Nhập số điện thoại lơn hơn hoặc bằng 10',
-//            'phone.max' => 'Nhập số điện thoại lớn là 12',
+            'phone.regex' => 'Nhập không đúng số điện thoại',
             'email.required' => 'Không được để trống email',
-            'email.email' => 'Nhập đúng định dạng mail',
+            'email.regex' => 'Nhập đúng định dạng mail',
         ];
     }
 

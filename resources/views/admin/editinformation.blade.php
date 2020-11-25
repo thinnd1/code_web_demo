@@ -54,6 +54,9 @@
                         <label for="inputEmail" class="col-sm-2 col-form-label">Email*</label>
                         <div class="col-sm-10">
                             <input type="text" name="email" class="form-control" value="{{ $user->email }}" id="inputEmail">
+                            @error('email')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
@@ -65,7 +68,10 @@
                     <div class="form-group row">
                         <label for="inputPhone" class="col-sm-2 col-form-label">Phone*</label>
                         <div class="col-sm-10">
-                            <input type="number" name="phone" class="form-control" value="{{ $user->phone }}" id="inputPhone">
+                            <input type="text" name="phone" class="form-control" value="{{ $user->phone }}" id="inputPhone">
+                            @error('phone')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">
@@ -96,7 +102,7 @@
                         </div>
                     </div>
 
-                    <a class="btn btn-primary" href="{{ URL::previous() }}">Go Back</a>
+                    <a class="btn btn-primary" href="{{ URL::previous() }}">Quay lại</a>
                     <button type="submit" class="btn btn-warning">Cập nhật thông tin</button>
                 </form>
             </div>

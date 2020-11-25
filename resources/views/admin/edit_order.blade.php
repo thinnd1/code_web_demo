@@ -94,7 +94,7 @@
                             </div>
                         </div>
 
-                        <a class="btn btn-primary" href="{{ URL::previous() }}">Go Back</a>
+                        <a class="btn btn-primary" href="{{ URL::previous() }}">Quay lại</a>
                         <button type="submit" class="btn btn-warning">Thêm mới</button>
                     </form>
                 </div>

@@ -26,7 +26,7 @@
                     <div class="form-group row">
                         <label for="inputquantity" class="col-sm-2 col-form-label">Số Lượng </label>
                         <div class="col-sm-10">
-                            <input type="number" name="quantity" class="form-control" value="{{ $products->name }}" id="inputquantity">
+                            <input type="number" name="quantity" class="form-control" value="{{ $products->quantity }}" id="inputquantity">
                             @error('quantity')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -64,7 +64,7 @@
                             @enderror
                         </div>
                     </div>
-                    <a class="btn btn-primary" href="{{ URL::previous() }}">Go Back</a>
+                    <a class="btn btn-primary" href="{{ URL::previous() }}">Quay lại</a>
                     <button type="submit" class="btn btn-warning">Update</button>
                 </form>
             </div>
