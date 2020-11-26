@@ -41,9 +41,9 @@
                         <label for="inputGender" class="col-sm-2 col-form-label">Giới tính*</label>
                         <div class="col-sm-10">
                             <select name="gender" class="form-control">
-                                <option value="1">Nam</option>
-                                <option value="2">Nữ</option>
-                                <option value="3">Khác</option>
+                                <option value="1" {{ $user->gender == 1 ? 'selected' : '' }}>Nam</option>
+                                <option value="2" {{ $user->gender == 2 ? 'selected' : '' }}>Nữ</option>
+                                <option value="3" {{ $user->gender == 3 ? 'selected' : '' }}>Khác</option>
                             </select>
                             @error('gender')
                             <p class="text-danger">{{ $message }}</p>
