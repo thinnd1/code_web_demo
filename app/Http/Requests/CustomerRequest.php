@@ -47,7 +47,7 @@ class CustomerRequest extends FormRequest
             'full_name.min' => 'Nhập họ tên nhiều hơn 5 ký tự',
             'full_name.max' => 'Nhập họ tên ít hơn 60 ký tự',
             'phone.required' => 'Không được để trống số trường điện thoại',
-            'phone.regex' => 'Số điện thoại nhập không đùng',
+            'phone.regex' => 'Số điện thoại nhập không đúng',
             'email.required' => 'Không được để trống trường email',
             'email.unique' => 'Email đã tồn tại',
             'email.regex' => 'Email sai định dạng',
