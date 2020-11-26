@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ol class="breadcrumb">
-                        <li class="active"><i class="fa fa-dashboard"></i> Danh sách order theo cá nhân</li>
+                        <li class="active"><i class="fa fa-dashboard"></i> Danh sách đặt hàng theo cá nhân</li>
                     </ol>
                 </div>
             </div><!-- /.row -->
@@ -26,7 +26,7 @@
                                     <th>Ngày đặt hàng</th>
                                     <th>Email</th>
                                     <th>Số điện thoại</th>
-                                    <th>Phương thức thanh toán</th>
+                                    <th>Thanh Toán</th>
                                     <th>Trạng thái</th>
                                 </tr>
                                 </thead>

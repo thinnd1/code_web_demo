@@ -36,7 +36,7 @@
                             <th>Ngày đặt hàng</th>
                             <th>Email</th>
                             <th>Số điện thoại</th>
-                            <th>Phương thức thanh toán</th>
+                            <th>Thanh toán</th>
                             <th>Trạng thái</th>
                             <th width="10%">Hành động</th>
                         </tr>
@@ -47,7 +47,6 @@
                                 <td colspan="11" class="text-center">Không có dữ liệu</td>
                             </tr>
                         @else
-{{--                            @dd($orders)--}}
                         @foreach ($orders as $index => $order)
                             <tr>
                                 <td>{{ $index + 1 }}</td>

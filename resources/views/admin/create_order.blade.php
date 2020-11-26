@@ -19,7 +19,7 @@
                             <div class="col-sm-10">
                                 <select name="id_user" class="form-control">
                                     @foreach($customers as $key => $customer)
-                                        @if (old('id_user') == $customer->username)
+                                        @if (old("id_user") == $customer->username)
                                             <option value="{{ $customer->username }}" selected >{{ $customer->full_name }}</option>
                                         @else
                                             <option value="{{ $customer->username }}" >{{ $customer->full_name }}</option>

@@ -34,6 +34,7 @@
                     </div>
                     <p></p>
                     <div class="table-responsive">
+                        <h3>Tổng số khách hàng: {{ count($totalcustomer) }}</h3>
                         <table class="table table-bordered table-hover tablesorter">
                             <thead>
                             <tr>
@@ -47,7 +48,7 @@
                                 <th>Công ty</th>
                                 <th>Ngày đăng ký</th>
                                 @if(Auth::user()->role == 1)
-                                    <th>Hành động</th>
+                                    <th width="10%">Hành động</th>
                                 @endif
                             </tr>
                             </thead>

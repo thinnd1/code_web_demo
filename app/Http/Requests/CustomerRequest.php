@@ -31,7 +31,7 @@ class CustomerRequest extends FormRequest
             'email' => ['required','regex: /^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix'],
             'age' => 'required|numeric|integer|min:0',
             'gender' => 'required|in:1,2,3',
-            'address' => 'max:500',
+            'address' => 'required|max:500',
             'job' => 'max:80',
             'company' => 'max:80',
         ];

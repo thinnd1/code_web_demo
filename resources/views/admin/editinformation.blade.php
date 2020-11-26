@@ -22,7 +22,7 @@
                     <div class="form-group row">
                         <label for="inputUser" class="col-sm-2 col-form-label">Tên Đăng Nhập*</label>
                         <div class="col-sm-10">
-                            <input type="text" name="username" class="form-control" value="{{ $user->username }}" id="inputUser">
+                            <input type="text" name="username" class="form-control" value="{{ old("username") ?? $user->username }}" id="inputUser">
                             @error('username')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -31,7 +31,7 @@
                     <div class="form-group row">
                         <label for="inputFullName" class="col-sm-2 col-form-label">Họ Và Tên*</label>
                         <div class="col-sm-10">
-                            <input type="text" name="full_name" class="form-control" value="{{ $user->full_name }}" id="inputFullName">
+                            <input type="text" name="full_name" class="form-control" value="{{ old("full_name") ?? $user->full_name }}" id="inputFullName">
                             @error('full_name')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -53,49 +53,49 @@
                     <div class="form-group row">
                         <label for="inputEmail" class="col-sm-2 col-form-label">Email*</label>
                         <div class="col-sm-10">
-                            <input type="text" name="email" class="form-control" value="{{ $user->email }}" id="inputEmail">
+                            <input type="text" name="email" class="form-control" value="{{ old("email") ?? $user->email }}" id="inputEmail">
                             @error('email')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="inputAge" class="col-sm-2 col-form-label">Age*</label>
+                        <label for="inputAge" class="col-sm-2 col-form-label">Tuổi*</label>
                         <div class="col-sm-10">
-                            <input type="number" name="age" value="{{ $user->age }}" class="form-control" id="inputAge">
+                            <input type="number" name="age" min="1" max="150" value="{{ old("age") ?? $user->age }}" class="form-control" id="inputAge">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="inputPhone" class="col-sm-2 col-form-label">Phone*</label>
+                        <label for="inputPhone" class="col-sm-2 col-form-label">Số điện thoại*</label>
                         <div class="col-sm-10">
-                            <input type="text" name="phone" class="form-control" value="{{ $user->phone }}" id="inputPhone">
+                            <input type="text" name="phone" class="form-control" value="{{ old("phone") ?? $user->phone }}" id="inputPhone">
                             @error('phone')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="inputAddress" class="col-sm-2 col-form-label">Address*</label>
+                        <label for="inputAddress" class="col-sm-2 col-form-label">Địa chỉ*</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" name="address" id="inputaddress" aria-label="With textarea">{ $user->address }}</textarea>
+                            <textarea class="form-control" name="address" id="inputaddress" aria-label="With textarea">{{ old("address") ?? $user->address }}</textarea>
                             @error('address')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="inputJob" class="col-sm-2 col-form-label">Job</label>
+                        <label for="inputJob" class="col-sm-2 col-form-label">Nghề nghiệp</label>
                         <div class="col-sm-10">
-                            <input type="text" name="job" class="form-control" value="{{ $user->job }}" id="inputJob">
+                            <input type="text" name="job" class="form-control" value="{{ old("job") ?? $user->job }}" id="inputJob">
                             @error('job')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="inputCompany" class="col-sm-2 col-form-label">Company</label>
+                        <label for="inputCompany" class="col-sm-2 col-form-label">Công ty</label>
                         <div class="col-sm-10">
-                            <input type="text" name="company" class="form-control" value="{{ $user->company }}" id="inputCompany">
+                            <input type="text" name="company" class="form-control" value="{{ old("company") ?? $user->company }}" id="inputCompany">
                             @error('company')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
