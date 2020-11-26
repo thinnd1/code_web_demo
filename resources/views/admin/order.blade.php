@@ -38,7 +38,7 @@
                             <th>Số điện thoại</th>
                             <th>Phương thức thanh toán</th>
                             <th>Trạng thái</th>
-                            <th width="10%"></th>
+                            <th width="10%">Hành động</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -47,17 +47,26 @@
                                 <td colspan="11" class="text-center">Không có dữ liệu</td>
                             </tr>
                         @else
+{{--                            @dd($orders)--}}
                         @foreach ($orders as $index => $order)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
-                                <td>Thin Nguyen</td>
-                                <td>Iphone X</td>
+                                <td>{{ $order->id_user }}</td>
+                                <td>{{ $order->id_product }}</td>
                                 <td>{{ $order->total_price }}</td>
                                 <td>{{ $order->address }}</td>
                                 <td>{{ $order->created_at }}</td>
                                 <td>{{ $order->email }}</td>
                                 <td>{{ $order->phone }}</td>
-                                <td>{{ $order->payment }}</td>
+                                <td>
+                                    @if($order->payment == 1)
+                                        Tiền mặt
+                                    @elseif($order->payment == 2)
+                                        Zalo Pay
+                                    @else
+                                        Credit Card
+                                    @endif
+                                </td>
                                 <td>
                                     @if ($order->status == 1)
                                         Mới

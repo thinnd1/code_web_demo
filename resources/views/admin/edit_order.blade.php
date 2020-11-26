@@ -5,29 +5,45 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ol class="breadcrumb">
-                        <li class="active"><i class="fa fa-dashboard"></i> Tạo khách hàng </li>
+                        <li class="active"><i class="fa fa-dashboard"></i> Cập nhật đơn hàng </li>
                     </ol>
                 </div>
             </div><!-- /.row -->
             <div class="row">
                 <div class="col-lg-9">
-                    <form action="{{ route('createcustomer') }}" method="post">
+                    <form action="{{ route('updateorder', ['id' => $orderdetail->id]) }}" method="post">
                         @csrf
+
                         <div class="form-group row">
-                            <label for="inputname" class="col-sm-2 col-form-label">Họ và tên*</label>
+                            <label for="inputname" class="col-sm-2 col-form-label">Tên khách hàng</label>
                             <div class="col-sm-10">
-                                <input type="text" name="full_name" class="form-control" value="" id="inputname">
-                                @error('full_name')
+                                <select name="id_user" class="form-control">
+                                <option value="0">--Khách hàng--</option>
+                                @foreach($customers as $customer)
+                                    <option value="{{ $customer->username }}">{{ $customer->full_name }}</option>
+                                @endforeach
+                                </select>
+                                @error('id_user')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="inputusername" class="col-sm-2 col-form-label">Tên đăng nhập*</label>
+                            <label for="inputusername" class="col-sm-2 col-form-label">Sản phẩm*</label>
                             <div class="col-sm-10">
-                                <input type="text" name="username" class="form-control" value="" id="inputusername">
-                                @error('username')
+                                <input type="text" name="id_product" class="form-control" value="{{ $orderdetail->id_product }}" id="inputusername">
+                                @error('id_product')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputusername" class="col-sm-2 col-form-label">Tổng tiền</label>
+                            <div class="col-sm-10">
+                                <input type="number" name="total_price" class="form-control" value="{{ $orderdetail->total_price }}" id="inputusername">
+                                @error('total_price')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -36,7 +52,7 @@
                         <div class="form-group row">
                             <label for="inputemail" class="col-sm-2 col-form-label">Email*</label>
                             <div class="col-sm-10">
-                                <input type="text" name="email" class="form-control" value="" id="inputemail">
+                                <input type="text" name="email" class="form-control" value="{{ $orderdetail->email }}" id="inputemail">
                                 @error('email')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
@@ -46,7 +62,7 @@
                         <div class="form-group row">
                             <label for="inputphone" class="col-sm-2 col-form-label">Số điện thoại*</label>
                             <div class="col-sm-10">
-                                <input type="number" name="phone" class="form-control" value="" id="inputphone">
+                                <input type="text" name="phone" class="form-control" value="{{ $orderdetail->phone }}" id="inputphone">
                                 @error('phone')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
@@ -54,26 +70,19 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="inputage" class="col-sm-2 col-form-label">Tuổi</label>
+                            <label for="inputage" class="col-sm-2 col-form-label">Ngày đặt</label>
                             <div class="col-sm-10">
-                                <input type="number" name="age" class="form-control" value="" id="inputage">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Giới tính</label>
-                            <div class="col-sm-10">
-                                <select name="gender" class="form-control">
-                                    <option value="1">Nam</option>
-                                    <option value="2">Nữ</option>
-                                </select>
+                                <input type="date" name="orderdate" class="form-control" value="{{ $orderdetail->orderdate }}" id="inputage">
+                                @error('orderdate')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="inputaddress" class="col-sm-2 col-form-label">Địa chỉ*</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" name="address" id="inputaddress" aria-label="With textarea"></textarea>
+                                <textarea class="form-control" name="address" id="inputaddress" aria-label="With textarea">{{ $orderdetail->address }}</textarea>
                                 @error('address')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
@@ -81,21 +90,31 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="inputjob" class="col-sm-2 col-form-label">Nghề nghiệp</label>
+                            <label for="inputjob" class="col-sm-2 col-form-label">Hình thức thanh toán</label>
                             <div class="col-sm-10">
-                                <input type="text" name="job" class="form-control" value="" id="inputjob">
+                                <select name="payment" class="form-control">
+                                    <option value="1" {{ $orderdetail->payment == 1 ? 'selected' : '' }}>Tiền mặt</option>
+                                    <option value="2" {{ $orderdetail->payment == 2 ? 'selected' : '' }}>Zalo Pay</option>
+                                    <option value="3" {{ $orderdetail->payment == 3 ? 'selected' : '' }}>Credit Card</option>
+                                </select>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="inputcompany" class="col-sm-2 col-form-label">Công ty</label>
+                            <label for="inputjob" class="col-sm-2 col-form-label">Trạng thái đặt hàng</label>
                             <div class="col-sm-10">
-                                <input type="text" name="company" class="form-control" value="" id="inputcompany">
+                                <select name="order_status" class="form-control">
+                                    <option value="1" {{ $orderdetail->status == 1 ? 'selected' : '' }}>Mới</option>
+                                    <option value="2" {{ $orderdetail->status == 2 ? 'selected' : '' }}>Đang giao</option>
+                                    <option value="3" {{ $orderdetail->status == 3 ? 'selected' : '' }}>Đã giao</option>
+                                    <option value="4" {{ $orderdetail->status == 4 ? 'selected' : '' }}>Hủy đơn hàng</option>
+                                </select>
                             </div>
                         </div>
 
                         <a class="btn btn-primary" href="{{ URL::previous() }}">Quay lại</a>
-                        <button type="submit" class="btn btn-warning">Thêm mới</button>
+                        <button type="submit" class="btn btn-warning">Cập nhật</button>
+
                     </form>
                 </div>
             </div>

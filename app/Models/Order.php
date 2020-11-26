@@ -45,11 +45,11 @@ class Order extends Eloquent
             'phone' => $request->phone,
             'email' => $request->email,
             'payment' => $request->payment,
-            'status' => 4
+            'status' => 1
         ];
         Order::create($data);
     }
-    public function updateOrder($id, $request)
+    public function updateOrder($request, $id)
     {
         $data = [
             'id_user' => $request->id_user,
@@ -60,8 +60,9 @@ class Order extends Eloquent
             'phone' => $request->phone,
             'email' => $request->email,
             'payment' => $request->payment,
-            'status' => 4
+            'status' => $request->order_status,
         ];
+//        dd($data);
         $this->where('_id', $id)->update($data);
     }
     public function deleteOrder($id)

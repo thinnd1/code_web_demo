@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderRequest;
 use App\Models\Customer;
 use App\Models\Order;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -28,18 +27,21 @@ class OrderController extends Controller
         $customers = $this->customer->getAll();
         return view('admin.create_order', compact('customers'));
     }
-    public function createOrder(Request $request)
+    public function createOrder(OrderRequest $request)
     {
         $this->order->createOrder($request);
         return redirect()->route('order');
     }
     public function editOrder($id)
     {
-        return view('admin.edit_order');
+        $orderdetail = $this->order->getOrderDetail($id);
+        $customers = $this->customer->getAll();
+
+        return view('admin.edit_order', compact('orderdetail', 'customers'));
     }
-    public function updateOrder(Request $request, $id)
+    public function updateOrder(OrderRequest $request, $id)
     {
-        $this->order->updateOrder($id, $request);
+        $this->order->updateOrder($request, $id);
         return redirect()->route('order');
     }
     public function deleteOrder($id)

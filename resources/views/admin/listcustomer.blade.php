@@ -30,7 +30,7 @@
                 <form action="" method="post" enctype="multipart/form-data">
                     @csrf
                     <div>
-                        <span data-href="{{ route('exportcsvcustomer') }}" id="export" class="btn btn-success btn-sm" onclick="exportTasks(event.target);">Export</span>
+                        <span data-href="{{ route('exportcsvcustomer') }}" id="export" class="btn btn-success btn-sm" onclick="exportTasks(event.target);">Xuất file csv</span>
                     </div>
                     <p></p>
                     <div class="table-responsive">
@@ -47,7 +47,7 @@
                                 <th>Công ty</th>
                                 <th>Ngày đăng ký</th>
                                 @if(Auth::user()->role == 1)
-                                    <th></th>
+                                    <th>Hành động</th>
                                 @endif
                             </tr>
                             </thead>
@@ -91,6 +91,7 @@
 
 <script>
     function exportTasks(_this) {
+        confirm('Bạn muốn xuất thành file csv không?');
         let _url = $(_this).data('href');
         window.location.href = _url;
     }

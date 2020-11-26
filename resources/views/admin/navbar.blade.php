@@ -9,7 +9,7 @@
                 <li><a href="{{ route('product')}}"><i class="fa fa-dashboard"></i> Quản lý sản phẩm </a></li>
                 <li><a href="{{ route('order')}}"><i class="fa fa-bar-chart-o"></i> Quản lý đơn hàng </a></li>
                 <li><a href="{{ route('shop') }}"><i class="fa fa-bar-chart-o"></i> Quản lý Công ty </a></li>
-                <li><a href="{{ route('logout') }}"><i class="fa fa-table"></i> Đăng xuất </a></li>
+                <li><a href="{{ route('logout') }}" onclick="return confirm('Bạn chắc chắn muốn đăng xuất ?')"><i class="fa fa-table"></i> Đăng xuất </a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>

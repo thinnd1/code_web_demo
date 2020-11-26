@@ -37,7 +37,7 @@
                         <div class="form-group row">
                             <label for="inputphone" class="col-sm-2 col-form-label">Số điện thoại*</label>
                             <div class="col-sm-10">
-                                <input type="number" name="phone" class="form-control" value="{{ old("phone") }}" id="inputphone">
+                                <input type="text" name="phone" class="form-control" value="{{ old("phone") }}" id="inputphone">
                                 @error('phone')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
