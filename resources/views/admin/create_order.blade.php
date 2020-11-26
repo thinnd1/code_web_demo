@@ -18,9 +18,12 @@
                             <label for="inputname" class="col-sm-2 col-form-label">Tên khách hàng</label>
                             <div class="col-sm-10">
                                 <select name="id_user" class="form-control">
-                                    <option value="0">--Khách hàng--</option>
-                                    @foreach($customers as $customer)
-                                        <option value="{{ $customer->username }}">{{ $customer->full_name }}</option>
+                                    @foreach($customers as $key => $customer)
+                                        @if (old('id_user') == $customer->username)
+                                            <option value="{{ $customer->username }}" selected >{{ $customer->full_name }}</option>
+                                        @else
+                                            <option value="{{ $customer->username }}" >{{ $customer->full_name }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                                 @error('id_user')

@@ -18,7 +18,6 @@
                             <label for="inputname" class="col-sm-2 col-form-label">Tên khách hàng</label>
                             <div class="col-sm-10">
                                 <select name="id_user" class="form-control">
-                                <option value="0">--Khách hàng--</option>
                                 @foreach($customers as $customer)
                                     <option value="{{ $customer->username }}">{{ $customer->full_name }}</option>
                                 @endforeach
