@@ -25,7 +25,7 @@ class Customer extends Eloquent
     {
         return Customer::with('order')
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->simplePaginate(10);
     }
     public function getUserorder($id)
     {
@@ -33,6 +33,7 @@ class Customer extends Eloquent
             ->orderBy('created_at', 'desc')
             ->where('_id', $id)
             ->get();
+
     }
     public function createCustomer($request)
     {

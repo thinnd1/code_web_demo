@@ -20,6 +20,9 @@ class AuthController extends Controller
 
     public function viewSignup()
     {
+        if (Auth::check()){
+            return redirect()->route('home');
+        }
         return view('layout.signup');
     }
 
@@ -33,6 +36,9 @@ class AuthController extends Controller
 
     public function viewLogin(Request $request)
     {
+        if (Auth::check()){
+            return redirect()->route('home');
+        } else
         $request->session()->put('url.intended',url()->previous());
         return view('layout.login');
     }
