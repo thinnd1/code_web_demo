@@ -1,0 +1,18 @@
+.divide-column {
+    width: calc(100vh/10 + 50px) !important;
+    overflow-wrap: break-word;
+}
+.divide-column-15 {
+    width: calc(100vh/10 + 120px) !important;
+    overflow-wrap: break-word;
+}
+
+.divide-column-7 {
+    width: calc(100vh/7 + 40px) !important;
+    overflow-wrap: break-word;
+}
+
+.divide-column-description {
+    width: calc(100vh/7 + 550px) !important;
+    overflow-wrap: break-word;
+}

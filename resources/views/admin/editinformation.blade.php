@@ -1,4 +1,5 @@
 @extends('layout.index')
+@section('title', 'Cập nhật thông tin cá nhân')
 @section('content')
 <div id="wrapper">
     <div id="page-wrapper">

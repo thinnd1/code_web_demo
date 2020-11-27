@@ -42,15 +42,16 @@ class AuthController extends Controller
         $request->session()->put('url.intended',url()->previous());
         return view('layout.login');
     }
-    public function login(Request $request)
+    public function login(UserRequest $request)
     {
         $checkExistUser = User::where('username', $request->username )->first();
         if (!$checkExistUser) {
-            return redirect()->route('login')->with('error', 'Tài khoản không tồn tại');
+            return redirect()->back()->with('error', 'Tài khoản không tồn tại')->withInput();
         } elseif(Auth::attempt(['username' => $request->username, 'password' => $request->password])){
             return redirect($request->session()->get('url.intended'));
         } else {
-            return redirect()->route('login')->with('error', 'Sai mật khẩu');
+            return redirect()->back()->with('error', 'Sai mật khẩu')->withInput();
+//            return redirect()->route('login')->with('error', 'Sai mật khẩu');
         }
     }
     public function logout()

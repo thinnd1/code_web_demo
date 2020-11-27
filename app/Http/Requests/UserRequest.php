@@ -25,18 +25,18 @@ class UserRequest extends FormRequest
     {
         return [
             //
-            'username' => 'required|unique:users|min:5|max:20',
-            'full_name' => 'required|min:5|max:30',
-            'password' => ['required', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/'],
-            'email' => ['required', 'exist' , 'regex: /^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix'],
+            'username' => 'required|min:3|max:20',
+//            'full_name' => 'required|min:5|max:30',
+            'password' => 'required',
+            'email' => ['regex: /^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix'],
         ];
     }
     public function messages()
     {
         return [
             'username.required' => 'Không được để trống tên đăng nhập',
-            'username.unique' => 'Tài khoản đã tồn tại',
-            'username.min' => 'Nhập ký tự nhiều hơn 5',
+//            'username.unique' => 'Tài khoản đã tồn tại',
+            'username.min' => 'Nhập ký tự nhiều hơn 3',
             'username.max' => 'Nhập ký tự ít hơn 20',
             'password.required' => 'Không được để trống mật khẩu',
             'password.regex' => 'Không mật khẩu ít nhất 8 ký tự có chữ in hoa, in thường, số',

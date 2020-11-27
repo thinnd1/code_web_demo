@@ -1,4 +1,5 @@
 @extends('layout.index')
+@section('title', 'Cập nhật thông tin sản phẩm')
 @section('content')
     <div id="wrapper">
         <div id="page-wrapper">
@@ -37,7 +38,7 @@
                         <div class="form-group row">
                             <label for="inputphone" class="col-sm-2 col-form-label">Số điện thoại*</label>
                             <div class="col-sm-10">
-                                <input type="number" name="phone" class="form-control" value="{{ old("phone") ?? $shopDetail->phone }}" id="inputphone">
+                                <input type="text" name="phone" class="form-control" value="{{ old("phone") ?? $shopDetail->phone }}" id="inputphone">
                                 @error('phone')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror

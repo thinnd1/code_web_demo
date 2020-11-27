@@ -1,4 +1,6 @@
 @extends('layout.index')
+@section('title', 'Trang danh sách sản phẩm')
+<link href="{{ asset('css/style.css') }}" rel="stylesheet">
 @section('content')
     <div id="wrapper">
         <div id="page-wrapper">
@@ -47,24 +49,48 @@
                                 @foreach ($products as $index =>$product)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
-                                        <td>{{ $product->name }}</td>
-                                        <td>{{ $product->description }}</td>
-                                        <td>{{ $product->quantity }}</td>
-                                        <td>{{ $product->price }}</td>
-                                        <td>{{ $product->vote }}</td>
                                         <td>
-                                            <a class="btn btn-warning"
-                                               href="{{ route('vieweditproduct', ['id' => $product->id ]) }}">Sửa</a>
+                                            <div class="divide-column-7">
+                                                {{ $product->name }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="divide-column-description">
+                                                {{ $product->description }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="divide-column-7">
+                                                {{ $product->quantity }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="divide-column-7">
+                                                {{ $product->price }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="divide-column-7">
+                                                {{ $product->vote }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="divide-column-7">
+                                                <a class="btn btn-warning"
+                                                   href="{{ route('vieweditproduct', ['id' => $product->id ]) }}">Sửa</a>
 
-                                            <a class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa sản phẩm này không?')"
-                                               href="{{ route('deleteproduct', ['id' => $product->id ])  }}">Xóa</a>
+                                                <a class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa sản phẩm này không?')"
+                                                   href="{{ route('deleteproduct', ['id' => $product->id ])  }}">Xóa</a>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
                                 @endif
                             </tr></tbody>
                         </table>
-                        {{ $products->links() }}
+                        <div class="d-flex justify-content-center">
+                            {{ $products->links() }}
+                        </div>
                     </div>
                 </div>
             </div><!-- /.row -->
