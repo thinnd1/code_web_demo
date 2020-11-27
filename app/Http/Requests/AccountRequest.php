@@ -53,7 +53,7 @@ class AccountRequest extends FormRequest
             'email.regex' => 'Email sai định dạng',
 
             'phone.required' => 'Không được để trống số điện thoại',
-            'phone.regex' => 'Số điện thoại nhập không đùng',
+            'phone.regex' => 'Số điện thoại nhập không đúng',
 
             'age.required' => 'Không được để trống tuổi',
             'age.numeric' => 'Tuổi nhập số',
