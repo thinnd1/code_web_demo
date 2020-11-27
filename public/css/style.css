@@ -13,6 +13,6 @@
 }
 
 .divide-column-description {
-    width: calc(100vh/7 + 550px) !important;
+    width: calc(100vh/7 + 300px) !important;
     overflow-wrap: break-word;
 }

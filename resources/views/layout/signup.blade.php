@@ -26,7 +26,7 @@
 
         <div class="form-group">
             <label for="inputPassword">Mật Khẩu*</label>
-            <input type="password" name="password" class="form-control password" id="inputPassword"
+            <input type="password" name="password" class="form-control password" value="{{ old("password") }}" id="inputPassword"
                    placeholder="Nhập mật khẩu">
             @error('password')
             <p class="text-danger">{{ $message }}</p>

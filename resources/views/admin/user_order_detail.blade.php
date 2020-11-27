@@ -64,7 +64,7 @@
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-center">
-                            {{ $shops->links() }}
+                            {{ $listCustomers->links() }}
                         </div>
                     </div>
                 </div>
