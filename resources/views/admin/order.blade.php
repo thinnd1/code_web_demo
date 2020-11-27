@@ -15,7 +15,6 @@
                 {{ session('key') }}
             </div>
         @endif
-{{--        @dd($orders)--}}
 
         <div class="row">
             <div class="col-lg-12">
@@ -87,7 +86,9 @@
                         @endif
                         </tbody>
                     </table>
-                    {{ $orders->links() }}
+                    <div class="d-flex justify-content-center">
+                        {{ $orders->links() }}
+                    </div>
                 </div>
             </div>
         </div><!-- /.row -->

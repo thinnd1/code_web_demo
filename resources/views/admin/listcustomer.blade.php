@@ -1,32 +1,33 @@
 @extends('layout.index')
 @section('title', 'Trang danh sách khách hàng')
+<link href="{{ asset('css/style.css') }}" rel="stylesheet">
 @section('content')
 
-<div id="wrapper">
-    <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <ol class="breadcrumb">
-                    <li class="active"><i class="fa fa-dashboard"></i> Danh sách khách hàng</li>
-                </ol>
-            </div>
-        </div><!-- /.row -->
-        @if (session('key'))
-            <div class="alert alert-success" role="alert">
-                {{ session('key') }}
-            </div>
-        @endif
-
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="row">
-                    <div class="coL-lg-6 h2">
-                        Danh sách khách hàng
-                    </div>
-                    <div class="coL-lg-6 text-right h2">
-                        <a class="btn btn-info" href="{{ route('createcustomer') }}">Thêm khách hàng</a>
-                    </div>
+    <div id="wrapper">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                        <li class="active"><i class="fa fa-dashboard"></i> Danh sách khách hàng</li>
+                    </ol>
                 </div>
+            </div><!-- /.row -->
+            @if (session('key'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('key') }}
+                </div>
+            @endif
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="coL-lg-6 h2">
+                            Danh sách khách hàng
+                        </div>
+                        <div class="coL-lg-6 text-right h2">
+                            <a class="btn btn-info" href="{{ route('createcustomer') }}">Thêm khách hàng</a>
+                        </div>
+                    </div>
 
                 <form action="" method="post" enctype="multipart/form-data">
                     @csrf
@@ -62,27 +63,63 @@
                                 @foreach ($listCustomers as $index => $listCustomer)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
-                                        <td>{{ $listCustomer->full_name }}</td>
-                                        <td>{{ $listCustomer->username }}</td>
-                                        <td>{{ $listCustomer->email }}</td>
-                                        <td>{{ $listCustomer->phone }}</td>
-                                        <td>{{ $listCustomer->address }}</td>
-                                        <td>{{ $listCustomer->job }}</td>
-                                        <td>{{ $listCustomer->company }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($listCustomer->created_at)->format('d/m/Y') }}</td>
+                                        <td>
+                                            <div class="divide-column">
+                                                {{ $listCustomer->full_name }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="divide-column">
+                                                {{ $listCustomer->username }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="divide-column">
+                                                {{ $listCustomer->email }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="divide-column">
+                                                {{ $listCustomer->phone }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="divide-column-15">
+                                                {{ $listCustomer->address }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="divide-column">
+                                                {{ $listCustomer->job }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="divide-column">
+                                                {{ $listCustomer->company }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="divide-column">
+                                                {{ \Carbon\Carbon::parse($listCustomer->created_at)->format('d-m-Y') }}
+                                            </div>
+                                        </td>
                                         @if(Auth::user()->role == 1)
+                                            <div class="divide-column">
                                             <td>
                                                 <a class="btn btn-primary" href="{{ route('viewuserorder', ['id' => $listCustomer->id ]) }}">Xem</a>
                                                 <a class="btn btn-warning" href="{{ route('vieweditcustomer', ['id' => $listCustomer->id ]) }}">Sửa</a>
                                                 <a class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa khách hàng này không?')" href="{{ route('removecustomer', ['id' => $listCustomer->id ]) }}">Xóa</a>
                                             </td>
+                                            </div>
                                         @endif
                                     </tr>
                                 @endforeach
                             @endif
                             </tbody>
                         </table>
-                        {{ $listCustomers->links() }}
+                        <div class="d-flex justify-content-center">
+                            {{ $listCustomers->links() }}
+                        </div>
                     </div>
                 </form>
             </div>
