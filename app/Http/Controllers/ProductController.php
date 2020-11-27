@@ -34,9 +34,9 @@ class ProductController extends Controller
         $products = $this->product->getProductDetail($id);
         return view('admin.edit_product', compact('products'));
     }
-    public function editProduct($id, ProductRequest $request)
+    public function editProduct(ProductRequest $request, $id)
     {
-        $this->product->editProduct($id, $request);
+        $this->product->editProduct($request, $id);
         return redirect()->route('product');
     }
     public function deleteProduct($id)

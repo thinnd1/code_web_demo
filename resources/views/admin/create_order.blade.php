@@ -18,9 +18,12 @@
                             <label for="inputname" class="col-sm-2 col-form-label">Tên khách hàng</label>
                             <div class="col-sm-10">
                                 <select name="id_user" class="form-control">
-                                    <option value="0">--Khách hàng--</option>
-                                    @foreach($customers as $customer)
-                                        <option value="{{ $customer->id }}">{{ $customer->full_name }}</option>
+                                    @foreach($customers as $key => $customer)
+                                        @if (old("id_user") == $customer->username)
+                                            <option value="{{ $customer->username }}" selected >{{ $customer->full_name }}</option>
+                                        @else
+                                            <option value="{{ $customer->username }}" >{{ $customer->full_name }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                                 @error('id_user')
@@ -32,7 +35,7 @@
                         <div class="form-group row">
                             <label for="inputusername" class="col-sm-2 col-form-label">Sản phẩm*</label>
                             <div class="col-sm-10">
-                                <input type="text" name="id_product" class="form-control" value="" id="inputusername">
+                                <input type="text" name="id_product" class="form-control" value="{{ old("id_product") }}" id="inputusername">
                                 @error('id_product')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
@@ -42,7 +45,7 @@
                         <div class="form-group row">
                             <label for="inputusername" class="col-sm-2 col-form-label">Tổng tiền</label>
                             <div class="col-sm-10">
-                                <input type="number" name="total_price" class="form-control" value="" id="inputusername">
+                                <input type="number" name="total_price" class="form-control" value="{{ old("total_price") }}" id="inputusername">
                                 @error('total_price')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
@@ -52,7 +55,7 @@
                         <div class="form-group row">
                             <label for="inputemail" class="col-sm-2 col-form-label">Email*</label>
                             <div class="col-sm-10">
-                                <input type="text" name="email" class="form-control" value="" id="inputemail">
+                                <input type="text" name="email" class="form-control" value="{{ old("email") }}" id="inputemail">
                                 @error('email')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
@@ -62,7 +65,7 @@
                         <div class="form-group row">
                             <label for="inputphone" class="col-sm-2 col-form-label">Số điện thoại*</label>
                             <div class="col-sm-10">
-                                <input type="number" name="phone" class="form-control" value="" id="inputphone">
+                                <input type="text" name="phone" class="form-control" value="{{ old("phone") }}" id="inputphone">
                                 @error('phone')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
@@ -72,14 +75,17 @@
                         <div class="form-group row">
                             <label for="inputage" class="col-sm-2 col-form-label">Ngày đặt</label>
                             <div class="col-sm-10">
-                                <input type="date" name="orderdate" class="form-control" value="" id="inputage">
+                                <input type="date" name="orderdate" class="form-control" value="{{ old("orderdate") }}" id="inputage">
+                                @error('orderdate')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="inputaddress" class="col-sm-2 col-form-label">Địa chỉ*</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" name="address" id="inputaddress" aria-label="With textarea"></textarea>
+                                <textarea class="form-control" name="address" id="inputaddress" aria-label="With textarea">{{ old("address") }}</textarea>
                                 @error('address')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
@@ -97,7 +103,7 @@
                             </div>
                         </div>
 
-                        <a class="btn btn-primary" href="{{ URL::previous() }}">Go Back</a>
+                        <a class="btn btn-primary" href="{{ URL::previous() }}">Quay lại</a>
                         <button type="submit" class="btn btn-warning">Thêm mới</button>
                     </form>
                 </div>

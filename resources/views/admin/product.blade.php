@@ -20,7 +20,7 @@
                     <div class="row">
                         <h2 class="col-lg-6 float-left">Danh sách sản phẩm</h2>
                         <div class="col-lg-6 text-right h2">
-                            <a href="{{ route('viewcreateproduct') }}" class="btn btn-info">Tạo mới</a>
+                            <a href="{{ route('viewcreateproduct') }}" class="btn btn-info">Tạo sản phẩm mới</a>
                         </div>
                     </div>
 
@@ -34,12 +34,12 @@
                                 <th>Số lượng</th>
                                 <th>Giá</th>
                                 <th>Đánh giá</th>
-                                <th width="10%"></th>
+                                <th width="10%">Hành động</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                @if (!$products)
+                                @if (count($products) == 0)
                                     <tr class="borderless">
                                         <td colspan="7" class="text-center">Không có dữ liệu</td>
                                     </tr>

@@ -26,7 +26,8 @@ class CustomerController extends Controller
     public function listCustomer()
     {
         $listCustomers = $this->customer->listCustomer();
-        return view('admin.listcustomer', compact('listCustomers'));
+        $totalcustomer = $this->customer->getAll();
+        return view('admin.listcustomer', compact('listCustomers', 'totalcustomer'));
     }
     public function removeCustomer($id)
     {

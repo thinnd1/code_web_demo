@@ -17,7 +17,7 @@
 
         <div class="form-group">
             <label for="inputUsername">Tên Đăng Nhập*</label>
-            <input type="text" name="username" class="form-control username" id="inputUsername"
+            <input type="text" name="username" class="form-control username" value="{{ old("username") }}" id="inputUsername"
                    placeholder="Nhập tên đăng nhập">
             @error('username')
             <p class="text-danger">{{ $message }}</p>
@@ -35,7 +35,7 @@
 
         <div class="form-group">
             <label for="inputFullName">Họ Và Tên*</label>
-            <input type="text" name="full_name" class="form-control full-name" id="inputFullName"
+            <input type="text" name="full_name" class="form-control full-name" value="{{ old("full_name") }}" id="inputFullName"
                    placeholder="Nhập họ và tên">
             @error('full_name')
             <p class="text-danger">{{ $message }}</p>
@@ -44,7 +44,7 @@
 
         <div class="form-group">
             <label for="inputEmail">Email</label>
-            <input type="email" name="email" class="form-control email" id="inputEmail"
+            <input type="email" name="email" class="form-control email" value="{{ old("email") }}" id="inputEmail"
                    placeholder="Nhập email">
             @error('email')
             <p class="text-danger">{{ $message }}</p>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateCompanyRequest;
+use App\Http\Requests\CompanyRequest;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 
@@ -20,7 +20,7 @@ class ShopController extends Controller
         $shops = $this->shop->getShop();
         return view('admin.shop', compact('shops'));
     }
-    public function createShop(CreateCompanyRequest $request)
+    public function createShop(CompanyRequest $request)
     {
         $this->shop->createShop($request);
         return redirect()->route('shop');
@@ -34,7 +34,7 @@ class ShopController extends Controller
         $shopDetail = $this->shop->getShopDetail($id);
         return view('admin.edit_company', compact('shopDetail'));
     }
-    public function updateCompany(CreateCompanyRequest $request, $id)
+    public function updateCompany(CompanyRequest $request, $id)
     {
         $this->shop->updateCompany($request, $id);
         return redirect()->route('shop');

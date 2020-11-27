@@ -19,7 +19,8 @@ class Shop extends Eloquent
     ];
     public function getShop()
     {
-        return Shop::paginate(5);
+        return Shop::orderBy('created_at', 'desc')
+            ->paginate(10);
     }
     public function getShopDetail($id)
     {

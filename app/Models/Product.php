@@ -23,7 +23,8 @@ class Product extends Eloquent
 
     public function getProduct()
     {
-        return Product::paginate(5);
+        return Product::orderBy('created_at', 'desc')
+            ->paginate(10);
     }
     public function getProductDetail($id)
     {
@@ -43,7 +44,7 @@ class Product extends Eloquent
 
         Product::create($data);
     }
-    public function editProduct($id, $request)
+    public function editProduct($request, $id)
     {
         $data = [
             'name' => $request->name,

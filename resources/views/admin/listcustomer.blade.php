@@ -30,10 +30,11 @@
                 <form action="" method="post" enctype="multipart/form-data">
                     @csrf
                     <div>
-                        <span data-href="{{ route('exportcsvcustomer') }}" id="export" class="btn btn-success btn-sm" onclick="exportTasks(event.target);">Export</span>
+                        <span data-href="{{ route('exportcsvcustomer') }}" id="export" class="btn btn-success btn-sm" onclick="exportTasks(event.target);">Xuất file csv</span>
                     </div>
                     <p></p>
                     <div class="table-responsive">
+                        <h3>Tổng số khách hàng: {{ count($totalcustomer) }}</h3>
                         <table class="table table-bordered table-hover tablesorter">
                             <thead>
                             <tr>
@@ -47,12 +48,12 @@
                                 <th>Công ty</th>
                                 <th>Ngày đăng ký</th>
                                 @if(Auth::user()->role == 1)
-                                    <th></th>
+                                    <th width="10%">Hành động</th>
                                 @endif
                             </tr>
                             </thead>
                             <tbody>
-                            @if(!$listCustomers)
+                            @if(count($listCustomers) == 0)
                                 <tr class="borderless">
                                     <td colspan="10" class="text-center">Không có dữ liệu</td>
                                 </tr>
@@ -81,21 +82,6 @@
                             </tbody>
                         </table>
                         {{ $listCustomers->links() }}
-                        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-body">
-                                        Bạn có chắc chắn muốn xóa không ??
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <a href="{{ route('removecustomer', ['id' => $listCustomer->id ]) }}"
-                                           data-dismiss="modal" class="btn btn-primary">Xóa</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </form>
             </div>
@@ -106,6 +92,7 @@
 
 <script>
     function exportTasks(_this) {
+        confirm('Bạn muốn xuất thành file csv không?');
         let _url = $(_this).data('href');
         window.location.href = _url;
     }

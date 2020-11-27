@@ -27,11 +27,11 @@ class AccountRequest extends FormRequest
             //
             'username' => 'required|min:5|max:20',
             'full_name' => 'required|min:5|max:50',
-            'email' => 'required|email',
-            'phone' => 'required|numeric',
+            'email' => ['required','regex: /^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix'],
+            'phone' => ['required','regex: /^\+?\d{10,11}$/i'],
             'age' => 'required|numeric|integer|min:0',
             'gender' => 'required|in:1,2,3',
-            'adđress' => 'max:500',
+            'address' => 'max:500',
             'job' => 'max:50',
             'company' => 'max:80',
         ];
@@ -49,12 +49,11 @@ class AccountRequest extends FormRequest
             'full_name.max' => 'Nhập họ tên ít hơn 60 ký tự',
 
             'email.required' => 'Không được để trống email',
-            'email.exist' => 'Nhập đúng định dạng mail',
             'email.unique' => 'Email đã tồn tại',
-            'email.email' => 'Email sai định dạng',
+            'email.regex' => 'Email sai định dạng',
 
             'phone.required' => 'Không được để trống số điện thoại',
-            'phone.numeric' => 'Số điện thoại là số',
+            'phone.regex' => 'Số điện thoại nhập không đúng',
 
             'age.required' => 'Không được để trống tuổi',
             'age.numeric' => 'Tuổi nhập số',
@@ -62,7 +61,7 @@ class AccountRequest extends FormRequest
             'age.min' => 'Tuổi nhập số dương',
 
             'gender.in' => 'Không chọn đúng giới tính',
-            'address.min' => 'Nhập địa chỉ nhiều hơn 10 ký tự',
+//            'address.min' => 'Nhập địa chỉ nhiều hơn 10 ký tự',
             'address.max' => 'Nhập địa chỉ ít hơn 500 ký tự',
             'job.min' => 'Nhập địa chỉ nhiều hơn 2 ký tự',
             'job.max' => 'Nhập địa chỉ ít hơn 80 ký tự',

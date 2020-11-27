@@ -26,9 +26,9 @@ class UserRequest extends FormRequest
         return [
             //
             'username' => 'required|unique:users|min:5|max:20',
-            'full_name' => 'required',
-            'password' => 'required',
-            'email' => 'required|email|unique:users'
+            'full_name' => 'required|min:5|max:30',
+            'password' => ['required', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/'],
+            'email' => ['required', 'exist' , 'regex: /^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix'],
         ];
     }
     public function messages()
@@ -39,10 +39,11 @@ class UserRequest extends FormRequest
             'username.min' => 'Nhập ký tự nhiều hơn 5',
             'username.max' => 'Nhập ký tự ít hơn 20',
             'password.required' => 'Không được để trống mật khẩu',
+            'password.regex' => 'Không mật khẩu ít nhất 8 ký tự có chữ in hoa, in thường, số',
             'full_name.required' => 'Không được để trống họ tên',
             'email.required' => 'Không được để trống email',
-            'email.exist' => 'Nhập đúng định dạng mail',
-            'email.unique' => 'Email đã tồn tại',
+            'email.exist' => 'Email đã tồn tại',
+            'email.regex' => 'Email sai định dạng',
             ];
     }
 }

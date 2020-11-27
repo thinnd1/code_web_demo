@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateCompanyRequest extends FormRequest
+class CompanyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,26 +24,27 @@ class CreateCompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_shop' => 'required',
-            'address' => 'required',
-            'phone' => 'required',
-            'email' => 'required|email|unique:shops',
-            'quantity_product' => 'required',
+            'name_shop' => 'required|min:5|max:50',
+            'address' => 'required|max:500',
+            'phone' => ['required','regex: /^\+?\d{10,11}$/i'],
+            'email' => ['required','regex: /^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix'],
+            'quantity_product' => 'required|numeric',
         ];
     }
     public function messages()
     {
         return [
             'name_shop.required' => 'Không được để trống tên công ty',
-            'name_shop.unique' => 'Tên công ty đã tồn tại',
             'name_shop.min' => 'Nhập ký tự nhiều hơn 5',
-            'name_shop.max' => 'Nhập ký tự ít hơn 20',
+            'name_shop.max' => 'Nhập ký tự ít hơn 50',
             'address.required' => 'Không được để trống địa chỉ',
-            'quantity_product.required' => 'Không được để trống số lượng',
+            'address.max' => 'Nhập ký tự ít hơn 200',
+            'quantity_product.required' => 'Không được để trống số hàng đã mua',
+            'quantity_product.numeric' => 'Nhập số hàng đã mua',
             'phone.required' => 'Không được để trống số điện thoại',
+            'phone.regex' => 'Nhập không đúng số điện thoại',
             'email.required' => 'Không được để trống email',
-            'email.exist' => 'Nhập đúng định dạng mail',
-            'email.unique' => 'Email đã tồn tại',
+            'email.regex' => 'Nhập đúng định dạng mail',
         ];
     }
 
