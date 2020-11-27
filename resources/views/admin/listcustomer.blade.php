@@ -81,7 +81,7 @@
                             @endif
                             </tbody>
                         </table>
-                        {{ $listCustomers->links('pagination::default') }}
+                        {{ $listCustomers->links() }}
                     </div>
                 </form>
             </div>

@@ -34,7 +34,7 @@
                                 <th>Số lượng</th>
                                 <th>Giá</th>
                                 <th>Đánh giá</th>
-                                <th width="10%"></th>
+                                <th width="10%">Hành động</th>
                             </tr>
                             </thead>
                             <tbody>

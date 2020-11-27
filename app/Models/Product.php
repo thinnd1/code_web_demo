@@ -23,7 +23,8 @@ class Product extends Eloquent
 
     public function getProduct()
     {
-        return Product::paginate(10);
+        return Product::orderBy('created_at', 'desc')
+            ->paginate(10);
     }
     public function getProductDetail($id)
     {

@@ -28,7 +28,8 @@ class Order extends Eloquent
     }
     public function getOrder()
     {
-        return Order::paginate(10);
+        return Order::orderBy('created_at', 'desc')
+            ->paginate(10);
     }
     public function getOrderDetail($id)
     {
