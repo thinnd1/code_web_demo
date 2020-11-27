@@ -27,7 +27,7 @@ class OrderRequest extends FormRequest
             //
             'id_user' => 'exists:customers,username',
             'id_product' => 'required|min:5|max:60',
-            'total_price' => 'required|numeric|min:0',
+            'total_price' => 'required|numeric|min:1',
             'email' => ['required','regex: /^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix'],
             'phone' => ['required','regex: /^\+?\d{10,11}$/i'],
             'orderdate' => 'required|date|date_format:Y-m-d',

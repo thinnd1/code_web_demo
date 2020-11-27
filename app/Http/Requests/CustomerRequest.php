@@ -29,7 +29,7 @@ class CustomerRequest extends FormRequest
             'full_name' => 'required|min:5|max:60',
             'phone' => ['required','regex: /^\+?\d{10,11}$/i'],
             'email' => ['required','regex: /^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix'],
-            'age' => 'required|numeric|integer|min:0',
+            'age' => 'required|numeric|integer|min:1',
             'gender' => 'required|in:1,2,3',
             'address' => 'required|max:500',
             'job' => 'max:80',

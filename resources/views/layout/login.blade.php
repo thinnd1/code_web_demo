@@ -22,7 +22,7 @@
 
         <div class="form-group">
             <label for="inputUsername">Tên Đăng Nhập</label>
-            <input type="text" name="username" class="form-control username" value="{{ old('username') }}" id="inputUsername" aria-describedby="emailHelp" placeholder="Nhập tên">
+            <input type="text" name="username" class="form-control username" value="{{ old("username") }}" id="inputUsername" aria-describedby="emailHelp" placeholder="Nhập tên">
             @error('username')
             <p class="text-danger">{{ $message }}</p>
             @enderror

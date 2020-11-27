@@ -42,7 +42,7 @@ class AuthController extends Controller
         $request->session()->put('url.intended',url()->previous());
         return view('layout.login');
     }
-    public function login(Request $request)
+    public function login(UserRequest $request)
     {
         $checkExistUser = User::where('username', $request->username )->first();
         if (!$checkExistUser) {

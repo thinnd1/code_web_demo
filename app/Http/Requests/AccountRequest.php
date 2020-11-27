@@ -29,11 +29,11 @@ class AccountRequest extends FormRequest
             'full_name' => 'required|min:5|max:50',
             'email' => ['required','regex: /^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix'],
             'phone' => ['required','regex: /^\+?\d{10,11}$/i'],
-            'age' => 'required|numeric|integer|min:0',
+            'age' => 'required|numeric|integer|min:1',
             'gender' => 'required|in:1,2,3',
             'address' => 'max:500',
             'job' => 'max:50',
-            'company' => 'max:80',
+            'company' => 'max:100',
         ];
     }
     public function messages()
@@ -65,7 +65,7 @@ class AccountRequest extends FormRequest
             'address.max' => 'Nhập địa chỉ ít hơn 500 ký tự',
             'job.min' => 'Nhập địa chỉ nhiều hơn 2 ký tự',
             'job.max' => 'Nhập địa chỉ ít hơn 80 ký tự',
-            'company.max' => 'Nhập địa chỉ ít hơn 80 ký tự',
+            'company.max' => 'Nhập địa chỉ ít hơn 100 ký tự',
         ];
     }
 }
