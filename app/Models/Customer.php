@@ -29,10 +29,11 @@ class Customer extends Eloquent
     }
     public function getUserorder($id)
     {
-        return Customer::with('order')
+        $userOrder = Customer::with('order')
             ->orderBy('created_at', 'desc')
             ->where('_id', $id)
             ->get();
+        return Order::where('id_user', $userOrder[0]->username)->paginate(10);
 
     }
     public function createCustomer($request)

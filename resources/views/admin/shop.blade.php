@@ -1,4 +1,5 @@
 @extends('layout.index')
+@section('title', 'Trang danh sách công ty')
 @section('content')
 
 <div id="wrapper">
