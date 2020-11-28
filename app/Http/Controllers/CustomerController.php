@@ -56,7 +56,7 @@ class CustomerController extends Controller
     }
     public function exportCsvCustomer(Request $request, Customer $customer)
     {
-        $fileName = 'tasks.csv';
+        $fileName = 'customer.csv';
         $tasks = Customer::all();
 
         $headers = array(

@@ -52,6 +52,7 @@ Route::middleware(['checklogin::class'])->prefix('admin')->group(function(){
     Route::get('/editorder/{id}', 'App\Http\Controllers\OrderController@editOrder')->name('editorder');
     Route::post('/updateorder/{id}', 'App\Http\Controllers\OrderController@updateOrder')->name('updateorder');
     Route::get('/removeorder/{id}', 'App\Http\Controllers\OrderController@deleteOrder')->name('removeorder');
+    Route::get('/exportcsvorder', 'App\Http\Controllers\OrderController@exportCsvOrder')->name('exportcsvorder');
 
 // shop
     Route::get('/shop', 'App\Http\Controllers\ShopController@getShop')->name('shop');
