@@ -41,13 +41,18 @@ class CustomerController extends Controller
     }
     public function editCustomer($id, CustomerRequest $request)
     {
-        $this->customer->editCustomer($id, $request);
+        try {
+            $this->customer->editCustomer($id, $request);
+        } catch (\Exception $ex){
+            return redirect()->back()->with('error', 'ID khong ton tai')->withInput();
+        }
         return redirect()->route('listcustomer');
     }
     public function viewUserOrder($id)
     {
-        $listCustomers = $this->customer->getUserorder($id);
-        return view('admin.user_order_detail', compact('listCustomers'));
+        $listCustomers = $this->customer->getUserOrder($id);
+        $customerDeatail = $this->customer->getCustomerDetail($id);
+        return view('admin.user_order_detail', compact('listCustomers', 'customerDeatail'));
     }
     public function exportCsvCustomer(Request $request, Customer $customer)
     {

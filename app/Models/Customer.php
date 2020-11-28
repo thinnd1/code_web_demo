@@ -27,7 +27,11 @@ class Customer extends Eloquent
             ->orderBy('created_at', 'desc')
             ->paginate(10);
     }
-    public function getUserorder($id)
+    public function getCustomerDetail($id)
+    {
+        return Customer::where('_id', $id)->first();
+    }
+    public function getUserOrder($id)
     {
         $userOrder = Customer::with('order')
             ->orderBy('created_at', 'desc')

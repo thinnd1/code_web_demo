@@ -34,7 +34,7 @@
         </div>
 
         <div class="form-group">
-            <label for="inputFullName">Họ Và Tên*</label>
+            <label for="inputFullName">Họ Và Tên</label>
             <input type="text" name="full_name" class="form-control full-name" value="{{ old("full_name") }}" id="inputFullName"
                    placeholder="Nhập họ và tên">
             @error('full_name')

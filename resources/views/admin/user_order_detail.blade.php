@@ -13,6 +13,62 @@
             </div><!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+                                <label for="inputUser" class="col-sm-2 col-form-label">Tên Đăng Nhập</label>
+                                <div class="col-sm-10">
+                                    {{ $customerDeatail->username }}
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputUser" class="col-sm-2 col-form-label">Họ và tên</label>
+                                <div class="col-sm-10">
+                                    {{ $customerDeatail->full_name }}
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputUser" class="col-sm-2 col-form-label">Ngày sinh</label>
+                                <div class="col-sm-10">
+                                    {{ \Carbon\Carbon::parse($customerDeatail->date_of_birth)->format('d/m/Y') }}
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputUser" class="col-sm-2 col-form-label">Giới tính</label>
+                                <div class="col-sm-10">
+                                    @if($customerDeatail->gender == 1)
+                                        Nam
+                                    @else
+                                        Nữ
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputUser" class="col-sm-2 col-form-label">Email</label>
+                                <div class="col-sm-10">
+                                    {{ $customerDeatail->email }}
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputUser" class="col-sm-2 col-form-label">Số điện thoại</label>
+                                <div class="col-sm-10">
+                                    {{ $customerDeatail->phone }}
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputUser" class="col-sm-2 col-form-label">Địa chỉ</label>
+                                <div class="col-sm-10">
+                                    {{ $customerDeatail->address }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover tablesorter">
                             <thead>
@@ -46,7 +102,14 @@
                                         <td>{{ $listCustomer->created_at }}</td>
                                         <td>{{ $listCustomer->email }}</td>
                                         <td>{{ $listCustomer->phone }}</td>
-                                        <td>{{ $listCustomer->payment }}</td>
+                                        <td>
+                                            @if($listCustomer->payment == 1)
+                                                Tiền mặt
+                                            @elseif($listCustomer->payment == 2)
+                                                Zalo Pay
+                                            @else
+                                                Credit Card
+                                            @endif</td>
                                         <td>
                                             @if ($listCustomer->status == 1)
                                                 Mới
