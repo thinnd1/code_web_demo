@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Exception;
+
 
 class CustomerController extends Controller
 {
@@ -20,8 +22,12 @@ class CustomerController extends Controller
     }
     public function createCustomer(CustomerRequest $request)
     {
-        $this->customer->createCustomer($request);
-        return redirect()->route('listcustomer');
+        try {
+            $this->customer->createCustomer($request);
+            return redirect()->route('listcustomer');
+        } catch (\Exception $ex) {
+            return redirect()->back()->with('error', 'Lỗi hệ thống')->withInput();
+        }
     }
     public function listCustomer()
     {
@@ -31,22 +37,30 @@ class CustomerController extends Controller
     }
     public function removeCustomer($id)
     {
-        $this->customer->deleteUser($id);
-        return redirect()->route('listcustomer');
+        try {
+            $this->customer->deleteUser($id);
+            return redirect()->route('listcustomer');
+        } catch (\Exception $ex) {
+            return redirect()->back()->with('error', 'Lỗi hệ thống')->withInput();
+        }
     }
     public function viewEditCustomer($id)
     {
-        $user = $this->customer->detailCustomer($id);
-        return view('admin.edit_customer', compact('user'));
+        try {
+            $user = $this->customer->detailCustomer($id);
+            return view('admin.edit_customer', compact('user'));
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', 'Lỗi hệ thống')->withInput();
+        }
     }
     public function editCustomer($id, CustomerRequest $request)
     {
         try {
             $this->customer->editCustomer($id, $request);
+            return redirect()->route('listcustomer');
         } catch (\Exception $ex){
-            return redirect()->back()->with('error', 'ID khong ton tai')->withInput();
+            return redirect()->back()->with('error', 'ID không tồn tại')->withInput();
         }
-        return redirect()->route('listcustomer');
     }
     public function viewUserOrder($id)
     {

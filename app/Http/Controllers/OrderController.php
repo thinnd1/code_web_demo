@@ -30,8 +30,12 @@ class OrderController extends Controller
     }
     public function createOrder(OrderRequest $request)
     {
-        $this->order->createOrder($request);
-        return redirect()->route('order');
+        try {
+            $this->order->createOrder($request);
+            return redirect()->route('order')->with('success', 'Tạo đơn hàng thành công');
+        } catch  (\Exception $ex) {
+            return redirect()->back()->withInput();
+        }
     }
     public function editOrder($id)
     {

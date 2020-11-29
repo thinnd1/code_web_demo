@@ -51,7 +51,6 @@ class AuthController extends Controller
             return redirect($request->session()->get('url.intended'));
         } else {
             return redirect()->back()->with('error', 'Sai mật khẩu')->withInput();
-//            return redirect()->route('login')->with('error', 'Sai mật khẩu');
         }
     }
     public function logout()

@@ -49,7 +49,7 @@ class User extends Eloquent implements Authenticatable
         $addUser->password = Hash::make($request['password']);
         $addUser->full_name = $request['full_name'];
         $addUser->email = $request['email'];
-        $addUser->role = 1;
+        $addUser->role = 2;
 
         $addUser->save();
     }
@@ -81,4 +81,21 @@ class User extends Eloquent implements Authenticatable
     {
 
     }
+    public function getUser()
+    {
+        return User::orderBy('created_at', 'desc')
+            ->paginate(10);
+    }
+    public function userDetail($id)
+    {
+        return User::where('_id', $id)->first();
+    }
+    public function removeUser($id)
+    {
+        $removeUser = User::findOrFail($id);
+        $removeUser->delete();
+    }
+    public function getAll()
+    {}
+
 }
