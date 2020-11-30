@@ -43,7 +43,7 @@ class UserRequest extends FormRequest
             'full_name.required' => 'Không được để trống họ tên',
             'email.required' => 'Không được để trống email',
             'email.exist' => 'Email đã tồn tại',
-            'email.regex' => 'Email sai định dạng',
+            'email.regex' => 'Email không để trống hoặc sai định dạng',
             ];
     }
 }

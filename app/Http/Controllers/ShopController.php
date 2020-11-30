@@ -15,15 +15,24 @@ class ShopController extends Controller
         $this->shop = $shop;
     }
 
-    public function getShop()
+    public function getShop(Request $request)
     {
-        $shops = $this->shop->getShop();
-        return view('admin.shop', compact('shops'));
+        try {
+            $search = trim($request->input('search_company'));
+            $shops = $this->shop->getShop($search);
+            return view('admin.shop', compact('shops'));
+        } catch (\Exception $ex){
+            return redirect()->back()->with('error', 'ID không tồn tại')->withInput();
+        }
     }
     public function createShop(CompanyRequest $request)
     {
-        $this->shop->createShop($request);
-        return redirect()->route('shop');
+        try {
+            $this->shop->createShop($request);
+            return redirect()->route('shop');
+        } catch (\Exception $ex){
+            return redirect()->back()->with('error', 'ID không tồn tại')->withInput();
+        }
     }
     public function viewCreateShop()
     {
@@ -31,18 +40,33 @@ class ShopController extends Controller
     }
     public function editCompany($id)
     {
-        $shopDetail = $this->shop->getShopDetail($id);
-        return view('admin.edit_company', compact('shopDetail'));
+        try {
+            $shopDetail = $this->shop->getShopDetail($id);
+            if (is_null($shopDetail)){
+                return redirect()->route('404-notfound');
+            }
+            return view('admin.edit_company', compact('shopDetail'));
+        } catch (\Exception $ex){
+            return redirect()->back()->with('error', 'ID không tồn tại')->withInput();
+        }
     }
     public function updateCompany(CompanyRequest $request, $id)
     {
-        $this->shop->updateCompany($request, $id);
-        return redirect()->route('shop');
+        try {
+            $this->shop->updateCompany($request, $id);
+            return redirect()->route('shop');
+        } catch (\Exception $ex){
+            return redirect()->back()->with('error', 'ID không tồn tại')->withInput();
+        }
     }
     public function deleteShop($id)
     {
-        $this->shop->deleteShop($id);
-        return redirect()->route('shop');
+        try {
+            $this->shop->deleteShop($id);
+            return redirect()->route('shop');
+        } catch (\Exception $ex){
+            return redirect()->back()->with('error', 'ID không tồn tại')->withInput();
+        }
     }
 
 }

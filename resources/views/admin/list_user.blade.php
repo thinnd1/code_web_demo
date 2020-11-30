@@ -1,5 +1,5 @@
 @extends('layout.index')
-@section('title', 'Trang danh sách khách hàng')
+@section('title', 'Trang danh sách tài khoản')
 <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 @section('content')
 
@@ -8,29 +8,21 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ol class="breadcrumb">
-                        <li class="active"><i class="fa fa-dashboard"></i> Danh sách khách hàng</li>
+                        <li class="active"><i class="fa fa-dashboard"></i> Danh sách tài khoản</li>
                     </ol>
                 </div>
             </div><!-- /.row -->
-            @if (session('key'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('key') }}
-                </div>
-            @endif
 
             <div class="row">
                 <div class="col-lg-12">
                     <div class="row">
                         <div class="coL-lg-6 h2">
-                            Danh sách khách hàng
+                            Danh sách tài khoản
                         </div>
-                        <div class="coL-lg-6 text-right h2">
-                            <a class="btn btn-info" href="{{ route('createcustomer') }}">Thêm khách hàng</a>
+                        <div class="col-lg-6 text-right h2">
+                            <a class="btn btn-info" href="">Thêm người dùng</a>
                         </div>
                     </div>
-
-                <form action="" method="" enctype="multipart/form-data">
-                    @csrf
 
                     <div class="table-responsive">
                         <div class="row">
@@ -44,16 +36,14 @@
                             </form>
                         </div>
 
-                        <div>
-                            <span data-href="{{ route('exportcsvcustomer') }}" id="export" class="btn btn-success btn-sm" onclick="exportTasks(event.target);">Xuất file csv</span>
-                        </div>
-                        <h3>Tổng số khách hàng: {{ count($totalcustomer) }}</h3>
+                        <h3>Tổng số tài khoản: {{ count($userTotal) }} </h3>
                         <table class="table table-bordered table-hover tablesorter">
                             <thead>
                             <tr>
                                 <th>Stt</th>
                                 <th>Họ và tên</th>
                                 <th>Tên đăng nhập</th>
+                                <th>Quyền</th>
                                 <th>Email</th>
                                 <th>Số điện thoại</th>
                                 <th>Địa chỉ</th>
@@ -66,61 +56,72 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @if(count($listCustomers) == 0)
+                            @if(count($users) == 0)
                                 <tr class="borderless">
-                                    <td colspan="10" class="text-center">Không có dữ liệu</td>
+                                    <td colspan="11" class="text-center">Không có dữ liệu</td>
                                 </tr>
                             @else
-                                @foreach ($listCustomers as $index => $listCustomer)
+                                @foreach ($users as $index => $user)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>
                                             <div class="divide-column">
-                                                {{ $listCustomer->full_name }}
+                                                {{ $user->full_name }}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="divide-column">
-                                                {{ $listCustomer->username }}
+                                                {{ $user->username }}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="divide-column">
-                                                {{ $listCustomer->email }}
+                                                @if($user->role == 1)
+                                                    Admin
+                                                @else
+                                                    Người dùng
+                                                @endif
                                             </div>
                                         </td>
                                         <td>
                                             <div class="divide-column">
-                                                {{ $listCustomer->phone }}
+                                                {{ $user->email }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="divide-column">
+                                                {{ $user->phone }}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="divide-column-15">
-                                                {{ $listCustomer->address }}
+                                                {{ $user->address }}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="divide-column">
-                                                {{ $listCustomer->job }}
+                                                {{ $user->job }}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="divide-column">
-                                                {{ $listCustomer->company }}
+                                                {{ $user->company }}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="divide-column">
-                                                {{ \Carbon\Carbon::parse($listCustomer->created_at)->format('d-m-Y') }}
+                                                {{ \Carbon\Carbon::parse($user->created_at)->format('d-m-Y') }}
                                             </div>
                                         </td>
                                         @if(Auth::user()->role == 1)
                                             <div class="divide-column">
-                                            <td>
-                                                <a class="btn btn-primary" href="{{ route('viewuserorder', ['id' => $listCustomer->id ]) }}">Xem</a>
-                                                <a class="btn btn-warning" href="{{ route('vieweditcustomer', ['id' => $listCustomer->id ]) }}">Sửa</a>
-                                                <a class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa khách hàng này không?')" href="{{ route('removecustomer', ['id' => $listCustomer->id ]) }}">Xóa</a>
-                                            </td>
+                                                <td>
+                                                    <a class="btn btn-warning"
+                                                       href="{{ route('edituser', ['id' => $user->id ]) }}">Sửa</a>
+                                                    <a class="btn btn-danger"
+                                                       onclick="return confirm('Bạn chắc chắn muốn xóa khách hàng này không?')"
+                                                       href="{{ route('deleteuser', ['id' => $user->id ]) }}">Xóa</a>
+                                                </td>
                                             </div>
                                         @endif
                                     </tr>
@@ -129,20 +130,15 @@
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-center">
-                            {{ $listCustomers->links() }}
+                            {{ $users->links() }}
                         </div>
                     </div>
-                </form>
-            </div>
-        </div><!-- /.row -->
+                </div>
+            </div><!-- /.row -->
+        </div>
     </div>
-</div>
 @endsection
 
 <script>
-    function exportTasks(_this) {
-        confirm('Bạn muốn xuất thành file csv không?');
-        let _url = $(_this).data('href');
-        window.location.href = _url;
-    }
+
 </script>

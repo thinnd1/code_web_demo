@@ -9,11 +9,8 @@
     <title>404 not found</title>
 </head>
 <body>
-<div id="main">
-    <div class="fof">
-        <h1>Error 404</h1>
-    </div>
+<div class="container">
+    <h1 class="text-uppercase">Error 404 </h1>
 </div>
-
 </body>
 </html>

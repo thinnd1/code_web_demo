@@ -17,10 +17,18 @@ class Shop extends Eloquent
     protected $fillable = [
         'name_shop', 'address', 'email', 'phone', 'quantity_product'
     ];
-    public function getShop()
+    public function getShop($search = null)
     {
-        return Shop::orderBy('created_at', 'desc')
+        $listCompany =  Shop::orderBy('created_at', 'desc')
             ->paginate(10);
+        if ($search) {
+            $listCompany = Shop::where('name_shop', 'like', '%' . $search . '%')
+                ->orWhere('address', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%')
+                ->paginate(10);
+            $listCompany->appends(['search' => $search]);
+        }
+        return $listCompany;
     }
     public function getShopDetail($id)
     {

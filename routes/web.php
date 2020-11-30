@@ -22,6 +22,9 @@ Route::post('/register', 'App\Http\Controllers\AuthController@signup')->name('re
 Route::get('/login','App\Http\Controllers\AuthController@viewLogin')->name('viewlogin');
 Route::post('/login','App\Http\Controllers\AuthController@login')->name('login');
 Route::get('/logout','App\Http\Controllers\AuthController@logout')->name('logout');
+Route::get('404', function (){
+    return view('admin.404');
+})->name('404-notfound');
 
 Route::middleware(['checklogin::class'])->prefix('admin')->group(function(){
     Route::get('/home', 'App\Http\Controllers\AuthController@getInformation')->name('home');
@@ -36,6 +39,13 @@ Route::middleware(['checklogin::class'])->prefix('admin')->group(function(){
     Route::get('/viewuserorder/{id}', 'App\Http\Controllers\CustomerController@viewUserOrder')->name('viewuserorder');
     Route::get('/exportcsvcustomer', 'App\Http\Controllers\CustomerController@exportCsvCustomer')->name('exportcsvcustomer');
     Route::get('/importcsvcustomer', 'App\Http\Controllers\CustomerController@importCsvCustomer')->name('importcsvcustomer');
+
+    // users
+    Route::get('/getlistuser', 'App\Http\Controllers\UserController@getListUser')->name('getlistuser');
+    Route::get('/edituser/{id?}', 'App\Http\Controllers\UserController@editUser')->name('edituser');
+    Route::post('/edituser/{id?}', 'App\Http\Controllers\UserController@updateUser')->name('updateuser');
+    Route::get('/deleteuser/{id?}', 'App\Http\Controllers\UserController@removeUser')->name('deleteuser');
+
 //product
     Route::get('/product', 'App\Http\Controllers\ProductController@getProduct')->name('product');
 //Route::get('/createproduct', 'App\Http\Controllers\ProductController@createProduct')->name('createproduct');
@@ -52,6 +62,7 @@ Route::middleware(['checklogin::class'])->prefix('admin')->group(function(){
     Route::get('/editorder/{id}', 'App\Http\Controllers\OrderController@editOrder')->name('editorder');
     Route::post('/updateorder/{id}', 'App\Http\Controllers\OrderController@updateOrder')->name('updateorder');
     Route::get('/removeorder/{id}', 'App\Http\Controllers\OrderController@deleteOrder')->name('removeorder');
+    Route::get('/exportcsvorder', 'App\Http\Controllers\OrderController@exportCsvOrder')->name('exportcsvorder');
 
 // shop
     Route::get('/shop', 'App\Http\Controllers\ShopController@getShop')->name('shop');

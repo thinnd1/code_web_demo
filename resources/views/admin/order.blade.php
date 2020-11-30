@@ -24,7 +24,24 @@
                         <a href="{{ route('viewcreateorder') }}" class="btn btn-info">Tạo đơn hàng mới</a>
                     </div>
                 </div>
-                <div class="table-responsive">
+                <form action="">
+                    @csrf
+                    <div class="row">
+                        <form action="">
+                            <div class="col-lg-6">
+                                <input type="text" name="search_order" class="form-control" placeholder="Tìm kiếm ..." value="" id="inputname">
+                            </div>
+                            <div class="col-lg-6">
+                                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div>
+                        <span data-href="{{ route('exportcsvorder') }}" id="exportorder" class="btn btn-success btn-sm" onclick="exportTasks(event.target);">Xuất file csv</span>
+                    </div>
+                    <p></p>
+
+                    <div class="table-responsive">
                     <table class="table table-bordered table-hover tablesorter">
                         <thead>
                         <tr>
@@ -90,8 +107,16 @@
                         {{ $orders->links() }}
                     </div>
                 </div>
+                </form>
             </div>
         </div><!-- /.row -->
     </div>
 </div>
 @endsection
+<script>
+    function exportTasks(_this) {
+        confirm('Bạn muốn xuất thành file csv không?');
+        let _url = $(_this).data('href');
+        window.location.href = _url;
+    }
+</script>

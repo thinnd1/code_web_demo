@@ -15,15 +15,24 @@ class ProductController extends Controller
         $this->product = $product;
     }
 
-    public function getProduct()
+    public function getProduct(Request $request)
     {
-        $products = $this->product->getProduct();
-        return view('admin.product', compact('products'));
+        try {
+            $search = trim($request->input('search_user'));
+            $products = $this->product->getProduct($search);
+            return view('admin.product', compact('products'));
+        } catch  (\Exception $ex) {
+            return redirect()->back()->with('error', 'ID không tồn tại')->withInput();
+        }
     }
     public function createProduct(ProductRequest $request)
     {
-        $this->product->createProduct($request);
-        return redirect()->route('product');
+        try {
+            $this->product->createProduct($request);
+            return redirect()->route('product');
+        } catch  (\Exception $ex) {
+            return redirect()->back()->with('error', 'ID không tồn tại')->withInput();
+        }
     }
     public function viewCreateProduct()
     {
@@ -31,17 +40,32 @@ class ProductController extends Controller
     }
     public function viewEditproduct($id)
     {
-        $products = $this->product->getProductDetail($id);
-        return view('admin.edit_product', compact('products'));
+        try {
+            $products = $this->product->getProductDetail($id);
+            if (is_null($products)){
+                return redirect()->route('404-notfound');
+            }
+            return view('admin.edit_product', compact('products'));
+        } catch  (\Exception $ex) {
+            return redirect()->back()->with('error', 'ID không tồn tại')->withInput();
+        }
     }
     public function editProduct(ProductRequest $request, $id)
     {
-        $this->product->editProduct($request, $id);
-        return redirect()->route('product');
+        try {
+            $this->product->editProduct($request, $id);
+            return redirect()->route('product');
+        } catch  (\Exception $ex) {
+            return redirect()->back()->with('error', 'ID không tồn tại')->withInput();
+        }
     }
     public function deleteProduct($id)
     {
-        $this->product->deleteProduct($id);
-        return redirect()->route('product');
+        try {
+            $this->product->deleteProduct($id);
+            return redirect()->route('product');
+        } catch  (\Exception $ex) {
+            return redirect()->back()->with('error', 'ID không tồn tại')->withInput();
+        }
     }
 }
