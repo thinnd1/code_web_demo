@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\SignupRequest;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\AccountRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -26,7 +27,7 @@ class AuthController extends Controller
         return view('layout.signup');
     }
 
-    public function signup(UserRequest $request)
+    public function signup(SignupRequest $request)
     {
         $user = $request->all();
         $this->user->signup($user);
@@ -42,7 +43,7 @@ class AuthController extends Controller
         $request->session()->put('url.intended',url()->previous());
         return view('layout.login');
     }
-    public function login(UserRequest $request)
+    public function login(LoginRequest $request)
     {
         $checkExistUser = User::where('username', $request->username )->first();
         if (!$checkExistUser) {
