@@ -31,10 +31,14 @@ class CustomerController extends Controller
     }
     public function listCustomer(Request $request)
     {
-        $search = trim($request->input('search_user'));
-        $listCustomers = $this->customer->listCustomer($search);
-        $totalcustomer = $this->customer->getAll();
-        return view('admin.listcustomer', compact('listCustomers', 'totalcustomer'));
+        try {
+            $search = trim($request->input('search_user'));
+            $listCustomers = $this->customer->listCustomer($search);
+            $totalcustomer = $this->customer->getAll();
+            return view('admin.listcustomer', compact('listCustomers', 'totalcustomer'));
+        } catch  (\Exception $ex) {
+            return redirect()->back()->withInput();
+        }
     }
     public function removeCustomer($id)
     {
@@ -65,9 +69,13 @@ class CustomerController extends Controller
     }
     public function viewUserOrder($id)
     {
-        $listCustomers = $this->customer->getUserOrder($id);
-        $customerDeatail = $this->customer->getCustomerDetail($id);
-        return view('admin.user_order_detail', compact('listCustomers', 'customerDeatail'));
+        try {
+            $listCustomers = $this->customer->getUserOrder($id);
+            $customerDeatail = $this->customer->getCustomerDetail($id);
+            return view('admin.user_order_detail', compact('listCustomers', 'customerDeatail'));
+        } catch  (\Exception $ex) {
+            return redirect()->back()->withInput();
+        }
     }
     public function exportCsvCustomer(Request $request, Customer $customer)
     {

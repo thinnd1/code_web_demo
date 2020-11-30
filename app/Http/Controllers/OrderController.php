@@ -20,14 +20,22 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
-        $search = trim($request->input('search_order'));
-        $orders = $this->order->getOrder($search);
-        return view('admin.order', compact('orders'));
+        try {
+            $search = trim($request->input('search_order'));
+            $orders = $this->order->getOrder($search);
+            return view('admin.order', compact('orders'));
+        } catch  (\Exception $ex) {
+            return redirect()->back()->withInput();
+        }
     }
     public function viewCreateOrder()
     {
-        $customers = $this->customer->getAll();
-        return view('admin.create_order', compact('customers'));
+        try {
+            $customers = $this->customer->getAll();
+            return view('admin.create_order', compact('customers'));
+        } catch  (\Exception $ex) {
+            return redirect()->back()->withInput();
+        }
     }
     public function createOrder(OrderRequest $request)
     {
@@ -40,20 +48,32 @@ class OrderController extends Controller
     }
     public function editOrder($id)
     {
-        $orderdetail = $this->order->getOrderDetail($id);
-        $customers = $this->customer->getAll();
+        try {
+            $orderdetail = $this->order->getOrderDetail($id);
+            $customers = $this->customer->getAll();
 
-        return view('admin.edit_order', compact('orderdetail', 'customers'));
+            return view('admin.edit_order', compact('orderdetail', 'customers'));
+        } catch  (\Exception $ex) {
+            return redirect()->back()->withInput();
+        }
     }
     public function updateOrder(OrderRequest $request, $id)
     {
-        $this->order->updateOrder($request, $id);
-        return redirect()->route('order');
+        try {
+            $this->order->updateOrder($request, $id);
+            return redirect()->route('order');
+        } catch  (\Exception $ex) {
+            return redirect()->back()->withInput();
+        }
     }
     public function deleteOrder($id)
     {
-        $this->order->deleteOrder($id);
-        return redirect()->route('order');
+        try {
+            $this->order->deleteOrder($id);
+            return redirect()->route('order');
+        } catch  (\Exception $ex) {
+            return redirect()->back()->withInput();
+        }
     }
     public function exportCsvOrder(Request $request, Order $order)
     {

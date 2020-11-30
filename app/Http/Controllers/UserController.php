@@ -16,15 +16,23 @@ class UserController extends Controller
     }
     public function getListUser(Request $request)
     {
-        $search = trim($request->input('search_user'));
-        $users = $this->user->getUser($search);
-        $userTotal = $this->user->getAll();
-        return view('admin.list_user', compact('users', 'userTotal'));
+        try {
+            $search = trim($request->input('search_user'));
+            $users = $this->user->getUser($search);
+            $userTotal = $this->user->getAll();
+            return view('admin.list_user', compact('users', 'userTotal'));
+        } catch  (\Exception $ex) {
+            return redirect()->back()->withInput();
+        }
     }
     public function editUser($id)
     {
-        $userDetail = $this->user->userDetail($id);
-        return view('admin.edit_user', compact('userDetail'));
+        try {
+            $userDetail = $this->user->userDetail($id);
+            return view('admin.edit_user', compact('userDetail'));
+        } catch  (\Exception $ex) {
+            return redirect()->back()->withInput();
+        }
     }
     public function updateUser(Request $request, $id)
     {
@@ -37,11 +45,6 @@ class UserController extends Controller
     }
     public function removeUser($id)
     {
-//        try {
-//
-//        } catch (\Exception $ex) {
-//
-//        }
         try {
             $this->user->removeUser($id);
             return redirect()->route('getlistuser');
