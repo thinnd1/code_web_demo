@@ -14,10 +14,12 @@ class UserController extends Controller
     {
         $this->user = $user;
     }
-    public function getListUser()
+    public function getListUser(Request $request)
     {
-        $users = $this->user->getUser();
-        return view('admin.list_user', compact('users'));
+        $search = trim($request->input('search_user'));
+        $users = $this->user->getUser($search);
+        $userTotal = $this->user->getAll();
+        return view('admin.list_user', compact('users', 'userTotal'));
     }
     public function editUser($id)
     {

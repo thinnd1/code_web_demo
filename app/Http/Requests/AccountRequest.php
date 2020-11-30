@@ -34,6 +34,7 @@ class AccountRequest extends FormRequest
             'address' => 'max:500',
             'job' => 'max:50',
             'company' => 'max:100',
+            'role' => 'in:1,2'
         ];
     }
     public function messages()
@@ -66,6 +67,8 @@ class AccountRequest extends FormRequest
             'job.min' => 'Nhập địa chỉ nhiều hơn 2 ký tự',
             'job.max' => 'Nhập địa chỉ ít hơn 80 ký tự',
             'company.max' => 'Nhập địa chỉ ít hơn 100 ký tự',
+
+            'role.in' => 'Không đúng quyền',
         ];
     }
 }

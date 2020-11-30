@@ -57,7 +57,7 @@ class User extends Eloquent implements Authenticatable
     {
         return User::where('_id', $id)->first();
     }
-    public function updateInformation($id, $request)
+    public function updateInformation($request, $id)
     {
 //        $data = [
 //
@@ -70,6 +70,7 @@ class User extends Eloquent implements Authenticatable
         $updateUser->email = $request['email'];
         $updateUser->age = $request['age'];
         $updateUser->phone = $request['phone'];
+        $updateUser->role = $request['role'];
         $updateUser->address = $request['address'];
         $updateUser->job = $request['job'];
         $updateUser->company = $request['company'];
@@ -81,10 +82,17 @@ class User extends Eloquent implements Authenticatable
     {
 
     }
-    public function getUser()
+    public function getUser($search = null)
     {
-        return User::orderBy('created_at', 'desc')
+        $listUser =  User::orderBy('created_at', 'desc')
             ->paginate(10);
+        if ($search) {
+            $listUser = User::where('full_name', 'like', '%' . $search . '%')
+                ->orWhere('username', 'like', '%' . $search . '%')
+                ->paginate(10);
+            $listUser->appends(['search' => $search]);
+        }
+        return $listUser;
     }
     public function userDetail($id)
     {
@@ -96,6 +104,8 @@ class User extends Eloquent implements Authenticatable
         $removeUser->delete();
     }
     public function getAll()
-    {}
+    {
+        return User::all();
+    }
 
 }

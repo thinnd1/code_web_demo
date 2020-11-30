@@ -19,13 +19,24 @@
                         <div class="coL-lg-6 h2">
                             Danh sách tài khoản
                         </div>
-                        <div class="coL-lg-6 text-right h2">
+                        <div class="col-lg-6 text-right h2">
                             <a class="btn btn-info" href="">Thêm người dùng</a>
                         </div>
                     </div>
 
                     <div class="table-responsive">
-                        <h3>Tổng số tài khoản: </h3>
+                        <div class="row">
+                            <form action="">
+                                <div class="col-lg-6">
+                                    <input type="text" name="search_user" class="form-control" placeholder="Tìm kiếm ..." value="" id="inputname">
+                                </div>
+                                <div class="col-lg-6">
+                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <h3>Tổng số tài khoản: {{ count($userTotal) }} </h3>
                         <table class="table table-bordered table-hover tablesorter">
                             <thead>
                             <tr>
@@ -47,7 +58,7 @@
                             <tbody>
                             @if(count($users) == 0)
                                 <tr class="borderless">
-                                    <td colspan="10" class="text-center">Không có dữ liệu</td>
+                                    <td colspan="11" class="text-center">Không có dữ liệu</td>
                                 </tr>
                             @else
                                 @foreach ($users as $index => $user)

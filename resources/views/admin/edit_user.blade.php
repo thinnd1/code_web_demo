@@ -16,6 +16,9 @@
                 <div class="col-lg-9">
                     <form action="{{ route('updateuser', ['id' => $userDetail->id]) }}" method="post">
                         @csrf
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
                         <div class="form-group row">
                             <label for="inputname" class="col-sm-2 col-form-label">Họ và tên*</label>
                             <div class="col-sm-10">
@@ -51,6 +54,19 @@
                             <div class="col-sm-10">
                                 <input type="text" name="phone" class="form-control" value="{{ old("phone") ?? $userDetail->phone }}" id="inputphone">
                                 @error('phone')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Phân quyền</label>
+                            <div class="col-sm-10">
+                                <select name="role" class="form-control">
+                                    <option value="1" {{ old("role") ?? $userDetail->role == 1 ? 'selected' : '' }}>Quản trị</option>
+                                    <option value="2" {{ old("role") ?? $userDetail->role == 2 ? 'selected' : '' }}>Dân thường</option>
+                                </select>
+                                @error('gender')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -101,7 +117,6 @@
                         </div>
 
                         <div class="form-group row">
-                            {{--                        @dd($user->company)--}}
                             <label for="inputcompany" class="col-sm-2 col-form-label">Công ty</label>
                             <div class="col-sm-10">
                                 <input type="text" name="company" class="form-control" value="{{ old("company") ?? $userDetail->company }}" id="inputcompany">
