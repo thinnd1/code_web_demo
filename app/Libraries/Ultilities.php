@@ -67,6 +67,13 @@ class Ultilities
 
         return $string;
     }
+    public static function phoneStartsWith($str, $prefix, $pos = 0, $encoding = null)
+    {
+        if (is_null($encoding)) {
+            $encoding = mb_internal_encoding();
+        }
+        return mb_substr($str, $pos, mb_strlen($prefix, $encoding), $encoding) === $prefix;
+    }
     public static function replacePhone($phone)
     {
         if(empty($phone)){
