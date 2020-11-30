@@ -72,6 +72,20 @@
                     </div>
                 </div>
 
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Nghề nghiệp</label>
+                    <div class="col-sm-10">
+                        {{ $user->job }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Công ty</label>
+                    <div class="col-sm-10">
+                        {{ $user->company }}
+                    </div>
+                </div>
+
                 <a class="btn btn-warning" href="{{ route('geteditinfor') }}">Sửa</a>
             </div>
         </div>

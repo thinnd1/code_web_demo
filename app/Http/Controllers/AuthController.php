@@ -72,7 +72,7 @@ class AuthController extends Controller
     public function updateInformation(AccountRequest $request)
     {
         $id = Auth::user()->id;
-        $this->user->updateInformation($id, $request);
+        $this->user->updateInformation($request, $id);
         return redirect()->route('home')->with('key', 'Cập nhật thông tin thành công');
     }
 }
