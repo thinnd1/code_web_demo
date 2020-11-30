@@ -52,7 +52,7 @@ class Ultilities
         if (!File::exists($publicPath)) {
             File::makeDirectory($publicPath, 0775, true, true);
         }
-        $name = time().'-eduzu-'.$file->getClientOriginalName();
+        $name = time().'-'.$file->getClientOriginalName();
         $name = preg_replace('/\s+/', '', $name);
         $file->move(public_path('uploads'), $name);
         return '/uploads/'.$name;

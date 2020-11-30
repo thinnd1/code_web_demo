@@ -74,8 +74,8 @@ class CustomerController extends Controller
     {
         try {
             $listCustomers = $this->customer->getUserOrder($id);
-            $customerDeatail = $this->customer->getCustomerDetail($id);
-            return view('admin.user_order_detail', compact('listCustomers', 'customerDeatail'));
+            $customerDetail = $this->customer->getCustomerDetail($id);
+            return view('admin.user_order_detail', compact('listCustomers', 'customerDetail'));
         } catch  (\Exception $ex) {
             return redirect()->back()->withInput();
         }
@@ -127,29 +127,37 @@ class CustomerController extends Controller
         {
             while (($row = fgetcsv($handle, 1000, $delimiter)) !== false)
             {
-                if (!$header)
+                if (!$header){
                     $header = $row;
-                else
+                } else
                     $data[] = array_combine($header, $row);
             }
             fclose($handle);
         }
-//        dd($data);
 
         return $data;
     }
 
     public function importCsvCustomer()
     {
-        $file = public_path('upload/tasks1.csv');
+        $file = public_path('uploads/tasks1.csv');
 
         $customerArr = $this->csvToArray($file);
 //        dd($customerArr);
 
         for ($i = 0; $i < count($customerArr); $i ++)
         {
-            Customer::firstOrCreate($customerArr[$i]);
+            Customer::create([
+                'username' => $customerArr[$i]['Username'],
+                'full_name' => $customerArr[$i]['Họ và tên'],
+                'email' => $customerArr[$i]['Email'],
+                'age' => $customerArr[$i]['Tuổi'],
+                'phone' => $customerArr[$i]['Số điện thoại'],
+                'address' => $customerArr[$i]['Địa chỉ'],
+                'job' => $customerArr[$i]['Nghề nghiệp'],
+                'company' => $customerArr[$i]['Công ty'],
+            ]);
         }
-        return 'Jobi done or what ever';
+        return redirect()->route('listcustomer');
     }
 }
