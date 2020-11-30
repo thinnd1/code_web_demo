@@ -15,9 +15,10 @@ class ShopController extends Controller
         $this->shop = $shop;
     }
 
-    public function getShop()
+    public function getShop(Request $request)
     {
-        $shops = $this->shop->getShop();
+        $search = trim($request->input('search_company'));
+        $shops = $this->shop->getShop($search);
         return view('admin.shop', compact('shops'));
     }
     public function createShop(CompanyRequest $request)

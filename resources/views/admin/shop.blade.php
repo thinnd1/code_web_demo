@@ -28,6 +28,17 @@
                         <a class="btn btn-info" href="{{ route('viewcreatecompany') }}">Thêm công ty</a>
                     </div>
                 </div>
+                <div class="row">
+                    <form action="">
+                        <div class="col-lg-6">
+                            <input type="text" name="search_company" class="form-control" placeholder="Tìm kiếm ..." value="" id="inputname">
+                        </div>
+                        <div class="col-lg-6">
+                            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                        </div>
+                    </form>
+                </div>
+                <p></p>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover tablesorter">
                         <thead>

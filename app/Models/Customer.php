@@ -21,11 +21,19 @@ class Customer extends Eloquent
         return Customer::all();
     }
 
-    public function listCustomer()
+    public function listCustomer($search)
     {
-        return Customer::with('order')
+        $listCustomer =  Customer::with('order')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
+        if ($search) {
+            $listCustomer = Customer::where('full_name', 'like', '%' . $search . '%')
+                ->orWhere('username', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%')
+                ->paginate(10);
+            $listCustomer->appends(['search' => $search]);
+        }
+        return $listCustomer;
     }
     public function getCustomerDetail($id)
     {

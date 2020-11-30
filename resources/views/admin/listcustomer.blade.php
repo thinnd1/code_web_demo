@@ -29,13 +29,24 @@
                         </div>
                     </div>
 
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="" method="" enctype="multipart/form-data">
                     @csrf
-                    <div>
-                        <span data-href="{{ route('exportcsvcustomer') }}" id="export" class="btn btn-success btn-sm" onclick="exportTasks(event.target);">Xuất file csv</span>
-                    </div>
-                    <p></p>
+
                     <div class="table-responsive">
+                        <div class="row">
+                            <form action="">
+                                <div class="col-lg-6">
+                                    <input type="text" name="search_user" class="form-control" placeholder="Tìm kiếm ..." value="" id="inputname">
+                                </div>
+                                <div class="col-lg-6">
+                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div>
+                            <span data-href="{{ route('exportcsvcustomer') }}" id="export" class="btn btn-success btn-sm" onclick="exportTasks(event.target);">Xuất file csv</span>
+                        </div>
                         <h3>Tổng số khách hàng: {{ count($totalcustomer) }}</h3>
                         <table class="table table-bordered table-hover tablesorter">
                             <thead>

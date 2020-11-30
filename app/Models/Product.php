@@ -21,10 +21,17 @@ class Product extends Eloquent
         'name', 'quantity', 'title' ,'description', 'price', 'id_shop', 'vote', 'type', 'status'
     ];
 
-    public function getProduct()
+    public function getProduct($search = null)
     {
-        return Product::orderBy('created_at', 'desc')
+        $listProduct = Product::orderBy('created_at', 'desc')
             ->paginate(10);
+        if ($search) {
+            $listProduct = Product::where('name', 'like', '%' . $search . '%')
+                ->orWhere('title', 'like', '%' . $search . '%')
+                ->paginate(10);
+            $listProduct->appends(['search' => $search]);
+        }
+        return $listProduct;
     }
     public function getProductDetail($id)
     {

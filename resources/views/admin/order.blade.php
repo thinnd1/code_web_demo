@@ -24,8 +24,18 @@
                         <a href="{{ route('viewcreateorder') }}" class="btn btn-info">Tạo đơn hàng mới</a>
                     </div>
                 </div>
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="">
                     @csrf
+                    <div class="row">
+                        <form action="">
+                            <div class="col-lg-6">
+                                <input type="text" name="search_order" class="form-control" placeholder="Tìm kiếm ..." value="" id="inputname">
+                            </div>
+                            <div class="col-lg-6">
+                                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                            </div>
+                        </form>
+                    </div>
                     <div>
                         <span data-href="{{ route('exportcsvorder') }}" id="exportorder" class="btn btn-success btn-sm" onclick="exportTasks(event.target);">Xuất file csv</span>
                     </div>

@@ -27,6 +27,18 @@
                     </div>
 
                     <div class="table-responsive">
+                        <div class="row">
+                            <form action="">
+                                <div class="col-lg-6">
+                                    <input type="text" name="search_user" class="form-control" placeholder="Tìm kiếm ..." value="" id="inputname">
+                                </div>
+                                <div class="col-lg-6">
+                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                </div>
+                            </form>
+                        </div>
+                        <p></p>
+
                         <table class="table table-bordered table-hover tablesorter">
                             <thead>
                             <tr>

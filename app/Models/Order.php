@@ -26,10 +26,17 @@ class Order extends Eloquent
     {
         return $this->belongsTo(Customer::class, 'id_custumor');
     }
-    public function getOrder()
+    public function getOrder($search = null)
     {
-        return Order::orderBy('created_at', 'desc')
+        $listOrder =  Order::orderBy('created_at', 'desc')
             ->paginate(10);
+        if ($search) {
+            $listOrder = Order::where('id_user', 'like', '%' . $search . '%')
+                ->orWhere('id_product', 'like', '%' . $search . '%')
+                ->paginate(10);
+            $listOrder->appends(['search' => $search]);
+        }
+        return $listOrder;
     }
     public function getOrderDetail($id)
     {

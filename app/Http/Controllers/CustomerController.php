@@ -29,9 +29,10 @@ class CustomerController extends Controller
             return redirect()->back()->with('error', 'Lỗi hệ thống')->withInput();
         }
     }
-    public function listCustomer()
+    public function listCustomer(Request $request)
     {
-        $listCustomers = $this->customer->listCustomer();
+        $search = trim($request->input('search_user'));
+        $listCustomers = $this->customer->listCustomer($search);
         $totalcustomer = $this->customer->getAll();
         return view('admin.listcustomer', compact('listCustomers', 'totalcustomer'));
     }

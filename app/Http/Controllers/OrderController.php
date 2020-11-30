@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OrderRequest;
 use App\Models\Customer;
 use App\Models\Order;
-use GuzzleHttp\Psr7\Request;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -18,9 +18,10 @@ class OrderController extends Controller
         $this->customer = $customer;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $orders = $this->order->getOrder();
+        $search = trim($request->input('search_order'));
+        $orders = $this->order->getOrder($search);
         return view('admin.order', compact('orders'));
     }
     public function viewCreateOrder()

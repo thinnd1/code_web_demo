@@ -1,5 +1,5 @@
 @extends('layout.index')
-@section('title', 'Trang danh sách người dùng')
+@section('title', 'Trang danh sách tài khoản')
 <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 @section('content')
 
@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ol class="breadcrumb">
-                        <li class="active"><i class="fa fa-dashboard"></i> Danh sách người dùng</li>
+                        <li class="active"><i class="fa fa-dashboard"></i> Danh sách tài khoản</li>
                     </ol>
                 </div>
             </div><!-- /.row -->

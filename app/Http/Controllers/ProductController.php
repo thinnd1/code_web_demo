@@ -15,9 +15,10 @@ class ProductController extends Controller
         $this->product = $product;
     }
 
-    public function getProduct()
+    public function getProduct(Request $request)
     {
-        $products = $this->product->getProduct();
+        $search = trim($request->input('search_user'));
+        $products = $this->product->getProduct($search);
         return view('admin.product', compact('products'));
     }
     public function createProduct(ProductRequest $request)
