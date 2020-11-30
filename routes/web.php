@@ -22,6 +22,9 @@ Route::post('/register', 'App\Http\Controllers\AuthController@signup')->name('re
 Route::get('/login','App\Http\Controllers\AuthController@viewLogin')->name('viewlogin');
 Route::post('/login','App\Http\Controllers\AuthController@login')->name('login');
 Route::get('/logout','App\Http\Controllers\AuthController@logout')->name('logout');
+Route::get('404', function (){
+    return view('admin.404');
+})->name('404-notfound');
 
 Route::middleware(['checklogin::class'])->prefix('admin')->group(function(){
     Route::get('/home', 'App\Http\Controllers\AuthController@getInformation')->name('home');
@@ -39,9 +42,9 @@ Route::middleware(['checklogin::class'])->prefix('admin')->group(function(){
 
     // users
     Route::get('/getlistuser', 'App\Http\Controllers\UserController@getListUser')->name('getlistuser');
-    Route::get('/edituser/{id}', 'App\Http\Controllers\UserController@editUser')->name('edituser');
-    Route::post('/edituser/{id}', 'App\Http\Controllers\UserController@updateUser')->name('updateuser');
-    Route::get('/deleteuser/{id}', 'App\Http\Controllers\UserController@removeUser')->name('deleteuser');
+    Route::get('/edituser/{id?}', 'App\Http\Controllers\UserController@editUser')->name('edituser');
+    Route::post('/edituser/{id?}', 'App\Http\Controllers\UserController@updateUser')->name('updateuser');
+    Route::get('/deleteuser/{id?}', 'App\Http\Controllers\UserController@removeUser')->name('deleteuser');
 
 //product
     Route::get('/product', 'App\Http\Controllers\ProductController@getProduct')->name('product');

@@ -51,7 +51,9 @@ class OrderController extends Controller
         try {
             $orderdetail = $this->order->getOrderDetail($id);
             $customers = $this->customer->getAll();
-
+            if (is_null($orderdetail)){
+                return redirect()->route('404-notfound');
+            }
             return view('admin.edit_order', compact('orderdetail', 'customers'));
         } catch  (\Exception $ex) {
             return redirect()->back()->withInput();

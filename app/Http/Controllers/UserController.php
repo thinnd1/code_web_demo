@@ -29,6 +29,9 @@ class UserController extends Controller
     {
         try {
             $userDetail = $this->user->userDetail($id);
+            if (is_null($userDetail)){
+                return redirect()->route('404-notfound');
+            }
             return view('admin.edit_user', compact('userDetail'));
         } catch  (\Exception $ex) {
             return redirect()->back()->withInput();

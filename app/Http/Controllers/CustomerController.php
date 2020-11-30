@@ -53,6 +53,9 @@ class CustomerController extends Controller
     {
         try {
             $user = $this->customer->detailCustomer($id);
+            if (is_null($user)){
+                return redirect()->route('404-notfound');
+            }
             return view('admin.edit_customer', compact('user'));
         } catch (\Exception $exception) {
             return redirect()->back()->with('error', 'Lỗi hệ thống')->withInput();

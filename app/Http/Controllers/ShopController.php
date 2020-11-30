@@ -42,6 +42,9 @@ class ShopController extends Controller
     {
         try {
             $shopDetail = $this->shop->getShopDetail($id);
+            if (is_null($shopDetail)){
+                return redirect()->route('404-notfound');
+            }
             return view('admin.edit_company', compact('shopDetail'));
         } catch (\Exception $ex){
             return redirect()->back()->with('error', 'ID không tồn tại')->withInput();

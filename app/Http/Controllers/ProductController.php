@@ -42,6 +42,9 @@ class ProductController extends Controller
     {
         try {
             $products = $this->product->getProductDetail($id);
+            if (is_null($products)){
+                return redirect()->route('404-notfound');
+            }
             return view('admin.edit_product', compact('products'));
         } catch  (\Exception $ex) {
             return redirect()->back()->with('error', 'ID không tồn tại')->withInput();
