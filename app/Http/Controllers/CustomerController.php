@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CustomerRequest;
+use App\Http\Requests\ImportCsvRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\Validator;
 
 
 class CustomerController extends Controller
@@ -158,6 +160,12 @@ class CustomerController extends Controller
                 'company' => $customerArr[$i]['Công ty'],
             ]);
         }
+        return redirect()->route('listcustomer');
+    }
+
+    public function importCsv(ImportCsvRequest $request)
+    {
+        $this->customer->importCsvCustomer($request);
         return redirect()->route('listcustomer');
     }
 }

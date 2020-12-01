@@ -64,7 +64,7 @@
                             <div class="col-sm-10">
                                 <select name="role" class="form-control">
                                     <option value="1" {{ old("role") ?? $userDetail->role == 1 ? 'selected' : '' }}>Quản trị</option>
-                                    <option value="2" {{ old("role") ?? $userDetail->role == 2 ? 'selected' : '' }}>Dân thường</option>
+                                    <option value="2" {{ old("role") ?? $userDetail->role == 2 ? 'selected' : '' }}>Người dùng</option>
                                 </select>
                                 @error('gender')
                                 <p class="text-danger">{{ $message }}</p>

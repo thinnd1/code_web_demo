@@ -19,9 +19,6 @@
                         <div class="coL-lg-6 h2">
                             Danh sách tài khoản
                         </div>
-                        <div class="col-lg-6 text-right h2">
-                            <a class="btn btn-info" href="">Thêm người dùng</a>
-                        </div>
                     </div>
 
                     <div class="table-responsive">

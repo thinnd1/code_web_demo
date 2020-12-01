@@ -16,6 +16,10 @@
                 <div class="alert alert-success" role="alert">
                     {{ session('key') }}
                 </div>
+            @elseif(session('error'))
+                <div class="alert alert-danger" role="alert">
+                    {{ session('error') }}
+                </div>
             @endif
 
             <div class="row">
@@ -46,6 +50,16 @@
 
                         <div>
                             <span data-href="{{ route('exportcsvcustomer') }}" id="export" class="btn btn-success btn-sm" onclick="exportTasks(event.target);">Xuất file csv</span>
+                            <form action="{{ route('importcsv') }}" method="post" id="import_csv" enctype="multipart/form-data">
+                                @csrf
+                                <label for="">Nhập dữ liệu từ file csv vào hệ thống</label>
+                                <input type="file" accept=".csv,.xls,.xlsx" name="file" id="file_csv">
+                                @error('file')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
+                                <button type="submit" class="btn btn-primary">Nhập</button>
+                            </form>
+
                         </div>
                         <h3>Tổng số khách hàng: {{ count($totalcustomer) }}</h3>
                         <table class="table table-bordered table-hover tablesorter">
@@ -140,6 +154,18 @@
 @endsection
 
 <script>
+    $(document).ready(function(){
+        $('#import_csv').validate({
+            rules: {
+                file: {
+                    required: true,
+                    extension:'csv',
+                }
+            },
+            messages: { file: "Nhập file csv" }
+        });
+    });
+
     function exportTasks(_this) {
         confirm('Bạn muốn xuất thành file csv không?');
         let _url = $(_this).data('href');

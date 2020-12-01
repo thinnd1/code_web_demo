@@ -7,45 +7,6 @@ use File;
 
 class Ultilities
 {
-
-    public static function formatDate($date, $type = 0)
-    {
-        //input
-        if($type == 0){
-            $test =  Carbon::createFromFormat('d/m/Y', $date)->format('m/d/Y');
-            return date("Y/m/d", strtotime($test));
-        }
-        if($type == 2){
-            return date("d/m/Y", strtotime($date));
-        }
-        if($type == 3){
-            if(empty($date)){
-                return null;
-            }
-            $fomat = explode(' ', $date);
-            $res =  Carbon::createFromFormat('d/m/Y', $fomat[0])->format('m/d/Y');
-            $res .= $fomat[1];
-            return date("Y/m/d H:i", strtotime($res));
-        }
-        return date("Y/m/d", strtotime($date));
-    }
-
-    public static function formatDateHMI($date)
-    {
-        //input
-        // $test =  Carbon::createFromFormat('d/m/Y h:i:s', $date)->format('m/d/Y');
-        return date("Y/m/d - h:i", strtotime($date));
-    }
-
-
-    public static function fomatDateTime($date)
-    {
-        $dateTime = explode(' ', $date);
-        $dateFomat = self::formatDate($dateTime[0]);
-        $dateTimeFomat = $dateFomat . '-' . $dateTime[1];
-        return date("Y/m/d - h:i", strtotime($dateTimeFomat));
-    }
-
     public static function uploadFile($file)
     {
         $publicPath = public_path('uploads');
@@ -58,15 +19,28 @@ class Ultilities
         return '/uploads/'.$name;
     }
 
-
-    public static function clearXSS($string)
+    public static function csvToArray($filename = '', $delimiter = ',')
     {
-        $string = nl2br($string);
-        $string = trim(strip_tags($string));
-        $string = self::removeScripts($string);
+        if (!file_exists($filename) || !is_readable($filename))
+            return false;
 
-        return $string;
+        $header = null;
+        $data = array();
+        if (($handle = fopen($filename, 'r')) !== false)
+        {
+            while (($row = fgetcsv($handle, 1000, $delimiter)) !== false)
+            {
+                if (!$header){
+                    $header = $row;
+                } else
+                    $data[] = array_combine($header, $row);
+            }
+            fclose($handle);
+        }
+
+        return $data;
     }
+
     public static function phoneStartsWith($str, $prefix, $pos = 0, $encoding = null)
     {
         if (is_null($encoding)) {

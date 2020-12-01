@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Libraries\Ultilities;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
 class Customer extends Eloquent
@@ -70,7 +71,7 @@ class Customer extends Eloquent
             'username' => $request->username,
             'full_name' => $request->full_name,
             'email' => $request->email,
-            'phone' => $request->phone,
+            'phone' => Ultilities::replacePhone($request->phone),
             'age' => $request->age,
             'gender' => $request->age,
             'address' => $request->address,
@@ -87,5 +88,34 @@ class Customer extends Eloquent
     {
         $deleteUser = Customer::findOrFail($id);
         return $deleteUser->delete();
+    }
+    public function importCsvCustomer($request)
+    {
+        if ($request->hasFile('file')) {
+            $nameImage = Ultilities::uploadFile($request->file('file'));
+        }
+        $file = public_path($nameImage);
+        $customerArr = Ultilities::csvToArray($file);
+        if (count($customerArr) == 0) {
+            return redirect()->back()->with('error', 'File không có dữ liệu')->withInput();
+        } else {
+//            dd($customerArr);
+            for ($i = 0; $i < count($customerArr); $i ++) {
+                if (isset($customerArr[$i]))
+                {
+                    return redirect()->back()->with('error', 'Không đúng định dạng mẫu form csv, bạn cần xem lại file csv')->withInput();
+                } else
+                Customer::create([
+                    'username' => $customerArr[$i]['Username'],
+                    'full_name' => $customerArr[$i]['Họ và tên'],
+                    'email' => $customerArr[$i]['Email'],
+                    'age' => $customerArr[$i]['Tuổi'],
+                    'phone' => $customerArr[$i]['Số điện thoại'],
+                    'address' => $customerArr[$i]['Địa chỉ'],
+                    'job' => $customerArr[$i]['Nghề nghiệp'],
+                    'company' => $customerArr[$i]['Công ty'],
+                ]);
+            }
+        }
     }
 }
