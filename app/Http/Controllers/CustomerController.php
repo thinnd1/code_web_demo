@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CustomersExport;
 use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\ImportCsvRequest;
+use App\Imports\CustomersImport;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\HeadingRowImport;
 
 
 class CustomerController extends Controller
@@ -88,9 +92,11 @@ class CustomerController extends Controller
         $tasks = Customer::all();
 
         $headers = array(
-            "Content-type"        => "text/csv",
+            "Content-Encoding" => "UTF-8",
+            "Content-Type"        => "text/csv;charset=utf-8",
             "Content-Disposition" => "attachment; filename=$fileName",
             "Pragma"              => "no-cache",
+            "Content-Transfer-Encoding" => "binary",
             "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
             "Expires"             => "0"
         );
@@ -167,5 +173,13 @@ class CustomerController extends Controller
     {
         $this->customer->importCsvCustomer($request);
         return redirect()->route('listcustomer');
+    }
+    public function fileExport()
+    {
+//        $headings = (new HeadingRowImport)->toArray('users.xlsx');
+//        return $headings;
+        return (new CustomersExport)->download('customer.xlsx');
+
+//        return Excel::download(new CustomersExport, 'users-collection.xlsx');
     }
 }
