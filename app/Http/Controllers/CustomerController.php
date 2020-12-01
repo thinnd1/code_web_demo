@@ -67,7 +67,7 @@ class CustomerController extends Controller
     {
         try {
             $this->customer->editCustomer($id, $request);
-            return redirect()->route('listcustomer');
+            return redirect()->back()->with('success', 'Cập nhật thành công');
         } catch (\Exception $ex){
             return redirect()->back()->with('error', 'ID không tồn tại')->withInput();
         }

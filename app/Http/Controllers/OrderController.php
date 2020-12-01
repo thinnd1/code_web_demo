@@ -63,7 +63,7 @@ class OrderController extends Controller
     {
         try {
             $this->order->updateOrder($request, $id);
-            return redirect()->route('order');
+            return redirect()->back()->with('success', 'Cập nhật thành công');
         } catch  (\Exception $ex) {
             return redirect()->back()->withInput();
         }

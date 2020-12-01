@@ -71,7 +71,7 @@ class Customer extends Eloquent
             'username' => $request->username,
             'full_name' => $request->full_name,
             'email' => $request->email,
-            'phone' => Ultilities::replacePhone($request->phone),
+            'phone' => $request->phone,
             'age' => $request->age,
             'gender' => $request->age,
             'address' => $request->address,

@@ -41,6 +41,15 @@ class Ultilities
         return $data;
     }
 
+    public static function clearXSS($string)
+    {
+        $string = nl2br($string);
+        $string = trim(strip_tags($string));
+        $string = self::removeScripts($string);
+
+        return $string;
+    }
+
     public static function phoneStartsWith($str, $prefix, $pos = 0, $encoding = null)
     {
         if (is_null($encoding)) {

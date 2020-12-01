@@ -29,7 +29,7 @@ class AccountRequest extends FormRequest
             'full_name' => 'required|min:5|max:50',
             'email' => ['required','regex: /^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix'],
             'phone' => ['required','regex: /^\+?\d{10,11}$/i'],
-            'age' => 'required|numeric|integer|min:1',
+            'age' => 'required|numeric|integer|min:1|max:150',
             'gender' => 'required|in:1,2,3',
             'address' => 'max:500',
             'job' => 'max:50',
@@ -60,6 +60,7 @@ class AccountRequest extends FormRequest
             'age.numeric' => 'Tuổi nhập số',
             'age.integer' => 'Tuổi nhập số dương',
             'age.min' => 'Tuổi nhập số dương',
+            'age.max' => 'Tuổi nhỏ hơn 150',
 
             'gender.in' => 'Không chọn đúng giới tính',
 //            'address.min' => 'Nhập địa chỉ nhiều hơn 10 ký tự',
