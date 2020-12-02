@@ -50,7 +50,7 @@
 
                         <div>
                             <span data-href="{{ route('exportcsvcustomer') }}" id="export" class="btn btn-success btn-sm" onclick="exportTasks(event.target);">Xuất file csv</span>
-                            <form action="{{ route('importcsv') }}" method="post" id="import_csv" enctype="multipart/form-data">
+                            <form action="{{ route('store') }}" method="post" id="import_csv" enctype="multipart/form-data">
                                 @csrf
                                 <label for="">Nhập dữ liệu từ file csv vào hệ thống</label>
                                 <input type="file" accept=".csv,.xls,.xlsx" name="file" id="file_csv">
