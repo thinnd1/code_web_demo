@@ -176,21 +176,11 @@ class CustomerController extends Controller
     }
     public function fileExport()
     {
-//        $headings = (new HeadingRowImport)->toArray('users.xlsx');
-//        return $headings;
         return (new CustomersExport)->download('customer.xlsx');
-
-//        return Excel::download(new CustomersExport, 'users-collection.xlsx');
     }
     public function store(Request $request)
     {
         Excel::import(new CustomersImport, $request->file('file'));
-
-//        $file = $request->file('file')->store('import');
-//
-//        $import = new CustomersImport;
-//        $import->import($file);
-
-        return back()->withStatus('Import in queue, we will send notification after import finished.');
+        return back();
     }
 }

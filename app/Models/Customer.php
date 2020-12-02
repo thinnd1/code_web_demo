@@ -22,7 +22,7 @@ class Customer extends Eloquent
         return Customer::all();
     }
 
-    public function listCustomer($search)
+    public function listCustomer($search = null)
     {
         $listCustomer =  Customer::with('order')
             ->orderBy('created_at', 'desc')

@@ -29,14 +29,14 @@ class CustomersImport implements ToCollection
     {
         foreach ($rows as $row) {
             $user = Customer::create([
-                'username'     => $row['username'],
-                'full_name'    => $row['full_name'],
-                'email'        => $row['email'],
-                'phone'        => $row['phone'],
-                'address'      => $row['address'],
-                'job'          => $row['job'],
-                'company'      => $row['company'],
-                'created_at'   => $row['created_at'],
+                'username'     => $row[0],
+                'full_name'    => $row[1],
+                'email'        => $row[2],
+                'phone'        => $row[3],
+                'address'      => $row[4],
+                'job'          => $row[5],
+                'company'      => $row[6],
+                'created_at'   => $row[7],
             ]);
         }
     }
