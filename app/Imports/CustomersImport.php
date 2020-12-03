@@ -3,24 +3,36 @@
 namespace App\Imports;
 
 use App\Models\Customer;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithValidation;
-use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
-use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Events\AfterImport;
+use Maatwebsite\Excel\Validators\Failure;
+use Throwable;
 
 class CustomersImport implements
     ToCollection,
+    WithHeadingRow,
+    SkipsOnError,
 //    WithValidation,
-    WithHeadingRow
+    SkipsOnFailure,
+    WithChunkReading,
+    ShouldQueue,
+    WithEvents
 {
     /**
     * @param array $row
@@ -31,26 +43,30 @@ class CustomersImport implements
 
     public function collection(Collection $rows)
     {
-        foreach ($rows as $row) {
+
+//        Validator::make($rows->toArray(), [
+//            '*.email' => 'required',
+//        ],
+//        [ '*.email.required' => 'Trường email bị trống nhé'
+//        ])->validate();
+        foreach ($rows as $index => $row) {
+//            dd($row);
             $user = Customer::create([
-                'username'     => $row[0],
-                'full_name'    => $row[1],
-                'email'        => $row[2],
-                'phone'        => $row[3],
-                'address'      => $row[4],
-                'job'          => $row[5],
-                'company'      => $row[6],
-                'created_at'   => $row[7],
+                'username'     => $row['Tên đăng nhập'],
+                'full_name'    => $row['Họ tên'],
+                'email'        => $row['Email'],
+                'phone'        => $row['Số điện thoại'],
+                'address'      => $row['Địa chỉ'],
+                'job'          => $row['Nghề nghiệp'],
+                'company'      => $row['Công ty'],
+                'created_at'   => $row['Ngày đăng ký'],
             ]);
         }
     }
 //    public function rules(): array
 //    {
-////        return [];
 //        return [
-////            '2' => ['email', 'required', 'unique:customers,email'],
-////            'username' => ['email'],
-//            '2' => ['email', 'required', 'unique:customers,email'],
+////            'email' => ['email', 'required', 'unique:customers,email'],
 //        ];
 //    }
 

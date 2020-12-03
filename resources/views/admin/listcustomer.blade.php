@@ -1,6 +1,6 @@
 @extends('layout.index')
 @section('title', 'Trang danh sách khách hàng')
-<link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
 @section('content')
 
     <div id="wrapper">
@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="row">
-                        <div class="coL-lg-6 h2">
+                        <div class="col-lg-6 h2">
                             Danh sách khách hàng
                         </div>
                         <div class="coL-lg-6 text-right h2">
@@ -60,7 +60,7 @@
                             <span data-href="{{ route('fileexport') }}" id="export" class="btn btn-success btn-sm" onclick="exportTasks(event.target);">Xuất file csv</span>
                             <form action="{{ route('importcustomer') }}" method="post" id="import_csv" enctype="multipart/form-data">
                                 @csrf
-                                <label for="">Nhập dữ liệu từ file csv vào hệ thống</label>
+                                <label for="">Nhập dữ liệu từ file excel vào hệ thống</label>
                                 <input type="file" accept=".csv,.xls,.xlsx" name="file" id="file_csv">
                                 @error('file')
                                 <p class="text-danger">{{ $message }}</p>
@@ -141,7 +141,7 @@
                                             <td>
                                                 <a class="btn btn-primary" href="{{ route('viewuserorder', ['id' => $listCustomer->id ]) }}">Xem</a>
                                                 <a class="btn btn-warning" href="{{ route('vieweditcustomer', ['id' => $listCustomer->id ]) }}">Sửa</a>
-                                                <a class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa khách hàng này không?')" href="{{ route('removecustomer', ['id' => $listCustomer->id ]) }}">Xóa</a>
+                                                <button type="button" class="btn btn-danger deleteRecord" data-id="{{ $listCustomer->id }}">Xóa</button>
                                             </td>
                                             </div>
                                         @endif
@@ -160,23 +160,33 @@
     </div>
 </div>
 @endsection
-
-<script>
-    $(document).ready(function(){
-        $('#import_csv').validate({
-            rules: {
-                file: {
-                    required: true,
-                    extension:'csv',
-                }
-            },
-            messages: { file: "Nhập file csv" }
+@section('js')
+    <script>
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $(document).ready(function(){
+            $(".deleteRecord").click(function(){
+                var id = $(this).data("id");
+                $.ajax(
+                    {
+                        url: 'delete/'+id,
+                        data: {_token: CSRF_TOKEN,id: id},
+                        type: 'post',
+                        success: function(response){
+                            location.reload();
+                        },
+                        error: function(xhr) {
+                            console.log("12345678");
+                            console.log(xhr.responseText); // this line will save you tons of hours while debugging
+                        }
+                    });
+            });
         });
-    });
 
-    function exportTasks(_this) {
-        confirm('Bạn muốn xuất thành file csv không?');
-        let _url = $(_this).data('href');
-        window.location.href = _url;
-    }
-</script>
+        function exportTasks(_this) {
+            confirm('Bạn muốn xuất thành file csv không?');
+            let _url = $(_this).data('href');
+            window.location.href = _url;
+        }
+    </script>
+@endsection
+
