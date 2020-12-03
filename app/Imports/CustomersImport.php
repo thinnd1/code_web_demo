@@ -25,11 +25,11 @@ use Maatwebsite\Excel\Validators\Failure;
 use Throwable;
 
 class CustomersImport implements
-    ToCollection,
+    ToModel,
     WithHeadingRow,
     SkipsOnError,
-//    WithValidation,
-    SkipsOnFailure,
+    WithValidation,
+//    SkipsOnFailure,
     WithChunkReading,
     ShouldQueue,
     WithEvents
@@ -39,19 +39,12 @@ class CustomersImport implements
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-    use Importable, SkipsErrors, SkipsFailures, RegistersEventListeners;
+    use Importable, SkipsErrors, RegistersEventListeners;
 
-    public function collection(Collection $rows)
+    public function model(array $row)
     {
-
-//        Validator::make($rows->toArray(), [
-//            '*.email' => 'required',
-//        ],
-//        [ '*.email.required' => 'Trường email bị trống nhé'
-//        ])->validate();
-        foreach ($rows as $index => $row) {
-//            dd($row);
-            $user = Customer::create([
+            $user = Customer::create(
+                [
                 'username'     => $row['Tên đăng nhập'],
                 'full_name'    => $row['Họ tên'],
                 'email'        => $row['Email'],
@@ -60,24 +53,22 @@ class CustomersImport implements
                 'job'          => $row['Nghề nghiệp'],
                 'company'      => $row['Công ty'],
                 'created_at'   => $row['Ngày đăng ký'],
-            ]);
-        }
+                ]
+            );
     }
-//    public function rules(): array
-//    {
-//        return [
-////            'email' => ['email', 'required', 'unique:customers,email'],
-//        ];
-//    }
+    public function rules(): array
+    {
+      return [
+           'Email' => ['required, unique:customers,email'],
+       ];
+    }
 
     public function chunkSize(): int
     {
         return 1000;
     }
-    public static function afterImport(AfterImport $event)
-    {
-    }
-    public function onFailure(Failure ...$failure)
-    {
-    }
+//    public static function afterImport(AfterImport $event)
+//    {
+//    }
+
 }

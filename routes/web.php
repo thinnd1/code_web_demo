@@ -19,8 +19,8 @@ use App\Http\Middleware\CheckLogin;
 Route::get('/register','App\Http\Controllers\AuthController@viewSignup')->name('viewregister');
 Route::get('/getdata','App\Http\Controllers\AuthController@getdata');
 Route::post('/register', 'App\Http\Controllers\AuthController@signup')->name('register');
-Route::get('/login','App\Http\Controllers\AuthController@viewLogin')->name('viewlogin');
-Route::post('/login','App\Http\Controllers\AuthController@login')->name('login');
+Route::get('/','App\Http\Controllers\AuthController@viewLogin')->name('viewlogin');
+Route::post('/','App\Http\Controllers\AuthController@login')->name('login');
 Route::get('/logout','App\Http\Controllers\AuthController@logout')->name('logout');
 Route::get('404', function (){
     return view('admin.404');

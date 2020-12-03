@@ -187,9 +187,6 @@ class CustomerController extends Controller
         $import = new CustomersImport;
         $import->import($file);
 
-        if ($import->failures()->isNotEmpty()) {
-            return back()->withFailures($import->failures());
-        }
         return back();
     }
 }
