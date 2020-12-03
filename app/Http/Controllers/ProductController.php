@@ -18,7 +18,7 @@ class ProductController extends Controller
     public function getProduct(Request $request)
     {
         try {
-            $search = trim($request->input('search_user'));
+            $search = trim($request->input('search_product'));
             $products = $this->product->getProduct($search);
             return view('admin.product', compact('products'));
         } catch  (\Exception $ex) {

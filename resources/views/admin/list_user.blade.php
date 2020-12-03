@@ -19,16 +19,13 @@
                         <div class="coL-lg-6 h2">
                             Danh sách tài khoản
                         </div>
-                        <div class="col-lg-6 text-right h2">
-                            <a class="btn btn-info" href="">Thêm người dùng</a>
-                        </div>
                     </div>
 
                     <div class="table-responsive">
                         <div class="row">
                             <form action="">
                                 <div class="col-lg-6">
-                                    <input type="text" name="search_user" class="form-control" placeholder="Tìm kiếm ..." value="" id="inputname">
+                                    <input type="text" name="search_user" class="form-control" placeholder="Tìm kiếm ..." value="{{ request()->input('search_user', old('search_user')) }}" id="inputname">
                                 </div>
                                 <div class="col-lg-6">
                                     <button type="submit" class="btn btn-primary">Tìm kiếm</button>

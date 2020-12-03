@@ -32,6 +32,7 @@
 <script src="{{ asset('http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js') }}"></script>
 <script src="{{ asset('js/tablesorter/jquery.tablesorter.js') }}"></script>
 <script src="{{ asset('js/tablesorter/tables.js') }}"></script>
+<script src="{{ asset('https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.js') }}"></script>
 
 </body>
 </html>

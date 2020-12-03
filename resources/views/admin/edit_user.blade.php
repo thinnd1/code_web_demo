@@ -16,9 +16,9 @@
                 <div class="col-lg-9">
                     <form action="{{ route('updateuser', ['id' => $userDetail->id]) }}" method="post">
                         @csrf
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
+{{--                        @foreach ($errors->all() as $error)--}}
+{{--                            <li>{{ $error }}</li>--}}
+{{--                        @endforeach--}}
                         <div class="form-group row">
                             <label for="inputname" class="col-sm-2 col-form-label">Họ và tên*</label>
                             <div class="col-sm-10">
@@ -64,7 +64,7 @@
                             <div class="col-sm-10">
                                 <select name="role" class="form-control">
                                     <option value="1" {{ old("role") ?? $userDetail->role == 1 ? 'selected' : '' }}>Quản trị</option>
-                                    <option value="2" {{ old("role") ?? $userDetail->role == 2 ? 'selected' : '' }}>Dân thường</option>
+                                    <option value="2" {{ old("role") ?? $userDetail->role == 2 ? 'selected' : '' }}>Người dùng</option>
                                 </select>
                                 @error('gender')
                                 <p class="text-danger">{{ $message }}</p>
@@ -126,7 +126,7 @@
                             </div>
                         </div>
 
-                        <a class="btn btn-primary" href="{{ URL::previous() }}">Quay lại</a>
+                        <a class="btn btn-primary" href="{{ route("getlistuser") }}">Quay lại</a>
                         <button type="submit" class="btn btn-warning">Cập nhật thông tin</button>
                     </form>
                 </div>

@@ -39,6 +39,9 @@ Route::middleware(['checklogin::class'])->prefix('admin')->group(function(){
     Route::get('/viewuserorder/{id}', 'App\Http\Controllers\CustomerController@viewUserOrder')->name('viewuserorder');
     Route::get('/exportcsvcustomer', 'App\Http\Controllers\CustomerController@exportCsvCustomer')->name('exportcsvcustomer');
     Route::get('/importcsvcustomer', 'App\Http\Controllers\CustomerController@importCsvCustomer')->name('importcsvcustomer');
+    Route::post('/importcsv', 'App\Http\Controllers\CustomerController@importCsv')->name('importcsv');
+    Route::get('/fileexport', 'App\Http\Controllers\CustomerController@fileExport')->name('fileexport');
+    Route::post('/importcustomer', 'App\Http\Controllers\CustomerController@importCustomer')->name('importcustomer');
 
     // users
     Route::get('/getlistuser', 'App\Http\Controllers\UserController@getListUser')->name('getlistuser');

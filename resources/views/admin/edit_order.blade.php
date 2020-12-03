@@ -10,6 +10,15 @@
                     </ol>
                 </div>
             </div><!-- /.row -->
+            @if (session('success'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('success') }}
+                </div>
+            @elseif(session('error'))
+                <div class="alert alert-danger" role="alert">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="row">
                 <div class="col-lg-9">
                     <form action="{{ route('updateorder', ['id' => $orderdetail->id]) }}" method="post">
@@ -112,7 +121,7 @@
                             </div>
                         </div>
 
-                        <a class="btn btn-primary" href="{{ URL::previous() }}">Quay lại</a>
+                        <a class="btn btn-primary" href="{{ route("order") }}">Quay lại</a>
                         <button type="submit" class="btn btn-warning">Cập nhật</button>
 
                     </form>

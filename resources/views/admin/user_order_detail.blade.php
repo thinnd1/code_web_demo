@@ -18,28 +18,28 @@
                             <div class="form-group row">
                                 <label for="inputUser" class="col-sm-2 col-form-label">Tên Đăng Nhập</label>
                                 <div class="col-sm-10">
-                                    {{ $customerDeatail->username }}
+                                    {{ $customerDetail->username }}
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="inputUser" class="col-sm-2 col-form-label">Họ và tên</label>
                                 <div class="col-sm-10">
-                                    {{ $customerDeatail->full_name }}
+                                    {{ $customerDetail->full_name }}
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="inputUser" class="col-sm-2 col-form-label">Ngày sinh</label>
                                 <div class="col-sm-10">
-                                    {{ \Carbon\Carbon::parse($customerDeatail->date_of_birth)->format('d/m/Y') }}
+                                    {{ \Carbon\Carbon::parse($customerDetail->date_of_birth)->format('d/m/Y') }}
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="inputUser" class="col-sm-2 col-form-label">Giới tính</label>
                                 <div class="col-sm-10">
-                                    @if($customerDeatail->gender == 1)
+                                    @if($customerDetail->gender == 1)
                                         Nam
                                     @else
                                         Nữ
@@ -50,21 +50,21 @@
                             <div class="form-group row">
                                 <label for="inputUser" class="col-sm-2 col-form-label">Email</label>
                                 <div class="col-sm-10">
-                                    {{ $customerDeatail->email }}
+                                    {{ $customerDetail->email }}
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="inputUser" class="col-sm-2 col-form-label">Số điện thoại</label>
                                 <div class="col-sm-10">
-                                    {{ $customerDeatail->phone }}
+                                    {{ $customerDetail->phone }}
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="inputUser" class="col-sm-2 col-form-label">Địa chỉ</label>
                                 <div class="col-sm-10">
-                                    {{ $customerDeatail->address }}
+                                    {{ $customerDetail->address }}
                                 </div>
                             </div>
                         </div>
@@ -126,6 +126,7 @@
                             @endif
                             </tbody>
                         </table>
+                        <a class="btn btn-primary" href="{{ route("listcustomer") }}">Quay lại</a>
                         <div class="d-flex justify-content-center">
                             {{ $listCustomers->links() }}
                         </div>

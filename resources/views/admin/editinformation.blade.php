@@ -19,7 +19,7 @@
             <div class="col-lg-9">
                 <form action="{{ route('editinfor') }}" method="post">
                     @csrf
-
+                    <input type="hidden" name="role" class="form-control" value="{{ $user->role }}">
                     <div class="form-group row">
                         <label for="inputUser" class="col-sm-2 col-form-label">Tên Đăng Nhập*</label>
                         <div class="col-sm-10">
@@ -103,7 +103,7 @@
                         </div>
                     </div>
 
-                    <a class="btn btn-primary" href="{{ URL::previous() }}">Quay lại</a>
+                    <a class="btn btn-primary" href="{{ route("home") }}">Quay lại</a>
                     <button type="submit" class="btn btn-warning">Cập nhật thông tin</button>
                 </form>
             </div>

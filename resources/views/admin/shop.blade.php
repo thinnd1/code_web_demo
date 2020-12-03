@@ -31,7 +31,7 @@
                 <div class="row">
                     <form action="">
                         <div class="col-lg-6">
-                            <input type="text" name="search_company" class="form-control" placeholder="Tìm kiếm ..." value="" id="inputname">
+                            <input type="text" name="search_company" class="form-control" placeholder="Tìm kiếm ..." value="{{ request()->input('search_company', old('search_company')) }}" id="inputname">
                         </div>
                         <div class="col-lg-6">
                             <button type="submit" class="btn btn-primary">Tìm kiếm</button>

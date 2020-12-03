@@ -24,6 +24,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
+            //
             'username' => 'required',
             'password' => 'required',
         ];
@@ -33,6 +34,6 @@ class LoginRequest extends FormRequest
         return [
             'username.required' => 'Không được để trống tên đăng nhập',
             'password.required' => 'Không được để trống mật khẩu',
-        ];
+            ];
     }
 }

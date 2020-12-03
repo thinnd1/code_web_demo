@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CustomersExport;
 use App\Http\Requests\CustomerRequest;
+use App\Http\Requests\ImportCsvRequest;
+use App\Http\Requests\ImportRequest;
+use App\Imports\CustomersImport;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\HeadingRowImport;
 
 
 class CustomerController extends Controller
@@ -44,7 +51,7 @@ class CustomerController extends Controller
     {
         try {
             $this->customer->deleteUser($id);
-            return redirect()->route('listcustomer');
+            return redirect()->back();
         } catch (\Exception $ex) {
             return redirect()->back()->with('error', 'Lỗi hệ thống')->withInput();
         }
@@ -65,7 +72,7 @@ class CustomerController extends Controller
     {
         try {
             $this->customer->editCustomer($id, $request);
-            return redirect()->route('listcustomer');
+            return redirect()->back()->with('success', 'Cập nhật thành công');
         } catch (\Exception $ex){
             return redirect()->back()->with('error', 'ID không tồn tại')->withInput();
         }
@@ -74,8 +81,8 @@ class CustomerController extends Controller
     {
         try {
             $listCustomers = $this->customer->getUserOrder($id);
-            $customerDeatail = $this->customer->getCustomerDetail($id);
-            return view('admin.user_order_detail', compact('listCustomers', 'customerDeatail'));
+            $customerDetail = $this->customer->getCustomerDetail($id);
+            return view('admin.user_order_detail', compact('listCustomers', 'customerDetail'));
         } catch  (\Exception $ex) {
             return redirect()->back()->withInput();
         }
@@ -86,9 +93,11 @@ class CustomerController extends Controller
         $tasks = Customer::all();
 
         $headers = array(
-            "Content-type"        => "text/csv",
+            "Content-Encoding" => "UTF-8",
+            "Content-Type"        => "text/csv;charset=utf-8",
             "Content-Disposition" => "attachment; filename=$fileName",
             "Pragma"              => "no-cache",
+            "Content-Transfer-Encoding" => "binary",
             "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
             "Expires"             => "0"
         );
@@ -127,29 +136,59 @@ class CustomerController extends Controller
         {
             while (($row = fgetcsv($handle, 1000, $delimiter)) !== false)
             {
-                if (!$header)
+                if (!$header){
                     $header = $row;
-                else
+                } else
                     $data[] = array_combine($header, $row);
             }
             fclose($handle);
         }
-//        dd($data);
 
         return $data;
     }
 
     public function importCsvCustomer()
     {
-        $file = public_path('upload/tasks1.csv');
+        $file = public_path('uploads/tasks1.csv');
 
         $customerArr = $this->csvToArray($file);
 //        dd($customerArr);
 
         for ($i = 0; $i < count($customerArr); $i ++)
         {
-            Customer::firstOrCreate($customerArr[$i]);
+            Customer::create([
+                'username' => $customerArr[$i]['Username'],
+                'full_name' => $customerArr[$i]['Họ và tên'],
+                'email' => $customerArr[$i]['Email'],
+                'age' => $customerArr[$i]['Tuổi'],
+                'phone' => $customerArr[$i]['Số điện thoại'],
+                'address' => $customerArr[$i]['Địa chỉ'],
+                'job' => $customerArr[$i]['Nghề nghiệp'],
+                'company' => $customerArr[$i]['Công ty'],
+            ]);
         }
-        return 'Jobi done or what ever';
+        return redirect()->route('listcustomer');
+    }
+
+    public function importCsv(ImportCsvRequest $request)
+    {
+        $this->customer->importCsvCustomer($request);
+        return redirect()->route('listcustomer');
+    }
+    public function fileExport()
+    {
+        return Excel::download(new CustomersExport(), 'customers-' . time() . '.xlsx');
+    }
+    public function importCustomer(ImportRequest $request)
+    {
+        $file = $request->file('file')->store('import');
+
+        $import = new CustomersImport;
+        $import->import($file);
+
+        if ($import->failures()->isNotEmpty()) {
+            return back()->withFailures($import->failures());
+        }
+        return back();
     }
 }
