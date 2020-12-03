@@ -22,6 +22,14 @@
                 </div>
             @endif
 
+            @if(isset($errors) && $errors->any())
+                <div class="alert alert-danger" role="alert">
+                    @foreach($errors->all() as $error)
+                        {{ $error }} <br>
+                    @endforeach
+                </div>
+            @endif
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="row">
@@ -49,8 +57,8 @@
                         </div>
 
                         <div>
-                            <span data-href="{{ route('exportcsvcustomer') }}" id="export" class="btn btn-success btn-sm" onclick="exportTasks(event.target);">Xuất file csv</span>
-                            <form action="{{ route('store') }}" method="post" id="import_csv" enctype="multipart/form-data">
+                            <span data-href="{{ route('fileexport') }}" id="export" class="btn btn-success btn-sm" onclick="exportTasks(event.target);">Xuất file csv</span>
+                            <form action="{{ route('importcustomer') }}" method="post" id="import_csv" enctype="multipart/form-data">
                                 @csrf
                                 <label for="">Nhập dữ liệu từ file csv vào hệ thống</label>
                                 <input type="file" accept=".csv,.xls,.xlsx" name="file" id="file_csv">

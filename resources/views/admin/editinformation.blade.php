@@ -103,7 +103,7 @@
                         </div>
                     </div>
 
-                    <a class="btn btn-primary" href="{{ URL::previous() }}">Quay lại</a>
+                    <a class="btn btn-primary" href="{{ route("home") }}">Quay lại</a>
                     <button type="submit" class="btn btn-warning">Cập nhật thông tin</button>
                 </form>
             </div>

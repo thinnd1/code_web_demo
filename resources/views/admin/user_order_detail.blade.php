@@ -126,6 +126,7 @@
                             @endif
                             </tbody>
                         </table>
+                        <a class="btn btn-primary" href="{{ route("listcustomer") }}">Quay lại</a>
                         <div class="d-flex justify-content-center">
                             {{ $listCustomers->links() }}
                         </div>

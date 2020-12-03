@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\CustomersExport;
 use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\ImportCsvRequest;
+use App\Http\Requests\ImportRequest;
 use App\Imports\CustomersImport;
 use App\Models\Customer;
 use Illuminate\Http\Request;
@@ -50,7 +51,7 @@ class CustomerController extends Controller
     {
         try {
             $this->customer->deleteUser($id);
-            return redirect()->route('listcustomer');
+            return redirect()->back();
         } catch (\Exception $ex) {
             return redirect()->back()->with('error', 'Lỗi hệ thống')->withInput();
         }
@@ -176,11 +177,18 @@ class CustomerController extends Controller
     }
     public function fileExport()
     {
-        return (new CustomersExport)->download('customer.xlsx');
+        return Excel::download(new CustomersExport(), 'customers-' . time() . '.xlsx');
     }
-    public function store(Request $request)
+    public function importCustomer(ImportRequest $request)
     {
-        Excel::import(new CustomersImport, $request->file('file'));
+        $file = $request->file('file')->store('import');
+
+        $import = new CustomersImport;
+        $import->import($file);
+
+        if ($import->failures()->isNotEmpty()) {
+            return back()->withFailures($import->failures());
+        }
         return back();
     }
 }

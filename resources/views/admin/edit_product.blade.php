@@ -65,8 +65,8 @@
                             @enderror
                         </div>
                     </div>
-                    <a class="btn btn-primary" href="{{ URL::previous() }}">Quay lại</a>
-                    <button type="submit" class="btn btn-warning">Update</button>
+                    <a class="btn btn-primary" href="{{ route("shop") }}">Quay lại</a>
+                    <button type="submit" class="btn btn-warning">Cập nhật</button>
                 </form>
             </div>
         </div>

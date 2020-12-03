@@ -74,6 +74,6 @@ class AuthController extends Controller
     {
         $id = Auth::user()->id;
         $this->user->updateInformation($request, $id);
-        return redirect()->route('home')->with('key', 'Cập nhật thông tin thành công');
+        return redirect()->back()->with('key', 'Cập nhật thông tin thành công');
     }
 }
