@@ -30,6 +30,7 @@ class CustomerRequest extends FormRequest
             'phone' => ['required','regex: /^\+?\d{10,11}$/i'],
 //            'email' => ['required','regex: /^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix'],
             'email' => 'required|email|unique:users,email,'.$this->user.',id',
+            'password' => 'required|min:6|max:15',
             'age' => 'required|numeric|integer|min:1|max:150',
             'gender' => 'required|in:1,2,3',
             'address' => 'required|max:500',
@@ -62,6 +63,9 @@ class CustomerRequest extends FormRequest
             'address.max' => 'Nhập địa chỉ ít hơn 500 ký tự',
             'job.max' => 'Nhập trường nghề nghiệp ít hơn 80 ký tự',
             'company.max' => 'Nhập trường công ty ít hơn 80 ký tự',
+            'password.required' => 'Không được để trống mật khẩu',
+            'password.min' => 'Nhập mật khẩu nhiều hơn 6 ký tự',
+            'password.max' => 'Nhập mật khẩu ít hơn 15 ký tự',
         ];
     }
 }

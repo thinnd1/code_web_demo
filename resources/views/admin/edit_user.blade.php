@@ -12,6 +12,16 @@
                 </div>
             </div><!-- /.row -->
 
+            @if (session('success'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('success') }}
+                </div>
+            @elseif(session('error'))
+                <div class="alert alert-danger" role="alert">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <div class="row">
                 <div class="col-lg-9">
                     <form action="{{ route('updateuser', ['id' => $userDetail->id]) }}" method="post">

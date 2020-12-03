@@ -31,13 +31,7 @@ class CustomersImport implements
 
     public function collection(Collection $rows)
     {
-//dd($rows->toArray());
-//        Validator::make($rows->toArray(), [
-//            '*.2' => 'email',
-//        ])->validate();
-
         foreach ($rows as $row) {
-            $row = array_values($row);
             $user = Customer::create([
                 'username'     => $row[0],
                 'full_name'    => $row[1],

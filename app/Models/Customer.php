@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Libraries\Ultilities;
+use Illuminate\Support\Facades\Hash;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
 class Customer extends Eloquent
@@ -53,6 +54,7 @@ class Customer extends Eloquent
     {
         $data = [
             'username' => $request->username,
+            'password' => Hash::make($request['password']),
             'full_name' => $request->full_name,
             'gender' => $request->gender,
             'email' => $request->email,

@@ -35,6 +35,16 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="inputPassword" class="col-sm-2 col-form-label">Mật Khẩu</label>
+                            <div class="col-sm-10">
+                                <input type="password" name="password" class="form-control password" id="inputPassword" placeholder="">
+                                @error('password')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="inputemail" class="col-sm-2 col-form-label">Email*</label>
                             <div class="col-sm-10">
                                 <input type="text" name="email" class="form-control" value="{{ old("email") }}" id="inputemail">
@@ -108,7 +118,7 @@
                             </div>
                         </div>
 
-                        <a class="btn btn-primary" href="{{ URL::previous() }}">Quay lại</a>
+                        <a class="btn btn-primary" href="{{ route("listcustomer") }}">Quay lại</a>
                         <button type="submit" class="btn btn-warning">Thêm mới</button>
                     </form>
                 </div>

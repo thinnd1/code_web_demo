@@ -54,7 +54,7 @@ class ShopController extends Controller
     {
         try {
             $this->shop->updateCompany($request, $id);
-            return redirect()->route('shop');
+            return redirect()->back();
         } catch (\Exception $ex){
             return redirect()->back()->with('error', 'ID không tồn tại')->withInput();
         }

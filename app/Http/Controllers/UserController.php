@@ -42,7 +42,7 @@ class UserController extends Controller
     {
         try {
             $this->user->updateInformation($request, $id);
-            return redirect()->route('getlistuser');
+            return redirect()->back()->with('success', 'Cập nhật thành công');
         } catch  (\Exception $ex) {
             return redirect()->back()->withInput();
         }
