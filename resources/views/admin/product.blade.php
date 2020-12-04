@@ -38,6 +38,7 @@
                             </form>
                         </div>
                         <p></p>
+                        <h3>Tổng số sản phẩm: {{ count($totalproducts) }}</h3>
 
                         <table class="table table-bordered table-hover tablesorter">
                             <thead>
@@ -90,9 +91,7 @@
                                             <div class="divide-column-7">
                                                 <a class="btn btn-warning"
                                                    href="{{ route('vieweditproduct', ['id' => $product->id ]) }}">Sửa</a>
-
-                                                <a class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa sản phẩm này không?')"
-                                                   href="{{ route('deleteproduct', ['id' => $product->id ])  }}">Xóa</a>
+                                                <button type="button" class="btn btn-danger deleteproduct" data-id="{{ $product->id }}">Xóa</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -108,4 +107,26 @@
             </div><!-- /.row -->
         </div>
     </div>
+@endsection
+@section('js')
+    <script>
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $(document).ready(function(){
+            $(".deleteproduct").click(function(){
+                var id = $(this).data("id");
+                $.ajax(
+                    {
+                        url: 'deleteproduct/'+id,
+                        data: {_token: CSRF_TOKEN,id: id},
+                        type: 'post',
+                        success: function(response){
+                            location.reload();
+                        },
+                        error: function(xhr) {
+                            console.log(xhr.responseText); // this line will save you tons of hours while debugging
+                        }
+                    });
+            });
+        });
+    </script>
 @endsection

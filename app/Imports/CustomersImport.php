@@ -28,7 +28,7 @@ class CustomersImport implements
     ToModel,
     WithHeadingRow,
     SkipsOnError,
-    WithValidation,
+//    WithValidation,
 //    SkipsOnFailure,
     WithChunkReading,
     ShouldQueue,
@@ -43,25 +43,25 @@ class CustomersImport implements
 
     public function model(array $row)
     {
-            $user = Customer::create(
-                [
-                'username'     => $row['Tên đăng nhập'],
-                'full_name'    => $row['Họ tên'],
-                'email'        => $row['Email'],
-                'phone'        => $row['Số điện thoại'],
-                'address'      => $row['Địa chỉ'],
-                'job'          => $row['Nghề nghiệp'],
-                'company'      => $row['Công ty'],
-                'created_at'   => $row['Ngày đăng ký'],
-                ]
-            );
+//            $user = Customer::create(
+//                [
+//                'username'     => $row['Tên đăng nhập'],
+//                'full_name'    => $row['Họ tên'],
+//                'email'        => $row['Email'],
+//                'phone'        => $row['Số điện thoại'],
+//                'address'      => $row['Địa chỉ'],
+//                'job'          => $row['Nghề nghiệp'],
+//                'company'      => $row['Công ty'],
+//                'created_at'   => $row['Ngày đăng ký'],
+//                ]
+//            );
     }
-    public function rules(): array
-    {
-      return [
-           'Email' => ['required, unique:customers,email'],
-       ];
-    }
+//    public function rules(): array
+//    {
+//      return [
+//           'Email' => ['required, unique:customers,email'],
+//       ];
+//    }
 
     public function chunkSize(): int
     {

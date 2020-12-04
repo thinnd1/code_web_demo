@@ -8,6 +8,7 @@ use App\Http\Requests\ImportCsvRequest;
 use App\Http\Requests\ImportRequest;
 use App\Imports\CustomersImport;
 use App\Models\Customer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Exception;
 use Illuminate\Support\Facades\Validator;
@@ -182,11 +183,60 @@ class CustomerController extends Controller
     }
     public function importCustomer(ImportRequest $request)
     {
-        $file = $request->file('file')->store('import');
+        $import = Excel::toArray(new CustomersImport, request()->file('file'));
+        $data = [];
+//        $url = https://docs.google.com/spreadsheets/d/1tFbqR0LCjSuVWaxrKx4OQ76YuKxn61yQ/edit#gid=408539925;
+//        if (isset($import)){
+//            return redirect()->back()->with('error', 'Form excel sai định dạng, bạn có thể tải file mẫu')->withInput();
+//        }
+        foreach ($import[0] as $key => $value) {
+            $data[$key]['username']  = $value['Tên đăng nhập'];
+            $data[$key]['full_name'] = $value['Họ tên'];
+            $data[$key]['email']        = $value['Email'];
+            $data[$key]['phone']         = $value['Số điện thoại'];
+            $data[$key]['address']     = $value['Địa chỉ'];
+            $data[$key]['job']    =  $value['Nghề nghiệp'];
+            $data[$key]['company']       = $value['Công ty'];
+            $data[$key]['created_at']       = date('Y-m-d',strtotime($value['Ngày đăng ký']));
+        }
+        dd($data);
+//        dd(sizeof($data));
+        if (sizeof($data) == 0)
+        {
+            return redirect()->back()->with('error', 'File excel trống')->withInput();
+        }
+        if (sizeof($data)>0) {
+            foreach ($data as $key => $value) {
+//                dd($value);
+                $email = Customer::where('email', 'like', '%' . $value['email'] . '%')->first();
+//                dd($email['email']);
+                $phone = Customer::where('phone', 'like', '%' . $value['phone'] . '%')->first();
+                $username = Customer::where('username', 'like', '%' . $value['username'] . '%')->first();
+                if ($value['email'] == '') {
+                    redirect()->back()->with('error', 'Trường email trống')->withInput();
+                    break;
+                } elseif($value['phone'] == ''){
+                    return redirect()->back()->with('error', 'Trường số điện thoại trống')->withInput();
+                } elseif(isset($value['email']) ?? $email['email']){
+                    return redirect()->back()->with('error', 'Trường email trùng')->withInput();
+                } elseif($value['phone'] == $phone->phone){
+                    return redirect()->back()->with('error', 'Trường số điện thoại trùng')->withInput();
+                } elseif($value['username'] == $username->username ){
+                    return redirect()->back()->with('error', 'Trường email trùng')->withInput();
+                }else
+                $customer = new Customer();
+                $customer->username = $value['username'];
+                $customer->full_name = $value['full_name'];
+                $customer->email = $value['email'];
+                $customer->phone = $value['phone'];
+                $customer->address = $value['address'];
+                $customer->job = $value['job'];
+                $customer->company = $value['company'];
+                $customer->created_at = Carbon::parse($value['created_at']);
 
-        $import = new CustomersImport;
-        $import->import($file);
-
-        return back();
+                $customer->save();
+            }
+        }
+        return redirect()->back()->with('success', 'Nhập file thành công')->withInput();
     }
 }

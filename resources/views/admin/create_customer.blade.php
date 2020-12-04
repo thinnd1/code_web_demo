@@ -37,7 +37,7 @@
                         <div class="form-group row">
                             <label for="inputPassword" class="col-sm-2 col-form-label">Mật Khẩu</label>
                             <div class="col-sm-10">
-                                <input type="password" name="password" class="form-control password" id="inputPassword" placeholder="">
+                                <input type="password" name="password" class="form-control password" value="{{ old("password") }}" id="inputPassword" placeholder="">
                                 @error('password')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror

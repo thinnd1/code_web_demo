@@ -115,9 +115,7 @@
                                                 <td>
                                                     <a class="btn btn-warning"
                                                        href="{{ route('edituser', ['id' => $user->id ]) }}">Sửa</a>
-                                                    <a class="btn btn-danger"
-                                                       onclick="return confirm('Bạn chắc chắn muốn xóa khách hàng này không?')"
-                                                       href="{{ route('deleteuser', ['id' => $user->id ]) }}">Xóa</a>
+                                                    <button type="button" class="btn btn-danger deleteuser" data-id="{{ $user->id }}">Xóa</button>
                                                 </td>
                                             </div>
                                         @endif
@@ -135,7 +133,26 @@
         </div>
     </div>
 @endsection
-
-<script>
-
-</script>
+@section('js')
+    <script>
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $(document).ready(function(){
+            $(".deleteuser").click(function(){
+                var id = $(this).data("id");
+                $.ajax(
+                    {
+                        url: 'deleteuser/'+id,
+                        data: {_token: CSRF_TOKEN,id: id},
+                        type: 'post',
+                        success: function(response){
+                            location.reload();
+                        },
+                        error: function(xhr) {
+                            console.log("2323");
+                            console.log(xhr.responseText); // this line will save you tons of hours while debugging
+                        }
+                    });
+            });
+        });
+    </script>
+@endsection

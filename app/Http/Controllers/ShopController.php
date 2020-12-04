@@ -20,7 +20,8 @@ class ShopController extends Controller
         try {
             $search = trim($request->input('search_company'));
             $shops = $this->shop->getShop($search);
-            return view('admin.shop', compact('shops'));
+            $totalshops = $this->shop->getAll();
+            return view('admin.shop', compact('shops','totalshops'));
         } catch (\Exception $ex){
             return redirect()->back()->with('error', 'ID không tồn tại')->withInput();
         }

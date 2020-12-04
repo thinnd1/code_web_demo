@@ -23,7 +23,8 @@ class OrderController extends Controller
         try {
             $search = trim($request->input('search_order'));
             $orders = $this->order->getOrder($search);
-            return view('admin.order', compact('orders'));
+            $totalOrder = $this->order->getAll();
+            return view('admin.order', compact('orders','totalOrder'));
         } catch  (\Exception $ex) {
             return redirect()->back()->withInput();
         }

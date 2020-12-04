@@ -47,7 +47,7 @@ Route::middleware(['checklogin::class'])->prefix('admin')->group(function(){
     Route::get('/getlistuser', 'App\Http\Controllers\UserController@getListUser')->name('getlistuser');
     Route::get('/edituser/{id?}', 'App\Http\Controllers\UserController@editUser')->name('edituser');
     Route::post('/edituser/{id?}', 'App\Http\Controllers\UserController@updateUser')->name('updateuser');
-    Route::get('/deleteuser/{id?}', 'App\Http\Controllers\UserController@removeUser')->name('deleteuser');
+    Route::post('/deleteuser/{id?}', 'App\Http\Controllers\UserController@removeUser')->name('deleteuser');
 
 //product
     Route::get('/product', 'App\Http\Controllers\ProductController@getProduct')->name('product');
@@ -56,7 +56,7 @@ Route::middleware(['checklogin::class'])->prefix('admin')->group(function(){
     Route::post('/createproduct', 'App\Http\Controllers\ProductController@createProduct')->name('createproduct');
     Route::get('/vieweditproduct/{id}', 'App\Http\Controllers\ProductController@viewEditproduct')->name('vieweditproduct');
     Route::post('/vieweditproduct/{id}', 'App\Http\Controllers\ProductController@editProduct')->name('editproduct');
-    Route::get('/deleteproduct/{id}', 'App\Http\Controllers\ProductController@deleteProduct')->name('deleteproduct');
+    Route::post('/deleteproduct/{id}', 'App\Http\Controllers\ProductController@deleteProduct')->name('deleteproduct');
 
 // order
     Route::get('/order', 'App\Http\Controllers\OrderController@index')->name('order');
@@ -64,13 +64,13 @@ Route::middleware(['checklogin::class'])->prefix('admin')->group(function(){
     Route::post('/createorder', 'App\Http\Controllers\OrderController@createOrder')->name('createorder');
     Route::get('/editorder/{id}', 'App\Http\Controllers\OrderController@editOrder')->name('editorder');
     Route::post('/updateorder/{id}', 'App\Http\Controllers\OrderController@updateOrder')->name('updateorder');
-    Route::get('/removeorder/{id}', 'App\Http\Controllers\OrderController@deleteOrder')->name('removeorder');
+    Route::post('/deleteorder/{id}', 'App\Http\Controllers\OrderController@deleteOrder')->name('deleteorder');
     Route::get('/exportcsvorder', 'App\Http\Controllers\OrderController@exportCsvOrder')->name('exportcsvorder');
 
 // shop
     Route::get('/shop', 'App\Http\Controllers\ShopController@getShop')->name('shop');
     Route::get('/createshop', 'App\Http\Controllers\ShopController@createShop')->name('createshop');
-    Route::get('/deleteshop/{id}', 'App\Http\Controllers\ShopController@deleteShop')->name('deleteshop');
+    Route::post('/deletecompany/{id}', 'App\Http\Controllers\ShopController@deleteShop')->name('deletecompany');
     Route::get('/createcompany', 'App\Http\Controllers\ShopController@viewCreateShop')->name('viewcreatecompany');
     Route::post('/createcompany', 'App\Http\Controllers\ShopController@createShop')->name('createcompany');
     Route::get('/editcompany/{id}', 'App\Http\Controllers\ShopController@editCompany')->name('editcompany');

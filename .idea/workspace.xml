@@ -19,64 +19,23 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e60aad1-ecf2-46a5-9fc6-7551494e3b3b" name="Default Changelist" comment="add field password customer">
-      <change afterPath="$PROJECT_DIR$/.idea/l8.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/phpunit.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/admin/export.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-0aoywaiqTjuKW86BHjomKKvbrL39gqAo.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-0cwV79SYm8QZEbVdA66VssEBlIAoN1sX.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-0j2ZvRqhdKjspc8WmZjlBp81cwXVDGcY.tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-4M5NfXEk7xyDvfpa9WHkK8SXfDcldIfa.tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-4ST7ruCVpr9vqXvBAjBEyCXjr09JMUzQ.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-4xa0B0bNcA3vLxHDsBSKlGVrSSQqq6uN.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-6jk5lIHqYAsQlJFqyBbcO6vcPOuow3GW.tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-7N5iAGoXon0Bdze6cmmtz2YuqBntFA1d.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-AqXZPWhWK1ZY5TjdUfmTfvx9a4odCEVu.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-Ek01QyVJNxDEnEYWoZbeXaWz3ac8H7sm.tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-Fh3bcxIFklJ9SmsJo2GPr8m8Fwb85QBu.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-H4opnmKHmU4VRu9ZtdY4opqQZ49zco5y.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-IKRELekAx6ROq4HoFHYj59qrXHcaxN4k.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-KcUcK3Sl8Wg2dDInRXo1GHBOvRJ5iCk5.tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-LEcVUyfq1Ac9uROszHSfZbwISmCuf4W7.tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-Outwh6381jkFmaWeZ6OqhIgB72mxZBH5.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-QafIdX2SuxUoPgpVlnIB994hsKp4Lf9m.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-Sup9D4qTFwHXWA9MlTFffgPfkB3C5gLV.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-TPkgT9PcUgSoo6E8Qr8tbsc9VlrO5Hyc.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-XYB1qb16FfQPd8A4QL2YzJ93Mk2lsjGK.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-ZX63Nzeze5dkUH6MFYxQUzPk7IosjSvB.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-ZZA3f51DOwWphF7Q8ZEL67E1foGWxijr.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-aAxULGg9w5KVfmxG2cKOZugq57NE20aq.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-aLLWQcjauwBXjVLzdKsm7P5zgXg5h6Jd.tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-b7blwhTOyFth9g6fKotIeYazgZFNyPDa.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-cScpT51PNlHsf046jbgyxHH5t0359U28.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-ckDxTxrJZIZfkhUjWWUDGI22SJHu4jX1.tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-dH8mAvToJ5d253NnSCnIWMmCUumbcLB3.tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-dJjSBqAljREorCDcY4V7nAlb8jtHKHDv.tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-dq7BmxpRI3V9exWZ2Q2W5NAlYyQdSNv7.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-esPUMSL6EwmWuRDXglBtfQ6MkGoIDwnC.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-kMPKjaDYHmLselyql5xbTDK79Mu2zKx5.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-khENnDaeHC49fNOYduztcwMJECN2RvYS.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-liYbthye20nbMHSZVzZnvUVq4oHd5jZ3.tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-lzsKcM5xb2dqFSc84YEA2QdoSadEuH8o.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-mAao2LVsDp6dlPfPynagDSQ2ihEVkLmr.tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-npWQTuCyrwhTdBIcjhI196rfwThAdbTw.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-oaKQc6FD1L1oSEKHZgHZ1w28UHtKzUJO.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-p7sk6Zyo7Itl1n9hoVv0qIozNamrsPL7.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-pljOfOYpWTFGLMq2w9nFK4tyD6dw73AK.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-qECiW58HPZGGoLc69LhA7ImyuQw8qPNP.tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-qUkSSYQ08AtXkRnl8VFSutQN38Fkqvpg.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-rJZadMKElubIfO6fgn11eiTsrbRheNZm.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-rzONoPU6YxpxIo2iZPcD3ySPQAqpvqCG.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-urGq9PCNFINQFEXQQfStAw4QB1TLJtZC.tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/framework/laravel-excel/laravel-excel-vPT7fc1UKUBPg3msOTwS1mT0DWRcDrBL.xlsx" afterDir="false" />
+    <list default="true" id="1e60aad1-ecf2-46a5-9fc6-7551494e3b3b" name="Default Changelist" comment="fix bug button delete post">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CustomerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ShopController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ShopController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/CustomerRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/CustomerRequest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Imports/CustomersImport.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Imports/CustomersImport.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Product.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Shop.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Shop.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/create_customer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/create_customer.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/list_user.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/list_user.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/listcustomer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/listcustomer.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layout/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layout/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/order.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/order.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/product.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/product.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/shop.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/shop.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -266,14 +225,8 @@
       <workItem from="1606736541545" duration="235000" />
       <workItem from="1606785810790" duration="26132000" />
       <workItem from="1606873574156" duration="27992000" />
-      <workItem from="1606958723275" duration="30761000" />
-    </task>
-    <task id="LOCAL-00001" summary="add controller">
-      <created>1605860869328</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1605860869328</updated>
+      <workItem from="1606958723275" duration="30850000" />
+      <workItem from="1607045710602" duration="20596000" />
     </task>
     <task id="LOCAL-00002" summary="fix bug">
       <created>1605866717441</created>
@@ -611,7 +564,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606982479068</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="fix bug button delete post">
+      <created>1606995152862</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1606995152862</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -631,7 +591,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="validate create and update company" />
     <MESSAGE value="validate create and update email &amp; phone" />
     <MESSAGE value="validate create and update order" />
     <MESSAGE value="keep value after submit in select option" />
@@ -656,7 +615,8 @@
     <MESSAGE value="ADD import excel" />
     <MESSAGE value="fix bug + add import file excel to db" />
     <MESSAGE value="add field password customer" />
-    <option name="LAST_COMMIT_MESSAGE" value="add field password customer" />
+    <MESSAGE value="fix bug button delete post" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bug button delete post" />
   </component>
   <component name="WindowStateProjectService">
     <state x="477" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1606731093647">
@@ -683,22 +643,22 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state width="512" height="446" key="SwitcherDM/0.0.1600.860@0.0.1600.860" timestamp="1606989602895" />
-    <state x="392" y="150" key="Vcs.Push.Dialog.v2" timestamp="1606982484137">
+    <state x="392" y="150" key="Vcs.Push.Dialog.v2" timestamp="1606995156896">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="392" y="150" key="Vcs.Push.Dialog.v2/0.0.1600.860@0.0.1600.860" timestamp="1606982484137" />
-    <state x="92" y="92" width="1416" height="676" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1606979887399">
+    <state x="392" y="150" key="Vcs.Push.Dialog.v2/0.0.1600.860@0.0.1600.860" timestamp="1606995156896" />
+    <state x="92" y="92" width="1416" height="676" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1607056759962">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="92" y="92" width="1416" height="676" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1600.860@0.0.1600.860" timestamp="1606979887399" />
-    <state x="92" y="92" width="1416" height="676" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog" timestamp="1606704618517">
+    <state x="92" y="92" width="1416" height="676" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1600.860@0.0.1600.860" timestamp="1607056759962" />
+    <state x="92" y="92" width="1416" height="676" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog" timestamp="1607056759962">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="92" y="92" width="1416" height="676" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog/0.0.1600.860@0.0.1600.860" timestamp="1606704618517" />
-    <state x="507" y="29" width="669" height="801" key="find.popup" timestamp="1606993107340">
+    <state x="92" y="92" width="1416" height="676" key="com.intellij.history.integration.ui.views.SelectionHistoryDialog/0.0.1600.860@0.0.1600.860" timestamp="1607056759962" />
+    <state x="507" y="29" width="669" height="801" key="find.popup" timestamp="1607068428050">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="507" y="29" width="669" height="801" key="find.popup/0.0.1600.860@0.0.1600.860" timestamp="1606993107340" />
+    <state x="507" y="29" width="669" height="801" key="find.popup/0.0.1600.860@0.0.1600.860" timestamp="1607068428050" />
     <state x="456" y="195" key="run.anything.popup" timestamp="1606987123070">
       <screen x="0" y="0" width="1600" height="860" />
     </state>

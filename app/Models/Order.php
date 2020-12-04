@@ -78,4 +78,8 @@ class Order extends Eloquent
         $deleteOrder = Order::findOrFail($id);
         $deleteOrder->delete();
     }
+    public function getAll()
+    {
+        return Order::all();
+    }
 }

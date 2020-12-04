@@ -175,7 +175,6 @@
                             location.reload();
                         },
                         error: function(xhr) {
-                            console.log("12345678");
                             console.log(xhr.responseText); // this line will save you tons of hours while debugging
                         }
                     });
@@ -183,7 +182,6 @@
         });
 
         function exportTasks(_this) {
-            confirm('Bạn muốn xuất thành file csv không?');
             let _url = $(_this).data('href');
             window.location.href = _url;
         }
