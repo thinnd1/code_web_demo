@@ -43,6 +43,9 @@ Route::middleware(['checklogin::class'])->prefix('admin')->group(function(){
     Route::get('/fileexport', 'App\Http\Controllers\CustomerController@fileExport')->name('fileexport');
     Route::post('/importcustomer', 'App\Http\Controllers\CustomerController@importCustomer')->name('importcustomer');
 
+    Route::get('/readexcel', 'App\Http\Controllers\CustomerController@viewReadExcel')->name('viewreadexcel');
+    Route::post('/readexcel', 'App\Http\Controllers\CustomerController@readExcel')->name('readexcel');
+
     // users
     Route::get('/getlistuser', 'App\Http\Controllers\UserController@getListUser')->name('getlistuser');
     Route::get('/edituser/{id?}', 'App\Http\Controllers\UserController@editUser')->name('edituser');

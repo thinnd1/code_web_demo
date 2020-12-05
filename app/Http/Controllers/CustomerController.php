@@ -239,4 +239,29 @@ class CustomerController extends Controller
         }
         return redirect()->back()->with('success', 'Nhập file thành công')->withInput();
     }
+    public function viewReadExcel()
+    {
+        return view('admin.import');
+    }
+    public function readExcel(Request $request)
+    {
+        $path = $request->file('file');
+
+        $import = \Excel::toArray(new CustomersImport, $path);
+        $data = [];
+        foreach ($import[0] as $key => $value) {
+            $data[$key]['username']  = $value['Tên đăng nhập'];
+            $data[$key]['full_name'] = $value['Họ tên'];
+            $data[$key]['email']        = $value['Email'];
+            $data[$key]['phone']         = $value['Số điện thoại'];
+            $data[$key]['address']     = $value['Địa chỉ'];
+            $data[$key]['job']    =  $value['Nghề nghiệp'];
+            $data[$key]['company']       = $value['Công ty'];
+            $data[$key]['created_at']       = date('Y-m-d',strtotime($value['Ngày đăng ký']));
+        }
+
+        return view('admin.import', compact('data'));
+//        return view('admin.import', compact('listCustomers', 'customerDetail'));
+
+    }
 }
