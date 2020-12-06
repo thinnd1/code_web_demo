@@ -69,7 +69,7 @@
                     <div class="form-group row">
                         <label for="inputage" class="col-sm-2 col-form-label">Tuổi*</label>
                         <div class="col-sm-10">
-                            <input type="number" name="age" class="form-control" value="{{ old("age") ?? $user->age }}" id="inputage">
+                            <input type="text" maxlength="3" name="age" class="form-control" value="{{ old("age") ?? $user->age }}" id="inputage">
                             @error('age')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -94,6 +94,8 @@
                         <label for="inputaddress" class="col-sm-2 col-form-label">Địa chỉ*</label>
                         <div class="col-sm-10">
                             <textarea class="form-control" name="address" id="inputaddress" aria-label="With textarea">{{ old("address") ?? $user->address }}</textarea>
+                            <textarea class="form-control" name="address" id="inputaddress" aria-label="With textarea">{{ old("address") ?? $user->address }}"</textarea>
+
                             @error('address')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
