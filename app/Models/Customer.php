@@ -134,13 +134,10 @@ class Customer extends Eloquent
     }
     public function importExcelCustomer($listExcels)
     {
-//        die("wewe");
         foreach ($listExcels as $item){
             $email = $this->checkMail($item->email);
             $item->status = $email ? 1 : 2;
-//dd($item);
             if ($item->status == 1 ) {
-//                dd($email->id);
                 $data = [
                     'username' => $item->username,
                     'full_name' => $item->full_name,
@@ -166,7 +163,7 @@ class Customer extends Eloquent
                 ];
                 Customer::create($data);
             }
+            return Import::truncate();
         }
-
     }
 }

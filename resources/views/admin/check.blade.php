@@ -13,8 +13,7 @@
             </div><!-- /.row -->
             <div class="table-responsive">
                 <h3>Tổng số bản ghi là : {{ count($totalListExcel) }}</h3>
-                <form action="{{ route('importexcelcustomer') }}" method="post">
-                    @csrf
+
                 <table class="table table-bordered table-hover tablesorter">
                     <thead>
                     <tr>
@@ -59,8 +58,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                    <button class="btn btn-primary" type="submit">Thực hiện Import</button>
-                </form>
+                    <a href="{{ route("importexcelcustomer") }}" class="btn btn-primary" >Thực hiện Import</a>
             </div>
         </div>
     </div>

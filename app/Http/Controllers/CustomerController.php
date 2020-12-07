@@ -298,47 +298,14 @@ class CustomerController extends Controller
             $listExcels[] = $item;
         }
 //        dd($listExcels);
-        self::importExcelCustomer($listExcels);
+//        self::importExcelCustomer($listExcels);
 
         return view('admin.check', compact('listExcel','email','listExcels','totalListExcel'));
     }
     public function importExcelCustomer($listExcels)
     {
 //        dd($listExcels);
-        foreach ($listExcels as $item){
-            $email = $this->checkMail($item->email);
-            $item->status = $email ? 1 : 2;
-//dd($item);
-            if ($item->status == 1 ) {
-//                dd($email->id);
-                $data = [
-                    'username' => $item->username,
-                    'full_name' => $item->full_name,
-                    'email' => $item->full_name,
-                    'phone' => (int)$item->phone,
-                    'address' => $item->address,
-                    'job' => $item->job,
-                    'company' => $item->company,
-                    'updated_at' => Carbon::now(),
-                ];
-                $this->where('_id', $email->id)->update($data);
-            } else {
-                $data = [
-                    'username' => $item->username,
-                    'full_name' => $item->full_name,
-                    'email' => $item->full_name,
-                    'phone' => (int)$item->phone,
-                    'address' => $item->address,
-                    'job' => $item->job,
-                    'company' => $item->company,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ];
-                Customer::create($data);
-            }
-        }
-        dd("2323");
-        dd($listExcels);
+
         $this->customer->importExcelCustomer($listExcels);
         return redirect()->route('listcustomer');
     }
