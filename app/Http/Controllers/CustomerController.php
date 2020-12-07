@@ -8,6 +8,7 @@ use App\Http\Requests\ImportCsvRequest;
 use App\Http\Requests\ImportRequest;
 use App\Imports\CustomersImport;
 use App\Models\Customer;
+use App\Models\Import;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Exception;
@@ -20,9 +21,12 @@ class CustomerController extends Controller
 {
     //
     protected $customer;
-    public function __construct(Customer $customer)
+    protected $import;
+
+    public function __construct(Customer $customer,Import $import)
     {
         $this->customer = $customer;
+        $this->import = $import;
     }
     public function viewCreateCustomer()
     {
@@ -259,9 +263,89 @@ class CustomerController extends Controller
             $data[$key]['company']       = $value['Công ty'];
             $data[$key]['created_at']       = date('Y-m-d',strtotime($value['Ngày đăng ký']));
         }
+        if (sizeof($data) == 0)
+        {
+            return redirect()->back()->with('error', 'File excel trống')->withInput();
+        }
+        if (sizeof($data) > 0) {
+            foreach ($data as $key => $value) {
+                $customer = new Import();
+                $customer->username = $value['username'];
+                $customer->full_name = $value['full_name'];
+                $customer->email = $value['email'];
+                $customer->phone = $value['phone'];
+                $customer->address = $value['address'];
+                $customer->job = $value['job'];
+                $customer->company = $value['company'];
+                $customer->created_at = Carbon::parse($value['created_at']);
 
+                $customer->save();
+            }
+        }
         return view('admin.import', compact('data'));
-//        return view('admin.import', compact('listCustomers', 'customerDetail'));
+    }
+    public function viewCheckData()
+    {
+        $listExcel = $this->import->getAll();
+        $totalListExcel = $this->import->getCount();
+        $listExcels = [];
+        foreach ($listExcel as $item) {
+            $email = $this->customer->checkMail($item->email);
+            $phone = $this->customer->checkPhone($item->phone);
+            $item->status = $email ? 1 : 2;
+            $item->statusphone = $phone ? 1 : 2;
 
+            $listExcels[] = $item;
+        }
+//        dd($listExcels);
+        self::importExcelCustomer($listExcels);
+
+        return view('admin.check', compact('listExcel','email','listExcels','totalListExcel'));
+    }
+    public function importExcelCustomer($listExcels)
+    {
+//        dd($listExcels);
+        foreach ($listExcels as $item){
+            $email = $this->checkMail($item->email);
+            $item->status = $email ? 1 : 2;
+//dd($item);
+            if ($item->status == 1 ) {
+//                dd($email->id);
+                $data = [
+                    'username' => $item->username,
+                    'full_name' => $item->full_name,
+                    'email' => $item->full_name,
+                    'phone' => (int)$item->phone,
+                    'address' => $item->address,
+                    'job' => $item->job,
+                    'company' => $item->company,
+                    'updated_at' => Carbon::now(),
+                ];
+                $this->where('_id', $email->id)->update($data);
+            } else {
+                $data = [
+                    'username' => $item->username,
+                    'full_name' => $item->full_name,
+                    'email' => $item->full_name,
+                    'phone' => (int)$item->phone,
+                    'address' => $item->address,
+                    'job' => $item->job,
+                    'company' => $item->company,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ];
+                Customer::create($data);
+            }
+        }
+        dd("2323");
+        dd($listExcels);
+        $this->customer->importExcelCustomer($listExcels);
+        return redirect()->route('listcustomer');
+    }
+
+    public function deleteRecordExcel($id)
+    {
+        $this->import->deleteRecord($id);
+        return redirect()->back();
     }
 }

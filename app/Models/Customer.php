@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Libraries\Ultilities;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
@@ -58,8 +59,8 @@ class Customer extends Eloquent
             'full_name' => $request->full_name,
             'gender' => $request->gender,
             'email' => $request->email,
-            'age' => $request->age,
-            'phone' => $request->phone,
+            'age' => (int)$request->age,
+            'phone' => (int)$request->phone,
             'address' => $request->address,
             'job' => $request->job,
             'company' => $request->company,
@@ -73,8 +74,8 @@ class Customer extends Eloquent
             'username' => $request->username,
             'full_name' => $request->full_name,
             'email' => $request->email,
-            'phone' => $request->phone,
-            'age' => $request->age,
+            'phone' => (int)$request->phone,
+            'age' => (int)$request->age,
             'gender' => $request->age,
             'address' => $request->address,
             'job' => $request->job,
@@ -119,5 +120,53 @@ class Customer extends Eloquent
                 ]);
             }
         }
+    }
+    public function checkMail($email)
+    {
+        $email = Customer::where('email', $email)->first();
+        return $email;
+    }
+
+    public function checkPhone($phone)
+    {
+        $phone = Customer::where('phone', $phone)->first();
+        return $phone;
+    }
+    public function importExcelCustomer($listExcels)
+    {
+//        die("wewe");
+        foreach ($listExcels as $item){
+            $email = $this->checkMail($item->email);
+            $item->status = $email ? 1 : 2;
+//dd($item);
+            if ($item->status == 1 ) {
+//                dd($email->id);
+                $data = [
+                    'username' => $item->username,
+                    'full_name' => $item->full_name,
+                    'email' => $item->full_name,
+                    'phone' => (int)$item->phone,
+                    'address' => $item->address,
+                    'job' => $item->job,
+                    'company' => $item->company,
+                    'updated_at' => Carbon::now(),
+                ];
+                $this->where('_id', $email->id)->update($data);
+            } else {
+                $data = [
+                    'username' => $item->username,
+                    'full_name' => $item->full_name,
+                    'email' => $item->full_name,
+                    'phone' => (int)$item->phone,
+                    'address' => $item->address,
+                    'job' => $item->job,
+                    'company' => $item->company,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ];
+                Customer::create($data);
+            }
+        }
+
     }
 }

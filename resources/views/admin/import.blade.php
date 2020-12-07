@@ -19,42 +19,44 @@
 
                 <button type="submit" class="btn btn-primary">Nhập</button>
             </form>
-            @if(isset($data))
-{{--                @dd($data)--}}
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover tablesorter">
-                        <thead>
-                        <tr>
-                            <th>Stt</th>
-                            <th>Họ và tên</th>
-                            <th>Tên đăng nhập</th>
-                            <th>Email</th>
-                            <th>Số điện thoại</th>
-                            <th>Địa chỉ</th>
-                            <th>Nghề nghiệp</th>
-                            <th>Công ty</th>
-                            <th>Ngày đăng ký</th>
-                        </tr>
-                        </thead>
-                        <tbody>
 
-                        @foreach($data as $index => $dt)
+            <form action="" method="post">
+                @csrf
+                @if(isset($data))
+                    {{--                @dd($data)--}}
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover tablesorter">
+                            <thead>
                             <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td><input type="text" value="{{ $dt['username'] }}"> </td>
-                                <td><input type="text" value="{{ $dt['full_name'] }}"> </td>
-                                <td><input type="text" value="{{ $dt['email'] }}"> </td>
-                                <td><input type="text" value="{{ $dt['phone'] }}"> </td>
-                                <td><input type="text" value="{{ $dt['address'] }}"> </td>
-                                <td><input type="text" value="{{ $dt['job'] }}"> </td>
-                                <td><input type="text" value="{{ $dt['company'] }}"> </td>
-                                <td><input type="text" value="{{ $dt['created_at'] }}"> </td>
+                                <th>Stt</th>
+                                <th>Họ và tên</th>
+                                <th>Email</th>
+                                <th width="10%">Số điện thoại</th>
+                                <th>Địa chỉ</th>
+                                <th>Nghề nghiệp</th>
+                                <th>Công ty</th>
+                                <th>Ngày đăng ký</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            @endif
+                            </thead>
+                            <tbody>
+                            @foreach($data as $index => $dt)
+                                <tr>
+                                    <td> {{ $index + 1 }} </td>
+                                    <td> {{ $dt['full_name'] }} </td>
+                                    <td> {{ $dt['email'] }} </td>
+                                    <td> {{ $dt['phone'] }} </td>
+                                    <td> {{ $dt['address'] }} </td>
+                                    <td> {{ $dt['job'] }} </td>
+                                    <td> {{ $dt['company'] }} </td>
+                                    <td> {{ $dt['created_at'] }} </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        <a href="{{ route("viewcheck") }}" type="submit" class="btn btn-primary">Check Trùng</a>
+                    </div>
+                @endif
+            </form>
         </div>
     </div>
 @endsection
