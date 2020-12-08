@@ -33,6 +33,7 @@ class Customer extends Eloquent
             $listCustomer = Customer::where('full_name', 'like', '%' . $search . '%')
                 ->orWhere('username', 'like', '%' . $search . '%')
                 ->orWhere('email', 'like', '%' . $search . '%')
+                ->orWhere('phone', 'like', '%' . $search . '%')
                 ->paginate(10);
             $listCustomer->appends(['search' => $search]);
         }
@@ -137,11 +138,12 @@ class Customer extends Eloquent
         foreach ($listExcels as $item){
             $email = $this->checkMail($item->email);
             $item->status = $email ? 1 : 2;
+
             if ($item->status == 1 ) {
                 $data = [
                     'username' => $item->username,
                     'full_name' => $item->full_name,
-                    'email' => $item->full_name,
+                    'email' => $item->email,
                     'phone' => (int)$item->phone,
                     'address' => $item->address,
                     'job' => $item->job,
@@ -149,11 +151,11 @@ class Customer extends Eloquent
                     'updated_at' => Carbon::now(),
                 ];
                 $this->where('_id', $email->id)->update($data);
-            } else {
+            } elseif ($item->status == 2) {
                 $data = [
                     'username' => $item->username,
                     'full_name' => $item->full_name,
-                    'email' => $item->full_name,
+                    'email' => $item->email,
                     'phone' => (int)$item->phone,
                     'address' => $item->address,
                     'job' => $item->job,
@@ -163,7 +165,7 @@ class Customer extends Eloquent
                 ];
                 Customer::create($data);
             }
-            return Import::truncate();
+            Import::truncate();
         }
     }
 }

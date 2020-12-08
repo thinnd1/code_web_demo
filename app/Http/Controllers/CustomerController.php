@@ -297,14 +297,27 @@ class CustomerController extends Controller
 
             $listExcels[] = $item;
         }
-//        dd($listExcels);
 //        self::importExcelCustomer($listExcels);
 
         return view('admin.check', compact('listExcel','email','listExcels','totalListExcel'));
     }
-    public function importExcelCustomer($listExcels)
+    public function checkExcel()
     {
-//        dd($listExcels);
+        $listExcel = $this->import->getCount();
+        $listExcels = [];
+        foreach ($listExcel as $item) {
+            $email = $this->customer->checkMail($item->email);
+            $phone = $this->customer->checkPhone($item->phone);
+            $item->status = $email ? 1 : 2;
+            $item->statusphone = $phone ? 1 : 2;
+
+            $listExcels[] = $item;
+        }
+        return $listExcels;
+    }
+    public function importExcelCustomer()
+    {
+        $listExcels = $this->checkExcel();
 
         $this->customer->importExcelCustomer($listExcels);
         return redirect()->route('listcustomer');

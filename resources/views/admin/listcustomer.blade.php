@@ -58,15 +58,7 @@
 
                         <div>
                             <span data-href="{{ route('fileexport') }}" id="export" class="btn btn-success btn-sm" onclick="exportTasks(event.target);">Xuất file csv</span>
-                            <form action="{{ route('importcustomer') }}" method="post" id="import_csv" enctype="multipart/form-data">
-                                @csrf
-                                <label for="">Nhập dữ liệu từ file excel vào hệ thống</label>
-                                <input type="file" accept=".csv,.xls,.xlsx" name="file" id="file_csv">
-                                @error('file')
-                                <p class="text-danger">{{ $message }}</p>
-                                @enderror
-                                <button type="submit" class="btn btn-primary">Nhập</button>
-                            </form>
+                            <p>Nhập dữ liệu từ file excel vào hệ thống <a href="{{ route("readexcel") }}">Link</a> </p>
 
                         </div>
                         <h3>Tổng số khách hàng: {{ count($totalcustomer) }}</h3>

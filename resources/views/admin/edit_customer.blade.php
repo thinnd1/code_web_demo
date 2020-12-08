@@ -94,8 +94,6 @@
                         <label for="inputaddress" class="col-sm-2 col-form-label">Địa chỉ*</label>
                         <div class="col-sm-10">
                             <textarea class="form-control" name="address" id="inputaddress" aria-label="With textarea">{{ old("address") ?? $user->address }}</textarea>
-                            <textarea class="form-control" name="address" id="inputaddress" aria-label="With textarea">{{ old("address") ?? $user->address }}"</textarea>
-
                             @error('address')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -113,7 +111,6 @@
                     </div>
 
                     <div class="form-group row">
-{{--                        @dd($user->company)--}}
                         <label for="inputcompany" class="col-sm-2 col-form-label">Công ty</label>
                         <div class="col-sm-10">
                             <input type="text" name="company" class="form-control" value="{{ old("company") ?? $user->company }}" id="inputcompany">
