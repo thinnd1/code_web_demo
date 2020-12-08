@@ -21,7 +21,7 @@
                 <div class="row">
                     <h2 class="col-lg-6 float-left">Danh sách đơn hàng</h2>
                     <div class="col-lg-6 text-right h2">
-                        <a href="{{ route('viewcreateorder') }}" class="btn btn-info">Tạo đơn hàng mới</a>
+                        <a href="{{ route('viewcreateorder') }}" onclick="return confirm('Bạn muốn thêm khách hàng ?')" class="btn btn-info">Tạo đơn hàng mới</a>
                     </div>
                 </div>
                 <form action="">

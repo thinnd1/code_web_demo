@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ol class="breadcrumb">
-                        <li class="active"><i class="fa fa-dashboard"></i> Danh sách khách hàng</li>
+                        <li class="active"><i class="fa fa-dashboard"></i> Nhập dữ liệu vào hệ thống</li>
                     </ol>
                 </div>
             </div><!-- /.row -->

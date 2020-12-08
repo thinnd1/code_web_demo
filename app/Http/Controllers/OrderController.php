@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\OrderExport;
 use App\Http\Requests\OrderRequest;
 use App\Models\Customer;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrderController extends Controller
 {
@@ -78,39 +80,8 @@ class OrderController extends Controller
             return redirect()->back()->withInput();
         }
     }
-    public function exportCsvOrder(Request $request, Order $order)
+    public function exportCsvOrder()
     {
-        $fileName = 'order.csv';
-        $orders = Order::all();
-
-        $headers = array(
-            "Content-type"        => "text/csv",
-            "Content-Disposition" => "attachment; filename=$fileName",
-            "Pragma"              => "no-cache",
-            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-            "Expires"             => "0"
-        );
-        $columns = array('Họ và tên', 'Sản phẩm', 'Tổng giá', 'Địa chỉ', 'Ngày đặt', 'Email', 'Trạng thái', 'Hình thức thanh toán');
-
-        $callback = function() use($orders, $columns, $fileName) {
-
-            $file = fopen('php://output', 'w');
-
-            fputcsv($file, $columns);
-
-            foreach ($orders as $order) {
-                $row['Họ và tên']            = $order->id_user;
-                $row['Sản phẩm']             = $order->id_product;
-                $row['Tổng giá']             = $order->total_price;
-                $row['Địa chỉ']              = $order->address;
-                $row['Ngày đặt']             = $order->orderdate;
-                $row['Email']                = $order->email;
-                $row['Trạng thái']           = $order->status;
-                $row['Hình thức thanh toán'] = $order->payment;
-                fputcsv($file, array($row['Họ và tên'], $row['Sản phẩm'], $row['Tổng giá'], $row['Địa chỉ'], $row['Ngày đặt'], $row['Email'],$row['Trạng thái'], $row['Hình thức thanh toán']));
-            }
-            fclose($file);
-        };
-        return response()->stream($callback, 200, $headers);
+        return Excel::download(new OrderExport(), 'order-' . time() . '.xlsx');
     }
 }

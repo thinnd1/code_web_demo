@@ -37,7 +37,7 @@
                             Danh sách khách hàng
                         </div>
                         <div class="coL-lg-6 text-right h2">
-                            <a class="btn btn-info" href="{{ route('createcustomer') }}">Thêm khách hàng</a>
+                            <a class="btn btn-info" href="{{ route('createcustomer') }}" onclick="return confirm('Bạn muốn thêm khách hàng ?')">Thêm khách hàng</a>
                         </div>
                     </div>
 
@@ -57,7 +57,7 @@
                         </div>
 
                         <div>
-                            <span data-href="{{ route('fileexport') }}" id="export" class="btn btn-success btn-sm" onclick="exportTasks(event.target);">Xuất file csv</span>
+                            <span id="export" class="btn btn-success btn-sm">Xuất file csv</span>
                             <p>Nhập dữ liệu từ file excel vào hệ thống <a href="{{ route("readexcel") }}">Link</a> </p>
 
                         </div>
@@ -176,11 +176,15 @@
                 }
             });
         });
+        $("#export").click(function(){
+            console.log("3232");
+            var ep = confirm("Bạn muốn tải file về máy?");
+            if (ep == true)
+            {
+                window.location.href = "{{ route('fileexport')}}";
+            }
+        });
 
-        function exportTasks(_this) {
-            let _url = $(_this).data('href');
-            window.location.href = _url;
-        }
     </script>
 @endsection
 
