@@ -247,7 +247,7 @@ class CustomerController extends Controller
     {
         return view('admin.import');
     }
-    public function readExcel(Request $request)
+    public function readExcel(ImportCsvRequest $request)
     {
         $path = $request->file('file');
 

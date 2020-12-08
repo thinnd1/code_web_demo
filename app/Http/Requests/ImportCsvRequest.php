@@ -25,14 +25,14 @@ class ImportCsvRequest extends FormRequest
     {
         return [
             //
-            'file'      => 'required',
+            'file'      => 'required|mimes:xlsx',
         ];
     }
     public function messages()
     {
         return [
             'file.required' => 'Không được để trống',
-            'file.in'       => 'Nhập không đúng định dạng file csv',
+            'file.mimes'       => 'Nhập không đúng định dạng file excel',
         ];
     }
 }

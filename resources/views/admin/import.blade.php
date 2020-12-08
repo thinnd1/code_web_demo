@@ -16,7 +16,9 @@
                 @csrf
                 <label for="">Nhập dữ liệu từ file excel vào hệ thống</label>
                 <input type="file" accept=".csv,.xls,.xlsx" name="file" id="file_csv">
-
+                @error('file')
+                <p class="text-danger">{{ $message }}</p>
+                @enderror
                 <button type="submit" class="btn btn-primary">Nhập</button>
             </form>
 
