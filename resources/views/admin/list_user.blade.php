@@ -33,7 +33,7 @@
                             </form>
                         </div>
 
-                        <h3>Tổng số tài khoản: {{ count($userTotal) }} </h3>
+                        <h3>Tổng số tài khoản: {{ $users->total() }} </h3>
                         <table class="table table-bordered table-hover tablesorter">
                             <thead>
                             <tr>

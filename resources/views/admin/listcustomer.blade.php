@@ -37,7 +37,7 @@
                             Danh sách khách hàng
                         </div>
                         <div class="coL-lg-6 text-right h2">
-                            <a class="btn btn-info" href="{{ route('createcustomer') }}" onclick="return confirm('Bạn muốn thêm khách hàng ?')">Thêm khách hàng</a>
+                            <a class="btn btn-info" href="{{ route('createcustomer') }}">Thêm khách hàng</a>
                         </div>
                     </div>
 
@@ -61,7 +61,7 @@
                             <p>Nhập dữ liệu từ file excel vào hệ thống <a href="{{ route("readexcel") }}">Link</a> </p>
 
                         </div>
-                        <h3>Tổng số khách hàng: {{ count($totalcustomer) }}</h3>
+                        <h3>Tổng số khách hàng: {{ $listCustomers->total() }}</h3>
                         <table class="table table-bordered table-hover tablesorter">
                             <thead>
                             <tr>
@@ -131,8 +131,8 @@
                                         @if(Auth::user()->role == 1)
                                             <div class="divide-column">
                                             <td>
-                                                <a class="btn btn-primary" onclick="return confirm('Bạn muốn xem khách hàng đặt đơn gì?')" href="{{ route('viewuserorder', ['id' => $listCustomer->id ]) }}">Xem</a>
-                                                <a class="btn btn-warning" onclick="return confirm('Bạn muốn cập nhật thông tin khách hàng ?')" href="{{ route('vieweditcustomer', ['id' => $listCustomer->id ]) }}">Sửa</a>
+                                                <a class="btn btn-primary" href="{{ route('viewuserorder', ['id' => $listCustomer->id ]) }}">Xem</a>
+                                                <a class="btn btn-warning" href="{{ route('vieweditcustomer', ['id' => $listCustomer->id ]) }}">Sửa</a>
                                                 <button type="button" class="btn btn-danger deleteRecord" data-id="{{ $listCustomer->id }}">Xóa</button>
                                             </td>
                                             </div>

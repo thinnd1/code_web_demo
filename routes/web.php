@@ -40,7 +40,6 @@ Route::middleware(['checklogin::class'])->prefix('admin')->group(function(){
     Route::get('/importcsvcustomer', 'App\Http\Controllers\CustomerController@importCsvCustomer')->name('importcsvcustomer');
     Route::post('/importcsv', 'App\Http\Controllers\CustomerController@importCsv')->name('importcsv');
     Route::get('/fileexport', 'App\Http\Controllers\CustomerController@fileExport')->name('fileexport');
-    Route::post('/importcustomer', 'App\Http\Controllers\CustomerController@importCustomer')->name('importcustomer');
 
     Route::get('/readexcel', 'App\Http\Controllers\CustomerController@viewReadExcel')->name('viewreadexcel');
     Route::post('/readexcel', 'App\Http\Controllers\CustomerController@readExcel')->name('readexcel');

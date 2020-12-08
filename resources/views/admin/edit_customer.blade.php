@@ -36,15 +36,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <label for="inputusername" class="col-sm-2 col-form-label">Tên đăng nhập*</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="username" class="form-control" value="{{ old("username") ?? $user->username }}" id="inputusername">
-                            @error('username')
-                            <p class="text-danger">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
+                    <input type="hidden" name="username" class="form-control" value="{{ old("username") ?? $user->username }}" id="inputusername">
 
                     <div class="form-group row">
                         <label for="inputemail" class="col-sm-2 col-form-label">Email*</label>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Libraries\Ultilities;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
@@ -124,8 +125,8 @@ class Customer extends Eloquent
     }
     public function checkMail($email)
     {
-        $email = Customer::where('email', $email)->first();
-        return $email;
+        $emails = Customer::where('email', $email)->first();
+        return $emails;
     }
 
     public function checkPhone($phone)
@@ -165,7 +166,7 @@ class Customer extends Eloquent
                 ];
                 Customer::create($data);
             }
-            Import::truncate();
+            Import::where('id_file', Auth::user()->id)->delete();
         }
     }
 }

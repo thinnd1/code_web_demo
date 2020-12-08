@@ -21,7 +21,7 @@
                 <div class="row">
                     <h2 class="col-lg-6 float-left">Danh sách đơn hàng</h2>
                     <div class="col-lg-6 text-right h2">
-                        <a href="{{ route('viewcreateorder') }}" onclick="return confirm('Bạn muốn thêm khách hàng ?')" class="btn btn-info">Tạo đơn hàng mới</a>
+                        <a href="{{ route('viewcreateorder') }}" class="btn btn-info">Tạo đơn hàng mới</a>
                     </div>
                 </div>
                 <form action="">
@@ -42,7 +42,7 @@
                     <p></p>
 
                     <div class="table-responsive">
-                        <h3>Tổng số đơn hàng: {{ count($totalOrder) }}</h3>
+                        <h3>Tổng số đơn hàng: {{ $orders->total() }}</h3>
 
                         <table class="table table-bordered table-hover tablesorter">
                         <thead>
@@ -118,21 +118,24 @@
 @section('js')
     <script>
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        $(document).ready(function(){
-            $(".deleteOrder").click(function(){
+        $(document).ready(function () {
+            $(".deleteOrder").click(function () {
                 var id = $(this).data("id");
-                $.ajax(
-                    {
-                        url: 'deleteorder/'+id,
-                        data: {_token: CSRF_TOKEN,id: id},
-                        type: 'post',
-                        success: function(response){
-                            location.reload();
-                        },
-                        error: function(xhr) {
-                            console.log(xhr.responseText); // this line will save you tons of hours while debugging
-                        }
-                    });
+                var del = confirm("Bạn chắc chắn muốn xóa ?");
+                if (del == true) {
+                    $.ajax(
+                        {
+                            url: 'deleteorder/' + id,
+                            data: {_token: CSRF_TOKEN, id: id},
+                            type: 'post',
+                            success: function (response) {
+                                location.reload();
+                            },
+                            error: function (xhr) {
+                                console.log(xhr.responseText); // this line will save you tons of hours while debugging
+                            }
+                        });
+                }
             });
         });
     function exportTasks(_this) {

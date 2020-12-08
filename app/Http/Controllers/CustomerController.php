@@ -12,6 +12,7 @@ use App\Models\Import;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -47,8 +48,7 @@ class CustomerController extends Controller
         try {
             $search = trim($request->input('search_user'));
             $listCustomers = $this->customer->listCustomer($search);
-            $totalcustomer = $this->customer->getAll();
-            return view('admin.listcustomer', compact('listCustomers', 'totalcustomer'));
+            return view('admin.listcustomer', compact('listCustomers'));
         } catch  (\Exception $ex) {
             return redirect()->back()->withInput();
         }
@@ -154,29 +154,6 @@ class CustomerController extends Controller
         return $data;
     }
 
-    public function importCsvCustomer()
-    {
-        $file = public_path('uploads/tasks1.csv');
-
-        $customerArr = $this->csvToArray($file);
-//        dd($customerArr);
-
-        for ($i = 0; $i < count($customerArr); $i ++)
-        {
-            Customer::create([
-                'username' => $customerArr[$i]['Username'],
-                'full_name' => $customerArr[$i]['Họ và tên'],
-                'email' => $customerArr[$i]['Email'],
-                'age' => $customerArr[$i]['Tuổi'],
-                'phone' => $customerArr[$i]['Số điện thoại'],
-                'address' => $customerArr[$i]['Địa chỉ'],
-                'job' => $customerArr[$i]['Nghề nghiệp'],
-                'company' => $customerArr[$i]['Công ty'],
-            ]);
-        }
-        return redirect()->route('listcustomer');
-    }
-
     public function importCsv(ImportCsvRequest $request)
     {
         $this->customer->importCsvCustomer($request);
@@ -185,64 +162,6 @@ class CustomerController extends Controller
     public function fileExport()
     {
         return Excel::download(new CustomersExport(), 'customers-' . time() . '.xlsx');
-    }
-    public function importCustomer(ImportRequest $request)
-    {
-        $import = Excel::toArray(new CustomersImport, request()->file('file'));
-        $data = [];
-//        $url = https://docs.google.com/spreadsheets/d/1tFbqR0LCjSuVWaxrKx4OQ76YuKxn61yQ/edit#gid=408539925;
-//        if (isset($import)){
-//            return redirect()->back()->with('error', 'Form excel sai định dạng, bạn có thể tải file mẫu')->withInput();
-//        }
-        foreach ($import[0] as $key => $value) {
-            $data[$key]['username']  = $value['Tên đăng nhập'];
-            $data[$key]['full_name'] = $value['Họ tên'];
-            $data[$key]['email']        = $value['Email'];
-            $data[$key]['phone']         = $value['Số điện thoại'];
-            $data[$key]['address']     = $value['Địa chỉ'];
-            $data[$key]['job']    =  $value['Nghề nghiệp'];
-            $data[$key]['company']       = $value['Công ty'];
-            $data[$key]['created_at']       = date('Y-m-d',strtotime($value['Ngày đăng ký']));
-        }
-        dd($data);
-//        dd(sizeof($data));
-        if (sizeof($data) == 0)
-        {
-            return redirect()->back()->with('error', 'File excel trống')->withInput();
-        }
-        if (sizeof($data)>0) {
-            foreach ($data as $key => $value) {
-//                dd($value);
-                $email = Customer::where('email', 'like', '%' . $value['email'] . '%')->first();
-//                dd($email['email']);
-                $phone = Customer::where('phone', 'like', '%' . $value['phone'] . '%')->first();
-                $username = Customer::where('username', 'like', '%' . $value['username'] . '%')->first();
-                if ($value['email'] == '') {
-                    redirect()->back()->with('error', 'Trường email trống')->withInput();
-                    break;
-                } elseif($value['phone'] == ''){
-                    return redirect()->back()->with('error', 'Trường số điện thoại trống')->withInput();
-                } elseif(isset($value['email']) ?? $email['email']){
-                    return redirect()->back()->with('error', 'Trường email trùng')->withInput();
-                } elseif($value['phone'] == $phone->phone){
-                    return redirect()->back()->with('error', 'Trường số điện thoại trùng')->withInput();
-                } elseif($value['username'] == $username->username ){
-                    return redirect()->back()->with('error', 'Trường email trùng')->withInput();
-                }else
-                $customer = new Customer();
-                $customer->username = $value['username'];
-                $customer->full_name = $value['full_name'];
-                $customer->email = $value['email'];
-                $customer->phone = $value['phone'];
-                $customer->address = $value['address'];
-                $customer->job = $value['job'];
-                $customer->company = $value['company'];
-                $customer->created_at = Carbon::parse($value['created_at']);
-
-                $customer->save();
-            }
-        }
-        return redirect()->back()->with('success', 'Nhập file thành công')->withInput();
     }
     public function viewReadExcel()
     {
@@ -254,9 +173,12 @@ class CustomerController extends Controller
 
         $import = \Excel::toArray(new CustomersImport, $path);
         $data = [];
+
+        // read file excel
+
         foreach ($import[0] as $key => $value) {
             if (!isset($value['Tên đăng nhập']) || !isset($value['Họ tên']) || !isset($value['Email']) || !isset($value['Số điện thoại']) || !isset($value['Địa chỉ']) || !isset($value['Nghề nghiệp']) || !isset($value['Công ty']) || !isset($value['Ngày đăng ký']))
-                return redirect()->back()->with('error', 'File excel không đúng định dạng')->withInput();
+                return redirect()->back()->with('error', 'File excel không đúng form chuẩn')->withInput();
             else{
                 $data[$key]['username']  = $value['Tên đăng nhập'];
                 $data[$key]['full_name'] = $value['Họ tên'];
@@ -282,6 +204,7 @@ class CustomerController extends Controller
                 $customer->address = $value['address'];
                 $customer->job = $value['job'];
                 $customer->company = $value['company'];
+                $customer->id_file = Auth::user()->id;
                 $customer->created_at = Carbon::parse($value['created_at']);
 
                 $customer->save();

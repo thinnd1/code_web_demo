@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
 
@@ -19,11 +20,11 @@ class Import extends Eloquent
 
     public  function getAll()
     {
-        return Import::paginate(10);
+        return Import::where('id_file', Auth::user()->id)->paginate(10);
     }
     public function getCount()
     {
-        return Import::all();
+        return Import::where('id_file', Auth::user()->id)->get();
     }
     public function deleteRecord($id)
     {
