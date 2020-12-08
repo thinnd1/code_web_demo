@@ -12,6 +12,7 @@ use App\Models\Import;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
@@ -254,14 +255,18 @@ class CustomerController extends Controller
         $import = \Excel::toArray(new CustomersImport, $path);
         $data = [];
         foreach ($import[0] as $key => $value) {
-            $data[$key]['username']  = $value['Tên đăng nhập'];
-            $data[$key]['full_name'] = $value['Họ tên'];
-            $data[$key]['email']        = $value['Email'];
-            $data[$key]['phone']         = $value['Số điện thoại'];
-            $data[$key]['address']     = $value['Địa chỉ'];
-            $data[$key]['job']    =  $value['Nghề nghiệp'];
-            $data[$key]['company']       = $value['Công ty'];
-            $data[$key]['created_at']       = date('Y-m-d',strtotime($value['Ngày đăng ký']));
+            if (!isset($value['Tên đăng nhập']) || !isset($value['Họ tên']) || !isset($value['Email']) || !isset($value['Số điện thoại']) || !isset($value['Địa chỉ']) || !isset($value['Nghề nghiệp']) || !isset($value['Công ty']) || !isset($value['Ngày đăng ký']))
+                return redirect()->back()->with('error', 'File excel không đúng định dạng')->withInput();
+            else{
+                $data[$key]['username']  = $value['Tên đăng nhập'];
+                $data[$key]['full_name'] = $value['Họ tên'];
+                $data[$key]['email']     = $value['Email'];
+                $data[$key]['phone']     = $value['Số điện thoại'];
+                $data[$key]['address']   = $value['Địa chỉ'];
+                $data[$key]['job']       =  $value['Nghề nghiệp'];
+                $data[$key]['company']   = $value['Công ty'];
+                $data[$key]['created_at'] = date('Y-m-d',strtotime($value['Ngày đăng ký']));
+            }
         }
         if (sizeof($data) == 0)
         {

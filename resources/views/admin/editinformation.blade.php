@@ -63,7 +63,10 @@
                     <div class="form-group row">
                         <label for="inputAge" class="col-sm-2 col-form-label">Tuổi*</label>
                         <div class="col-sm-10">
-                            <input type="number" name="age" min="1" max="150" value="{{ old("age") ?? $user->age }}" class="form-control" id="inputAge">
+                            <input type="text" name="age" min="1" maxlength="3" value="{{ old("age") ?? $user->age }}" class="form-control" id="inputAge">
+                            @error('age')
+                            <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group row">

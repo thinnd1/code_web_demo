@@ -12,6 +12,17 @@
                     </ol>
                 </div>
             </div><!-- /.row -->
+
+            @if (session('success'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('success') }}
+                </div>
+            @elseif(session('error'))
+                <div class="alert alert-danger" role="alert">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <form action="" method="post" id="import_csv" enctype="multipart/form-data">
                 @csrf
                 <label for="">Nhập dữ liệu từ file excel vào hệ thống</label>
@@ -19,7 +30,10 @@
                 @error('file')
                 <p class="text-danger">{{ $message }}</p>
                 @enderror
+                <p></p>
+                <a href="{{ asset('uploads/customers-format.xlsx') }}" class="btn btn-primary">Form mẫu</a>
                 <button type="submit" class="btn btn-primary">Nhập</button>
+                <a href="{{ route("listcustomer") }}" class="btn btn-warning">Quay lại</a>
             </form>
 
             <form action="" method="post">

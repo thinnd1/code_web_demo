@@ -114,18 +114,21 @@
         $(document).ready(function(){
             $(".deleteproduct").click(function(){
                 var id = $(this).data("id");
-                $.ajax(
-                    {
-                        url: 'deleteproduct/'+id,
-                        data: {_token: CSRF_TOKEN,id: id},
-                        type: 'post',
-                        success: function(response){
-                            location.reload();
-                        },
-                        error: function(xhr) {
-                            console.log(xhr.responseText); // this line will save you tons of hours while debugging
-                        }
-                    });
+                var del = confirm("Bạn chắc chắn muốn xóa ?");
+                if (del == true){
+                    $.ajax(
+                        {
+                            url: 'deleteproduct/'+id,
+                            data: {_token: CSRF_TOKEN,id: id},
+                            type: 'post',
+                            success: function(response){
+                                location.reload();
+                            },
+                            error: function(xhr) {
+                                console.log(xhr.responseText); // this line will save you tons of hours while debugging
+                            }
+                        });
+                }
             });
         });
     </script>

@@ -131,8 +131,8 @@
                                         @if(Auth::user()->role == 1)
                                             <div class="divide-column">
                                             <td>
-                                                <a class="btn btn-primary" href="{{ route('viewuserorder', ['id' => $listCustomer->id ]) }}">Xem</a>
-                                                <a class="btn btn-warning" href="{{ route('vieweditcustomer', ['id' => $listCustomer->id ]) }}">Sửa</a>
+                                                <a class="btn btn-primary" onclick="return confirm('Bạn muốn xem khách hàng đặt đơn gì?')" href="{{ route('viewuserorder', ['id' => $listCustomer->id ]) }}">Xem</a>
+                                                <a class="btn btn-warning" onclick="return confirm('Bạn muốn cập nhật thông tin khách hàng ?')" href="{{ route('vieweditcustomer', ['id' => $listCustomer->id ]) }}">Sửa</a>
                                                 <button type="button" class="btn btn-danger deleteRecord" data-id="{{ $listCustomer->id }}">Xóa</button>
                                             </td>
                                             </div>
