@@ -181,7 +181,7 @@
             var ep = confirm("Bạn muốn tải file về máy?");
             if (ep == true)
             {
-                window.location.href = "{{ route('fileexport')}}";
+                window.location.href = "{{ route('fileexport', ['search_user' => $search])}}";
             }
         });
 

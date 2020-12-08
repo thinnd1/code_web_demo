@@ -48,7 +48,7 @@ class CustomerController extends Controller
         try {
             $search = trim($request->input('search_user'));
             $listCustomers = $this->customer->listCustomer($search);
-            return view('admin.listcustomer', compact('listCustomers'));
+            return view('admin.listcustomer', compact('listCustomers', 'search'));
         } catch  (\Exception $ex) {
             return redirect()->back()->withInput();
         }
@@ -159,9 +159,12 @@ class CustomerController extends Controller
         $this->customer->importCsvCustomer($request);
         return redirect()->route('listcustomer');
     }
-    public function fileExport()
+    public function fileExport(Request $request)
     {
-        return Excel::download(new CustomersExport(), 'customers-' . time() . '.xlsx');
+        $search = $request->input('search_user');
+        $listCustomers = $this->customer->listCustomerExport($search);
+
+        return Excel::download(new CustomersExport($listCustomers), 'customers-' . time() . '.xlsx');
     }
     public function viewReadExcel()
     {

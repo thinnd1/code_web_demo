@@ -40,6 +40,22 @@ class Customer extends Eloquent
         }
         return $listCustomer;
     }
+
+    public function listCustomerExport($search = null)
+    {
+        $query = Customer::with('order')
+            ->orderBy('created_at', 'desc');
+
+        if ($search) {
+            $listCustomer = $query->where('full_name', 'like', '%' . $search . '%')
+                ->orWhere('username', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%')
+                ->orWhere('phone', 'like', '%' . $search . '%');
+        }
+
+        return $query->get();
+    }
+
     public function getCustomerDetail($id)
     {
         return Customer::where('_id', $id)->first();
