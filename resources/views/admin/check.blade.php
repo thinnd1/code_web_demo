@@ -83,7 +83,6 @@
                                 console.log("123");
                             },
                             error: function(xhr) {
-                                console.log(this.url);
                                 console.log("12345678");
                                 console.log(xhr.responseText); // this line will save you tons of hours while debugging
                             }

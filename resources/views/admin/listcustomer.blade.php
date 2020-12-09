@@ -55,11 +55,10 @@
                                 </div>
                             </form>
                         </div>
-
+                        <p></p>
                         <div>
-                            <span id="export" class="btn btn-success btn-sm">Xuất file csv</span>
-                            <p>Nhập dữ liệu từ file excel vào hệ thống <a href="{{ route("readexcel") }}">Link</a> </p>
-
+                            <span id="export" class="btn btn-success btn-sm">Export danh sách khách hàng</span>
+                            <a href="{{ route("readexcel") }}" class="btn btn-success btn-sm">Import từ file excel</a>
                         </div>
                         <h3>Tổng số khách hàng: {{ $listCustomers->total() }}</h3>
                         <table class="table table-bordered table-hover tablesorter">

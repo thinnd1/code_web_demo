@@ -180,7 +180,7 @@ class CustomerController extends Controller
         // read file excel
 
         foreach ($import[0] as $key => $value) {
-            if (!isset($value['Tên đăng nhập']) || !isset($value['Họ tên']) || !isset($value['Email']) || !isset($value['Số điện thoại']) || !isset($value['Địa chỉ']) || !isset($value['Nghề nghiệp']) || !isset($value['Công ty']) || !isset($value['Ngày đăng ký']))
+            if (!isset($value['Tên đăng nhập']) )
                 return redirect()->back()->with('error', 'File excel không đúng form chuẩn')->withInput();
             else{
                 $data[$key]['username']  = $value['Tên đăng nhập'];
@@ -188,7 +188,7 @@ class CustomerController extends Controller
                 $data[$key]['email']     = $value['Email'];
                 $data[$key]['phone']     = $value['Số điện thoại'];
                 $data[$key]['address']   = $value['Địa chỉ'];
-                $data[$key]['job']       =  $value['Nghề nghiệp'];
+                $data[$key]['job']       = $value['Nghề nghiệp'];
                 $data[$key]['company']   = $value['Công ty'];
                 $data[$key]['created_at'] = date('Y-m-d',strtotime($value['Ngày đăng ký']));
             }
