@@ -86,7 +86,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <p>Tổng đơn hàng : {{count($listCustomers)}}</p>
+                            <p>Tổng đơn hàng : {{ $listCustomers->total() }}</p>
                             @if(count($listCustomers) == 0)
                                 <tr class="borderless">
                                     <td colspan="10" class="text-center">Không có dữ liệu</td>

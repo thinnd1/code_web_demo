@@ -12,6 +12,16 @@
                 </div>
             </div><!-- /.row -->
 
+            @if (session('success'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('success') }}
+                </div>
+            @elseif(session('error'))
+                <div class="alert alert-danger" role="alert">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <div class="row">
                 <div class="col-lg-9">
                     <form action="{{ route('updateuser', ['id' => $userDetail->id]) }}" method="post">
@@ -75,7 +85,7 @@
                         <div class="form-group row">
                             <label for="inputage" class="col-sm-2 col-form-label">Tuổi*</label>
                             <div class="col-sm-10">
-                                <input type="number" name="age" class="form-control" value="{{ old("age") ?? $userDetail->age }}" id="inputage">
+                                <input type="text" maxlength="3" name="age" class="form-control" value="{{ old("age") ?? $userDetail->age }}" id="inputage">
                                 @error('age')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror

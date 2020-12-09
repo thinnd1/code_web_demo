@@ -77,7 +77,7 @@
                         <div class="form-group row">
                             <label for="inputage" class="col-sm-2 col-form-label">Tuổi*</label>
                             <div class="col-sm-10">
-                                <input type="number" name="age" class="form-control" value="{{ old("age") }}" id="inputage">
+                                <input type="text" maxlength="3" name="age" class="form-control" value="{{ old("age") }}" id="inputage">
                                 @error('age')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror

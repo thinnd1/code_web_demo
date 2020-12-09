@@ -42,7 +42,9 @@
                     <p></p>
 
                     <div class="table-responsive">
-                    <table class="table table-bordered table-hover tablesorter">
+                        <h3>Tổng số đơn hàng: {{ $orders->total() }}</h3>
+
+                        <table class="table table-bordered table-hover tablesorter">
                         <thead>
                         <tr>
                             <th>Stt</th>
@@ -96,7 +98,7 @@
                                 </td>
                                 <td>
                                     <a class="btn btn-warning" href="{{ route('editorder', ['id' => $order->id ]) }}">Sửa</a>
-                                    <a class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa đơn hàng này không?')" href="{{ route('removeorder', ['id' => $order->id ]) }}">Xóa</a>
+                                    <button type="button" class="btn btn-danger deleteOrder" data-id="{{ $order->id }}">Xóa</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -113,10 +115,33 @@
     </div>
 </div>
 @endsection
-<script>
+@section('js')
+    <script>
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $(document).ready(function () {
+            $(".deleteOrder").click(function () {
+                var id = $(this).data("id");
+                var del = confirm("Bạn chắc chắn muốn xóa ?");
+                if (del == true) {
+                    $.ajax(
+                        {
+                            url: 'deleteorder/' + id,
+                            data: {_token: CSRF_TOKEN, id: id},
+                            type: 'post',
+                            success: function (response) {
+                                location.reload();
+                            },
+                            error: function (xhr) {
+                                console.log(xhr.responseText); // this line will save you tons of hours while debugging
+                            }
+                        });
+                }
+            });
+        });
     function exportTasks(_this) {
         confirm('Bạn muốn xuất thành file csv không?');
         let _url = $(_this).data('href');
         window.location.href = _url;
     }
-</script>
+    </script>
+@endsection

@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use App\Libraries\Ultilities;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
 class Customer extends Eloquent
@@ -31,11 +34,28 @@ class Customer extends Eloquent
             $listCustomer = Customer::where('full_name', 'like', '%' . $search . '%')
                 ->orWhere('username', 'like', '%' . $search . '%')
                 ->orWhere('email', 'like', '%' . $search . '%')
+                ->orWhere('phone', 'like', '%' . $search . '%')
                 ->paginate(10);
             $listCustomer->appends(['search' => $search]);
         }
         return $listCustomer;
     }
+
+    public function listCustomerExport($search = null)
+    {
+        $query = Customer::with('order')
+            ->orderBy('created_at', 'desc');
+
+        if ($search) {
+            $listCustomer = $query->where('full_name', 'like', '%' . $search . '%')
+                ->orWhere('username', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%')
+                ->orWhere('phone', 'like', '%' . $search . '%');
+        }
+
+        return $query->get();
+    }
+
     public function getCustomerDetail($id)
     {
         return Customer::where('_id', $id)->first();
@@ -53,11 +73,12 @@ class Customer extends Eloquent
     {
         $data = [
             'username' => $request->username,
+            'password' => Hash::make($request['password']),
             'full_name' => $request->full_name,
             'gender' => $request->gender,
             'email' => $request->email,
-            'age' => $request->age,
-            'phone' => $request->phone,
+            'age' => (int)$request->age,
+            'phone' => (int)$request->phone,
             'address' => $request->address,
             'job' => $request->job,
             'company' => $request->company,
@@ -71,8 +92,8 @@ class Customer extends Eloquent
             'username' => $request->username,
             'full_name' => $request->full_name,
             'email' => $request->email,
-            'phone' => $request->phone,
-            'age' => $request->age,
+            'phone' => (int)$request->phone,
+            'age' => (int)$request->age,
             'gender' => $request->age,
             'address' => $request->address,
             'job' => $request->job,
@@ -116,6 +137,52 @@ class Customer extends Eloquent
                     'company' => $customerArr[$i]['Công ty'],
                 ]);
             }
+        }
+    }
+    public function checkMail($email)
+    {
+        $emails = Customer::where('email', $email)->first();
+        return $emails;
+    }
+
+    public function checkPhone($phone)
+    {
+        $phone = Customer::where('phone', $phone)->first();
+        return $phone;
+    }
+    public function importExcelCustomer($listExcels)
+    {
+        foreach ($listExcels as $item){
+            $email = $this->checkMail($item->email);
+            $item->status = $email ? 1 : 2;
+
+            if ($item->status == 1 ) {
+                $data = [
+                    'username' => $item->username,
+                    'full_name' => $item->full_name,
+                    'email' => $item->email,
+                    'phone' => (int)$item->phone,
+                    'address' => $item->address,
+                    'job' => $item->job,
+                    'company' => $item->company,
+                    'updated_at' => Carbon::now(),
+                ];
+                $this->where('_id', $email->id)->update($data);
+            } elseif ($item->status == 2) {
+                $data = [
+                    'username' => $item->username,
+                    'full_name' => $item->full_name,
+                    'email' => $item->email,
+                    'phone' => (int)$item->phone,
+                    'address' => $item->address,
+                    'job' => $item->job,
+                    'company' => $item->company,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ];
+                Customer::create($data);
+            }
+            Import::where('id_file', Auth::user()->id)->delete();
         }
     }
 }

@@ -69,4 +69,8 @@ class Product extends Eloquent
         $deleteProduct = Product::findOrFail($id);
         $deleteProduct->delete();
     }
+    public function getAll()
+    {
+        return Product::all();
+    }
 }

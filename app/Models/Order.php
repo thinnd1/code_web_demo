@@ -50,7 +50,7 @@ class Order extends Eloquent
             'total_price' => $request->total_price,
             'address' => $request->address,
             'orderdate' => $request->orderdate,
-            'phone' => $request->phone,
+            'phone' => (int)$request->phone,
             'email' => $request->email,
             'payment' => $request->payment,
             'status' => 1
@@ -65,7 +65,7 @@ class Order extends Eloquent
             'total_price' => $request->total_price,
             'address' => $request->address,
             'orderdate' => $request->orderdate,
-            'phone' => $request->phone,
+            'phone' => (int)$request->phone,
             'email' => $request->email,
             'payment' => $request->payment,
             'status' => $request->order_status,
@@ -77,5 +77,9 @@ class Order extends Eloquent
     {
         $deleteOrder = Order::findOrFail($id);
         $deleteOrder->delete();
+    }
+    public function getAll()
+    {
+        return Order::all();
     }
 }

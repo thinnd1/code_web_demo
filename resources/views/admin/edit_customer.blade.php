@@ -36,15 +36,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <label for="inputusername" class="col-sm-2 col-form-label">Tên đăng nhập*</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="username" class="form-control" value="{{ old("username") ?? $user->username }}" id="inputusername">
-                            @error('username')
-                            <p class="text-danger">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
+                    <input type="hidden" name="username" class="form-control" value="{{ old("username") ?? $user->username }}" id="inputusername">
 
                     <div class="form-group row">
                         <label for="inputemail" class="col-sm-2 col-form-label">Email*</label>
@@ -69,7 +61,7 @@
                     <div class="form-group row">
                         <label for="inputage" class="col-sm-2 col-form-label">Tuổi*</label>
                         <div class="col-sm-10">
-                            <input type="number" name="age" class="form-control" value="{{ old("age") ?? $user->age }}" id="inputage">
+                            <input type="text" maxlength="3" name="age" class="form-control" value="{{ old("age") ?? $user->age }}" id="inputage">
                             @error('age')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -93,7 +85,7 @@
                     <div class="form-group row">
                         <label for="inputaddress" class="col-sm-2 col-form-label">Địa chỉ*</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" name="address" id="inputaddress" aria-label="With textarea">{{ old("address") ?? $user->address }}"</textarea>
+                            <textarea class="form-control" name="address" id="inputaddress" aria-label="With textarea">{{ old("address") ?? $user->address }}</textarea>
                             @error('address')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
@@ -111,7 +103,6 @@
                     </div>
 
                     <div class="form-group row">
-{{--                        @dd($user->company)--}}
                         <label for="inputcompany" class="col-sm-2 col-form-label">Công ty</label>
                         <div class="col-sm-10">
                             <input type="text" name="company" class="form-control" value="{{ old("company") ?? $user->company }}" id="inputcompany">

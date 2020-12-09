@@ -40,6 +40,8 @@
                 </div>
                 <p></p>
                 <div class="table-responsive">
+                    <h3>Tổng số công ty: {{ count($totalshops) }}</h3>
+
                     <table class="table table-bordered table-hover tablesorter">
                         <thead>
                         <tr>
@@ -68,7 +70,7 @@
                                     <td>{{ $shop->quantity_product }}</td>
                                     <td>
                                         <a href="{{ route('editcompany', ['id' => $shop->id ]) }}" class="btn btn-warning">Sửa</a>
-                                        <a href="{{ route('deleteshop', ['id' => $shop->id ]) }}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn muốn xóa công ty này không?')">Xóa</a>
+                                        <button type="button" class="btn btn-danger delete-company" data-id="{{ $shop->id }}">Xóa</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -81,4 +83,30 @@
         </div><!-- /.row -->
     </div>
 </div>
+@endsection
+
+@section('js')
+    <script>
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $(document).ready(function(){
+            $(".delete-company").click(function(){
+                var id = $(this).data("id");
+                var del = confirm("Bạn chắc chắn muốn xóa ?");
+                if (del == true) {
+                    $.ajax(
+                        {
+                            url: 'deletecompany/'+id,
+                            data: {_token: CSRF_TOKEN,id: id},
+                            type: 'post',
+                            success: function(response){
+                                location.reload();
+                            },
+                            error: function(xhr) {
+                                console.log(xhr.responseText); // this line will save you tons of hours while debugging
+                            }
+                        });
+                }
+            });
+        });
+    </script>
 @endsection

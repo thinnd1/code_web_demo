@@ -8,8 +8,12 @@ use App\Http\Requests\ImportCsvRequest;
 use App\Http\Requests\ImportRequest;
 use App\Imports\CustomersImport;
 use App\Models\Customer;
+use App\Models\Import;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
@@ -19,9 +23,12 @@ class CustomerController extends Controller
 {
     //
     protected $customer;
-    public function __construct(Customer $customer)
+    protected $import;
+
+    public function __construct(Customer $customer,Import $import)
     {
         $this->customer = $customer;
+        $this->import = $import;
     }
     public function viewCreateCustomer()
     {
@@ -41,8 +48,7 @@ class CustomerController extends Controller
         try {
             $search = trim($request->input('search_user'));
             $listCustomers = $this->customer->listCustomer($search);
-            $totalcustomer = $this->customer->getAll();
-            return view('admin.listcustomer', compact('listCustomers', 'totalcustomer'));
+            return view('admin.listcustomer', compact('listCustomers', 'search'));
         } catch  (\Exception $ex) {
             return redirect()->back()->withInput();
         }
@@ -61,11 +67,12 @@ class CustomerController extends Controller
         try {
             $user = $this->customer->detailCustomer($id);
             if (is_null($user)){
-                return redirect()->route('404-notfound');
+                return abort(404);
+//                return redirect()->route('404-notfound');
             }
             return view('admin.edit_customer', compact('user'));
         } catch (\Exception $exception) {
-            return redirect()->back()->with('error', 'Lỗi hệ thống')->withInput();
+            return redirect()->back()->with('error', 'Lỗi')->withInput();
         }
     }
     public function editCustomer($id, CustomerRequest $request)
@@ -147,48 +154,109 @@ class CustomerController extends Controller
         return $data;
     }
 
-    public function importCsvCustomer()
-    {
-        $file = public_path('uploads/tasks1.csv');
-
-        $customerArr = $this->csvToArray($file);
-//        dd($customerArr);
-
-        for ($i = 0; $i < count($customerArr); $i ++)
-        {
-            Customer::create([
-                'username' => $customerArr[$i]['Username'],
-                'full_name' => $customerArr[$i]['Họ và tên'],
-                'email' => $customerArr[$i]['Email'],
-                'age' => $customerArr[$i]['Tuổi'],
-                'phone' => $customerArr[$i]['Số điện thoại'],
-                'address' => $customerArr[$i]['Địa chỉ'],
-                'job' => $customerArr[$i]['Nghề nghiệp'],
-                'company' => $customerArr[$i]['Công ty'],
-            ]);
-        }
-        return redirect()->route('listcustomer');
-    }
-
     public function importCsv(ImportCsvRequest $request)
     {
         $this->customer->importCsvCustomer($request);
         return redirect()->route('listcustomer');
     }
-    public function fileExport()
+    public function fileExport(Request $request)
     {
-        return Excel::download(new CustomersExport(), 'customers-' . time() . '.xlsx');
+        $search = $request->input('search_user');
+        $listCustomers = $this->customer->listCustomerExport($search);
+
+        return Excel::download(new CustomersExport($listCustomers), 'customers-' . time() . '.xlsx');
     }
-    public function importCustomer(ImportRequest $request)
+    public function viewReadExcel()
     {
-        $file = $request->file('file')->store('import');
+        return view('admin.import');
+    }
+    public function readExcel(ImportCsvRequest $request)
+    {
+        $path = $request->file('file');
 
-        $import = new CustomersImport;
-        $import->import($file);
+        $import = \Excel::toArray(new CustomersImport, $path);
+        $data = [];
 
-        if ($import->failures()->isNotEmpty()) {
-            return back()->withFailures($import->failures());
+        // read file excel
+
+        foreach ($import[0] as $key => $value) {
+            if (!isset($value['Tên đăng nhập']) )
+                return redirect()->back()->with('error', 'File excel không đúng form chuẩn')->withInput();
+            else{
+                $data[$key]['username']  = $value['Tên đăng nhập'];
+                $data[$key]['full_name'] = $value['Họ tên'];
+                $data[$key]['email']     = $value['Email'];
+                $data[$key]['phone']     = $value['Số điện thoại'];
+                $data[$key]['address']   = $value['Địa chỉ'];
+                $data[$key]['job']       = $value['Nghề nghiệp'];
+                $data[$key]['company']   = $value['Công ty'];
+                $data[$key]['created_at'] = date('Y-m-d',strtotime($value['Ngày đăng ký']));
+            }
         }
-        return back();
+        if (sizeof($data) == 0)
+        {
+            return redirect()->back()->with('error', 'File excel trống')->withInput();
+        }
+        if (sizeof($data) > 0) {
+            foreach ($data as $key => $value) {
+                $customer = new Import();
+                $customer->username = $value['username'];
+                $customer->full_name = $value['full_name'];
+                $customer->email = $value['email'];
+                $customer->phone = $value['phone'];
+                $customer->address = $value['address'];
+                $customer->job = $value['job'];
+                $customer->company = $value['company'];
+                $customer->id_file = Auth::user()->id;
+                $customer->created_at = Carbon::parse($value['created_at']);
+
+                $customer->save();
+            }
+        }
+        return view('admin.import', compact('data'));
+    }
+    public function viewCheckData()
+    {
+        $listExcel = $this->import->getAll();
+        $totalListExcel = $this->import->getCount();
+        $listExcels = [];
+        foreach ($listExcel as $item) {
+            $email = $this->customer->checkMail($item->email);
+            $phone = $this->customer->checkPhone($item->phone);
+            $item->status = $email ? 1 : 2;
+            $item->statusphone = $phone ? 1 : 2;
+
+            $listExcels[] = $item;
+        }
+//        self::importExcelCustomer($listExcels);
+
+        return view('admin.check', compact('listExcel','email','listExcels','totalListExcel'));
+    }
+    public function checkExcel()
+    {
+        $listExcel = $this->import->getCount();
+        $listExcels = [];
+        foreach ($listExcel as $item) {
+            $email = $this->customer->checkMail($item->email);
+            $phone = $this->customer->checkPhone($item->phone);
+            $item->status = $email ? 1 : 2;
+            $item->statusphone = $phone ? 1 : 2;
+
+            $listExcels[] = $item;
+        }
+        return $listExcels;
+    }
+    public function importExcelCustomer()
+    {
+        $listExcels = $this->checkExcel();
+
+        $this->customer->importExcelCustomer($listExcels);
+        return redirect()->route('listcustomer');
+    }
+
+    public function deleteRecordExcel($id)
+    {
+        $this->import->deleteRecord($id);
+        return redirect()->back();
     }
 }

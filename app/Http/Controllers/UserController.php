@@ -20,8 +20,7 @@ class UserController extends Controller
         try {
             $search = trim($request->input('search_user'));
             $users = $this->user->getUser($search);
-            $userTotal = $this->user->getAll();
-            return view('admin.list_user', compact('users', 'userTotal'));
+            return view('admin.list_user', compact('users'));
         } catch  (\Exception $ex) {
             return redirect()->back()->withInput();
         }
@@ -42,7 +41,7 @@ class UserController extends Controller
     {
         try {
             $this->user->updateInformation($request, $id);
-            return redirect()->route('getlistuser');
+            return redirect()->back()->with('success', 'Cập nhật thành công');
         } catch  (\Exception $ex) {
             return redirect()->back()->withInput();
         }

@@ -20,7 +20,8 @@ class ProductController extends Controller
         try {
             $search = trim($request->input('search_product'));
             $products = $this->product->getProduct($search);
-            return view('admin.product', compact('products'));
+            $totalproducts = $this->product->getAll();
+            return view('admin.product', compact('products','totalproducts'));
         } catch  (\Exception $ex) {
             return redirect()->back()->with('error', 'ID không tồn tại')->withInput();
         }

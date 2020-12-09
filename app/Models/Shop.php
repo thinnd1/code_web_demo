@@ -61,4 +61,8 @@ class Shop extends Eloquent
         $removeShop = Shop::findOrFail($id);
         return $removeShop->delete();
     }
+    public function getAll()
+    {
+        return Shop::all();
+    }
 }
