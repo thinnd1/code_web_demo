@@ -139,6 +139,11 @@ class Customer extends Eloquent
             }
         }
     }
+    public function checkUser($username)
+    {
+        $user = Customer::where('username', $username)->first();
+        return $user;
+    }
     public function checkMail($email)
     {
         $emails = Customer::where('email', $email)->first();
@@ -150,15 +155,44 @@ class Customer extends Eloquent
         $phone = Customer::where('phone', $phone)->first();
         return $phone;
     }
-    public function importExcelCustomer($listExcels)
+    public function importExcelCustomer($listExcels, $id)
     {
         foreach ($listExcels as $item){
+//            dd($item);
             $email = $this->checkMail($item->email);
-            $item->status = $email ? 1 : 2;
+            $phone = $this->checkPhone($item->phone);
+            $user = $this->checkUser($item->username);
+//            dd($user);
 
-            if ($item->status == 1 ) {
+            if ($item->statususer == 1 && $item->statusemail == 1 && $item->statusphone == 1) {
                 $data = [
-                    'username' => $item->username,
+//                    'username' => $item->username,
+                    'full_name' => $item->full_name,
+//                    'email' => $item->email,
+//                    'phone' => (int)$item->phone,
+                    'address' => $item->address,
+                    'job' => $item->job,
+                    'company' => $item->company,
+                    'updated_at' => Carbon::now(),
+                ];
+                $this->where('_id', $email->id)->update($data);
+
+            } elseif ($item->statususer == 1 && $item->statusemail == 1 && $item->statusphone == 2 ) {
+                $data = [
+//                    'username' => $item->username,
+                    'full_name' => $item->full_name,
+//                    'email' => $item->email,
+                    'phone' => (int)$item->phone,
+                    'address' => $item->address,
+                    'job' => $item->job,
+                    'company' => $item->company,
+                    'updated_at' => Carbon::now(),
+                ];
+                $this->where('_id', $email->id)->update($data);
+
+            } elseif ($item->statususer == 1 && $item->statusemail == 2 && $item->statusphone == 2 ) {
+                $data = [
+//                    'username' => $item->username,
                     'full_name' => $item->full_name,
                     'email' => $item->email,
                     'phone' => (int)$item->phone,
@@ -167,8 +201,35 @@ class Customer extends Eloquent
                     'company' => $item->company,
                     'updated_at' => Carbon::now(),
                 ];
+                $this->where('_id', $user->id)->update($data);
+
+            } elseif ($item->statususer == 2 && $item->statusemail == 1 && $item->statusphone == 1 ) {
+                $data = [
+//                    'username' => $item->username,
+                    'full_name' => $item->full_name,
+//                    'email' => $item->email,
+//                    'phone' => (int)$item->phone,
+                    'address' => $item->address,
+                    'job' => $item->job,
+                    'company' => $item->company,
+                    'updated_at' => Carbon::now(),
+                ];
                 $this->where('_id', $email->id)->update($data);
-            } elseif ($item->status == 2) {
+
+            } elseif ($item->statususer == 2 && $item->statusemail == 2 && $item->statusphone == 1) {
+                $data = [
+                    'username' => $item->username,
+                    'full_name' => $item->full_name,
+                    'email' => $item->email,
+//                    'phone' => (int)$item->phone,
+                    'address' => $item->address,
+                    'job' => $item->job,
+                    'company' => $item->company,
+                    'updated_at' => Carbon::now(),
+                ];
+                $this->where('_id', $phone->id)->update($data);
+
+            } elseif ($item->statususer == 2 && $item->statusemail == 2 && $item->statusphone == 2) {
                 $data = [
                     'username' => $item->username,
                     'full_name' => $item->full_name,
@@ -182,7 +243,7 @@ class Customer extends Eloquent
                 ];
                 Customer::create($data);
             }
-            Import::where('id_file', Auth::user()->id)->delete();
+            Import::where('id_file', $id)->delete();
         }
     }
 }

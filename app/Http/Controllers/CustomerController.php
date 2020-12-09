@@ -46,7 +46,7 @@ class CustomerController extends Controller
     public function listCustomer(Request $request)
     {
         try {
-            $search = trim($request->input('search_user'));
+            $search = $request->input('search_user');
             $listCustomers = $this->customer->listCustomer($search);
             return view('admin.listcustomer', compact('listCustomers', 'search'));
         } catch  (\Exception $ex) {
@@ -176,6 +176,7 @@ class CustomerController extends Controller
 
         $import = \Excel::toArray(new CustomersImport, $path);
         $data = [];
+        $id = uniqid();
 
         // read file excel
 
@@ -207,50 +208,56 @@ class CustomerController extends Controller
                 $customer->address = $value['address'];
                 $customer->job = $value['job'];
                 $customer->company = $value['company'];
-                $customer->id_file = Auth::user()->id;
+                $customer->id_file = $id;
                 $customer->created_at = Carbon::parse($value['created_at']);
 
                 $customer->save();
             }
         }
-        return view('admin.import', compact('data'));
+        return view('admin.import', compact('data', 'id'));
     }
-    public function viewCheckData()
+    public function viewCheckData(Request $request)
     {
-        $listExcel = $this->import->getAll();
-        $totalListExcel = $this->import->getCount();
+        $id_file = $request->input('id_file');
+//        dd($id_file);
+        $listExcel = $this->import->getAll($id_file);
+//        dd($listExcel);
+        if (!isset($listExcel)){
+            return back();
+        } else {
+            $listExcels = [];
+            foreach ($listExcel as $item) {
+                $user  = $this->customer->checkUser($item->username);
+                $email = $this->customer->checkMail($item->email);
+                $phone = $this->customer->checkPhone($item->phone);
+                $item->statusemail = $email ? 1 : 2;
+                $item->statusphone = $phone ? 1 : 2;
+                $item->statususers = $user ? 1 : 2;
+
+                $listExcels[] = $item;
+            }
+        }
+//        self::checkExcel($listExcels);
+
+        return view('admin.check', compact('listExcel','email', 'user', 'id_file', 'listExcels'));
+    }
+
+    public function importExcelCustomer($id, Request $request)
+    {
+        $id = $request->id_file;
+        $listExcel = $this->import->getAll($id);
         $listExcels = [];
         foreach ($listExcel as $item) {
+            $user = $this->customer->checkUser($item->username);
             $email = $this->customer->checkMail($item->email);
             $phone = $this->customer->checkPhone($item->phone);
-            $item->status = $email ? 1 : 2;
+            $item->statusemail = $email ? 1 : 2;
             $item->statusphone = $phone ? 1 : 2;
+            $item->statususer = $user ? 1 : 2;
 
             $listExcels[] = $item;
         }
-//        self::importExcelCustomer($listExcels);
-
-        return view('admin.check', compact('listExcel','email','listExcels','totalListExcel'));
-    }
-    public function checkExcel()
-    {
-        $listExcel = $this->import->getCount();
-        $listExcels = [];
-        foreach ($listExcel as $item) {
-            $email = $this->customer->checkMail($item->email);
-            $phone = $this->customer->checkPhone($item->phone);
-            $item->status = $email ? 1 : 2;
-            $item->statusphone = $phone ? 1 : 2;
-
-            $listExcels[] = $item;
-        }
-        return $listExcels;
-    }
-    public function importExcelCustomer()
-    {
-        $listExcels = $this->checkExcel();
-
-        $this->customer->importExcelCustomer($listExcels);
+        $this->customer->importExcelCustomer($listExcels, $id);
         return redirect()->route('listcustomer');
     }
 

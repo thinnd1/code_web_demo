@@ -12,53 +12,65 @@
                 </div>
             </div><!-- /.row -->
             <div class="table-responsive">
-                <h3>Tổng số bản ghi là : {{ count($totalListExcel) }}</h3>
+                <h3>Tổng số bản ghi là : {{ count($listExcel) }}</h3>
 
-                <table class="table table-bordered table-hover tablesorter">
-                    <thead>
-                    <tr>
-                        <th width="5%"></th>
-                        <th width="30%">Trạng thái</th>
-                        <th>Email</th>
-                        <th width="15%">Số điện thoại</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($listExcels as $index => $list)
-{{--                        @dump($list)--}}
+                <form action="{{ route("importexcelcustomer", ['id' => $id_file]) }}" method="post">
+                    @csrf
+                    <input type="hidden" name="id_file" value="{{ $id_file }}">
+                    <table class="table table-bordered table-hover tablesorter">
+                        <thead>
                         <tr>
-                            <td>
-                                <button data-id="{{ $list->id }}" class="btn btn-danger deleteRecordExcel">Xóa</button>
-                            </td>
-                            <td>
-                                @if($list->email == '' && $list->phone == '')
-                                    <p class="text-danger">Trường email trống và Trường số điện thoại trống</p>
-                                @elseif($list->phone == '' && $list->status == 1)
-                                    <p class="text-danger">Trường số điện thoại trống và Trùng mail</p>
-                                @elseif($list->statusphone == 1 && $list->email == '')
-                                    <p class="text-danger">Trùng số điện thoại và Trường mail trống</p>
-                                @elseif($list->phone == '')
-                                    <p class="text-danger">Trường số điện thoại trống</p>
-                                @elseif($list->email == '')
-                                    <p class="text-danger">Trường mail trống</p>
-                                @elseif($list->status == 1 && $list->statusphone == 1)
-                                    <p class="text-danger">Trùng số điện thoại và Trùng mail</p>
-                                @elseif($list->status == 1)
-                                    <p class="text-danger">Trùng mail</p>
-                                @elseif($list->statusphone == 1)
-                                    <p class="text-danger">Trùng số điện thoại</p>
-                                @else
-                                    <p class="text-primary">Mới</p>
-                                @endif
-                            </td>
-
-                            <td>{{ $list->email }}</td>
-                            <td>{{ $list->phone }}</td>
+                            <th width="5%"></th>
+                            <th width="15%">Trạng thái</th>
+                            <th>Họ và tên</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th width="10%">Số điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th>Nghề nghiệp</th>
+                            <th>Công ty</th>
+                            <th>Ngày đăng ký</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-                    <a href="{{ route("importexcelcustomer") }}" class="btn btn-primary" >Thực hiện Import</a>
+                        </thead>
+                        <tbody>
+                        @foreach($listExcels as $index => $list)
+                            {{--                        @dump($list)--}}
+                            <tr>
+                                <td>
+                                    <button data-id="{{ $list->id }}" class="btn btn-danger deleteRecordExcel">Xóa</button>
+                                </td>
+                                <td>
+                                    @if($list->statusemail == 1 && $list->statusphone == 1 && $list->statususers == 1)
+                                        <p class="text-danger">Trường users, email, số điện thoại trùng</p>
+                                    @elseif($list->statususers == 1 && $list->statusemail == '' && $list->statusphone == '')
+                                        <p class="text-danger">Trường username trùng, số điện thoại, mail trống</p>
+                                    @elseif($list->statususers == 1 && $list->statusemail == 1 && $list->statusphone == '')
+                                        <p class="text-danger">Trường username trùng, email trùng, số điện thoại trống</p>
+                                    @elseif($list->statususers == '' && $list->statusemail == 1 && $list->statusphone == 1)
+                                        <p class="text-danger">Trường username trống, email trùng, số điện thoại trùng</p>
+                                    @elseif($list->statususers == '' && $list->statusemail == '' && $list->statusphone == 1)
+                                        <p class="text-danger">Trường username trống, email trống, số điện thoại trùng</p>
+                                    @else
+                                        <p class="text-primary">Mới</p>
+                                    @endif
+                                </td>
+
+                                <td> {{ $list['full_name'] }} </td>
+                                <td> {{ $list['username'] }} </td>
+                                <td> {{ $list['email'] }} </td>
+                                <td> {{ $list['phone'] }} </td>
+                                <td> {{ $list['address'] }} </td>
+                                <td> {{ $list['job'] }} </td>
+                                <td> {{ $list['company'] }} </td>
+                                <td> {{ $list['created_at'] }} </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    <a href="{{ url()->previous() }}" class="btn btn-primary">Quay lại</a>
+{{--                    <a href="{{ route("importexcelcustomer") }}" class="btn btn-warning" >Thực hiện Import</a>--}}
+                    <button type="submit" class="btn btn-warning">Submit</button>
+                </form>
             </div>
         </div>
     </div>

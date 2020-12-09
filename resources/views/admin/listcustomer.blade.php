@@ -161,7 +161,7 @@
                 if (del == true){
                     $.ajax(
                         {
-                            url: 'delete/'+id,
+                            url: encodeURI('delete/'+id),
                             data: {_token: CSRF_TOKEN,id: id},
                             type: 'post',
                             success: function(response){
@@ -176,7 +176,6 @@
             });
         });
         $("#export").click(function(){
-            console.log("3232");
             var ep = confirm("Bạn muốn tải file về máy?");
             if (ep == true)
             {
