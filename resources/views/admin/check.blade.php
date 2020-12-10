@@ -11,12 +11,23 @@
                     </ol>
                 </div>
             </div><!-- /.row -->
-            <div class="table-responsive">
-                <h3>Tổng số bản ghi là : {{ count($listExcel) }}</h3>
 
-                <form action="{{ route("importexcelcustomer", ['id' => $id_file]) }}" method="post">
-                    @csrf
-                    <input type="hidden" name="id_file" value="{{ $id_file }}">
+            @if (session('success'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('success') }}
+                </div>
+            @elseif(session('error'))
+                <div class="alert alert-danger" role="alert">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            <div class="table-responsive">
+                <h3>Tổng số bản ghi là : {{ $listExcel->total() }}</h3>
+
+{{--                <form action="{{ route("importexcelcustomer", ['id' => $id_file]) }}" method="post">--}}
+{{--                    @csrf--}}
+                    <input type="hidden" name="id_file" class="js_id_file" value="{{ $id_file }}">
                     <table class="table table-bordered table-hover tablesorter">
                         <thead>
                         <tr>
@@ -37,7 +48,7 @@
                             {{--                        @dump($list)--}}
                             <tr>
                                 <td>
-                                    <button data-id="{{ $list->id }}" class="btn btn-danger deleteRecordExcel">Xóa</button>
+                                    <button data-id="{{ $list->id }}" class="btn btn-danger deleteRecordExcel" >Xóa</button>
                                 </td>
                                 <td>
                                     @if($list->statusemail == 1 && $list->statusphone == 1 && $list->statususers == 1)
@@ -67,10 +78,9 @@
                         @endforeach
                         </tbody>
                     </table>
+                    {{ $listExcel->links() }}
                     <a href="{{ url()->previous() }}" class="btn btn-primary">Quay lại</a>
-{{--                    <a href="{{ route("importexcelcustomer") }}" class="btn btn-warning" >Thực hiện Import</a>--}}
-                    <button type="submit" class="btn btn-warning">Submit</button>
-                </form>
+                    <button data-id="{{ $id_file }}" class="btn btn-warning import">Thực hiện import</button>
             </div>
         </div>
     </div>
@@ -92,7 +102,6 @@
                             type: 'post',
                             success: function(response){
                                 location.reload();
-                                console.log("123");
                             },
                             error: function(xhr) {
                                 console.log("12345678");
@@ -101,7 +110,34 @@
                         });
                 }
             });
+            $(".import").click(function(){
+                var id = $(this).data("id");
+                console.log("CSRF_TOKEN :::", CSRF_TOKEN);
+                console.log("id cua user", id);
+                $.ajax(
+                    {
+                        url: 'importexcelcustomer/'+id,
+                        data: {_token: CSRF_TOKEN, id: id},
+                        type: 'post',
+                        success: function(response){
+                            // location.reload();
+                            alert("Bạn đã import file thành công");
+                            window.location = 'listcustomer';
+                            // console.log((response));
+                            // if (response.length == 1){
+                            //     window.location =  'listcustomer';
+                            // } else {
+                            //     window.location = 'listcustomer';
+                            // }
+                        },
+                        error: function(xhr) {
+                            console.log("12345678");
+                            console.log(xhr.responseText); // this line will save you tons of hours while debugging
+                        }
+                    });
+            });
         });
+
     </script>
 @endsection
 

@@ -20,7 +20,7 @@ class Import extends Eloquent
 
     public  function getAll($id_file)
     {
-        return Import::where('id_file', $id_file)->paginate(10);
+        return Import::where('id_file', $id_file)->paginate(50);
     }
     public function getCount()
     {

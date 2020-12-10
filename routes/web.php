@@ -46,7 +46,7 @@ Route::middleware(['checklogin::class'])->prefix('admin')->group(function(){
     Route::get('/checkreadexcel', 'App\Http\Controllers\CustomerController@viewCheckData')->name('viewcheck');
     Route::post('/checkreadexcel', 'App\Http\Controllers\CustomerController@checkData')->name('checkcustomer');
     Route::post('/deleterecordexcel/{id}', 'App\Http\Controllers\CustomerController@deleteRecordExcel')->name('deleterecordexcel');
-    Route::post('/importexcelcustomer/{id}', 'App\Http\Controllers\CustomerController@importExcelCustomer')->name('importexcelcustomer');
+    Route::any('/importexcelcustomer/{id}', 'App\Http\Controllers\CustomerController@importExcelCustomer')->name('importexcelcustomer');
 
     // users
     Route::get('/getlistuser', 'App\Http\Controllers\UserController@getListUser')->name('getlistuser');

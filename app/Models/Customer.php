@@ -162,7 +162,10 @@ class Customer extends Eloquent
             $email = $this->checkMail($item->email);
             $phone = $this->checkPhone($item->phone);
             $user = $this->checkUser($item->username);
-//            dd($user);
+
+            if ($item->statususer == '' || $item->statusemail == '' || $item->statusphone == '' ) {
+
+            }
 
             if ($item->statususer == 1 && $item->statusemail == 1 && $item->statusphone == 1) {
                 $data = [
@@ -243,7 +246,7 @@ class Customer extends Eloquent
                 ];
                 Customer::create($data);
             }
-            Import::where('id_file', $id)->delete();
         }
+        return $listExcels;
     }
 }
