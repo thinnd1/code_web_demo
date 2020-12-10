@@ -6,6 +6,7 @@ use App\Libraries\Ultilities;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
 class Customer extends Eloquent
@@ -36,7 +37,7 @@ class Customer extends Eloquent
                 ->orWhere('email', 'like', '%' . $search . '%')
                 ->orWhere('phone', 'like', '%' . $search . '%')
                 ->paginate(10);
-            $listCustomer->appends(['search' => $search]);
+            $listCustomer->appends(request()->input())->links();
         }
         return $listCustomer;
     }
@@ -165,6 +166,13 @@ class Customer extends Eloquent
 
             if ($item->statususer == '' || $item->statusemail == '' || $item->statusphone == '' ) {
 
+            }
+            $validator = Validator::make(['email' => $item->email],[
+                'email' => 'required|email'
+            ]);
+            if($validator->passes()){
+                // send you email here
+                continue;
             }
 
             if ($item->statususer == 1 && $item->statusemail == 1 && $item->statusphone == 1) {
