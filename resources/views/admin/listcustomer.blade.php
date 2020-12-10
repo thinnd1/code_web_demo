@@ -142,7 +142,20 @@
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-center">
-                            {{ $listCustomers->links() }}
+                            @if ($listCustomers->hasPages())
+
+                                {{ $listCustomers->links() }}
+                            @else
+                                <div class="d-flex justify-content-center">
+                                    <nav>
+                                        <ul class="pagination">
+                                            <li class="page-item active">
+                                                <a href="" class="page-link">1</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </form>
