@@ -18,7 +18,7 @@ class UserController extends Controller
     public function getListUser(Request $request)
     {
         try {
-            $search = trim($request->input('search_user'));
+            $search = trim($request->input('search_account'));
             $users = $this->user->getUser($search);
             return view('admin.list_user', compact('users'));
         } catch  (\Exception $ex) {

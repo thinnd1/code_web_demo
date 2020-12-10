@@ -29,7 +29,7 @@
                     <div class="row">
                         <form action="">
                             <div class="col-lg-6">
-                                <input type="text" name="search_order" class="form-control" placeholder="Tìm kiếm ..." value="{{ request()->input('search_order', old('search_order')) }}" id="inputname">
+                                <input type="text" name="search_order" class="form-control" placeholder="Tìm theo tên, email, số điện thoại ..." value="{{ request()->input('search_order', old('search_order')) }}" id="inputname">
                             </div>
                             <div class="col-lg-6">
                                 <button type="submit" class="btn btn-primary">Tìm kiếm</button>
