@@ -89,10 +89,10 @@
                             @else
                                 @foreach ($listCustomers as $index => $listCustomer)
                                     <tr>
-                                        <td>{{ $index + 1 }}</td>
+                                        <td><a href="{{ route('viewuserorder', ['id' => $listCustomer->id ]) }}"> {{ $index + 1 }}</a></td>
                                         <td>
                                             <div class="divide-column">
-                                                {{ $listCustomer->full_name }}
+                                                <a href="{{ route('viewuserorder', ['id' => $listCustomer->id ]) }}"> {{ $listCustomer->full_name }} </a>
                                             </div>
                                         </td>
                                         <td>
@@ -133,7 +133,6 @@
                                         @if(Auth::user()->role == 1)
                                             <div class="divide-column">
                                             <td>
-                                                <a class="btn btn-primary" href="{{ route('viewuserorder', ['id' => $listCustomer->id ]) }}">Xem</a>
                                                 <a class="btn btn-warning" href="{{ route('vieweditcustomer', ['id' => $listCustomer->id ]) }}">Sửa</a>
                                                 <button type="button" class="btn btn-danger deleteRecord" data-id="{{ $listCustomer->id }}">Xóa</button>
                                             </td>

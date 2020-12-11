@@ -159,7 +159,7 @@ class CustomerController extends Controller
     }
     public function viewCheckData(Request $request)
     {
-        try {
+//        try {
             $id_file = $request->input('id_file');
             $listExcel = $this->import->getAll($id_file);
             if (!isset($listExcel)){
@@ -167,12 +167,20 @@ class CustomerController extends Controller
             } else {
                 $listExcels = [];
                 foreach ($listExcel as $item) {
-                    $user  = $this->customer->checkUser($item->username);
-                    $email = $this->customer->checkMail($item->email);
-                    $phone = $this->customer->checkPhone($item->phone);
-                    $item->statusemail = $email ? 1 : 2;
-                    $item->statusphone = $phone ? 1 : 2;
-                    $item->statususers = $user ? 1 : 2;
+                    foreach (Customer::$list_field_import_required as $field)
+                    {
+                        $item['status_check'][$field]['status'] = Customer::checkFieldStatus($field, $item[$field]);
+                    }
+                    foreach (Customer::$list_field_import_check_trung as $field)
+                    {
+                        $item['status_check'][$field]['status'];
+                        $customer = Customer::check_trung($field, $item[$field]);
+                        if($customer)
+                        {
+                            $item['status_check'][$field]['status'] = '';
+                        }
+                    }
+                    $item['status_check_summary'] = Customer::checkItemStatus($item);
 
                     $listExcels[] = $item;
                 }
@@ -180,9 +188,15 @@ class CustomerController extends Controller
 //        self::checkExcel($listExcels);
             return view('admin.check', compact('listExcel','email', 'user', 'id_file','listExcel', 'listExcels'));
 
-        } catch  (\Exception $ex) {
-            return redirect()->back()->with('error', 'Lỗi hệ thống')->withInput();
-        }
+//        } catch  (\Exception $ex) {
+//            return redirect()->back()->with('error', 'Lỗi hệ thống')->withInput();
+//        }
+    }
+    static function process_status_string($item)
+    {
+        $arr_status = [1 => 'Trùng', 2 => 'Trống'];
+        $item['status_check'][$field]['status_str'] = $arr_status[$item['status_check'][$field]];
+        return $item;
     }
 
     public function importExcelCustomer($id)
@@ -194,9 +208,13 @@ class CustomerController extends Controller
                 $user = $this->customer->checkUser($item->username);
                 $email = $this->customer->checkMail($item->email);
                 $phone = $this->customer->checkPhone($item->phone);
-                $item->statusemail = $email ? 1 : 2;
-                $item->statusphone = $phone ? 1 : 2;
-                $item->statususer = $user ? 1 : 2;
+                $item->statusemail = $email ? 1 : 2 ;
+                $item->statusphone = $phone ? 1 : 2 ;
+                $item->statususer = $user ? 1 : 2 ;
+                $validatormail = Validator::make(['email' => $item->email],['email' => 'email']);
+                $item->mailform = !$validatormail->passes() ? 1 : 2 ;
+                $validatorphone = Validator::make(['phone' => $item->phone],['phone' => 'regex: /^\+?\d{9,11}$/i']);
+                $item->phoneform = !$validatorphone->passes() ? 1 : 2 ;
 
                 $listExcels[] = $item;
             }
@@ -204,7 +222,7 @@ class CustomerController extends Controller
             return $excelcustomer;
 //            return redirect()->route('listcustomer');
         }catch (\Exception $ex){
-            return redirect()->back()->with('error', 'ID không tồn tại')->withInput();
+            return redirect()->back()->with('error', 'Mail không đúng định dạng')->withInput();
         }
     }
 

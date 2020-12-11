@@ -17,21 +17,19 @@
                     {{ session('success') }}
                 </div>
             @elseif(session('error'))
-                <div class="alert alert-danger" role="alert">
+                <div cl   ass="alert alert-danger" role="alert">
                     {{ session('error') }}
                 </div>
-            @endif
+         @endif
 
             <div class="table-responsive">
                 <h3>Tổng số bản ghi là : {{ $listExcel->total() }}</h3>
-
-{{--                <form action="{{ route("importexcelcustomer", ['id' => $id_file]) }}" method="post">--}}
-{{--                    @csrf--}}
                     <input type="hidden" name="id_file" class="js_id_file" value="{{ $id_file }}">
                     <table class="table table-bordered table-hover tablesorter">
                         <thead>
                         <tr>
                             <th width="5%"></th>
+                            <th width="5%">STT</th>
                             <th width="15%">Trạng thái</th>
                             <th>Họ và tên</th>
                             <th>Username</th>
@@ -45,13 +43,15 @@
                         </thead>
                         <tbody>
                         @foreach($listExcels as $index => $list)
-                            {{--                        @dump($list)--}}
                             <tr>
                                 <td>
                                     <button data-id="{{ $list->id }}" class="btn btn-danger deleteRecordExcel" >Xóa</button>
                                 </td>
+                                <td>{{ $index+1 }}</td>
                                 <td>
-                                    @if($list->statusemail == 1 && $list->statusphone == 1 && $list->statususers == 1)
+                                    @if($list->mailform == 1)
+                                        <p class="text-danger">Mail sai định dạng</p>
+                                    @elseif($list->statusemail == 1 && $list->statusphone == 1 && $list->statususers == 1)
                                         <p class="text-danger">Trường users, email, số điện thoại trùng</p>
                                     @elseif($list->statususers == 1 && $list->statusemail == '' && $list->statusphone == '')
                                         <p class="text-danger">Trường username trùng, số điện thoại, mail trống</p>

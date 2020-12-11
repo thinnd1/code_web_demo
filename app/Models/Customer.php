@@ -17,6 +17,13 @@ class Customer extends Eloquent
     protected $fillable = [
         'full_name', 'username', 'email', 'password', 'age', 'gender', 'phone', 'address', 'job', 'role', 'company', 'id_custumor'
     ];
+    static $list_field_import_check_trung = [
+         'username', 'email',  'phone'
+    ];
+    static $list_field_import_required = [
+         'username', 'email', 'password'
+    ];
+
     public function order()
     {
         return $this->hasMany(Order::class, 'id_user');
@@ -150,6 +157,11 @@ class Customer extends Eloquent
         $emails = Customer::where('email', $email)->first();
         return $emails;
     }
+    public function checkField($field, $value)
+    {
+        $field = Customer::where('$field', $value)->first();
+        return $field;
+    }
 
     public function checkPhone($phone)
     {
@@ -159,19 +171,18 @@ class Customer extends Eloquent
     public function importExcelCustomer($listExcels, $id)
     {
         foreach ($listExcels as $item){
-//            dd($item);
             $email = $this->checkMail($item->email);
             $phone = $this->checkPhone($item->phone);
             $user = $this->checkUser($item->username);
 
-            if ($item->statususer == '' || $item->statusemail == '' || $item->statusphone == '' ) {
-
-            }
-            $validator = Validator::make(['email' => $item->email],[
-                'email' => 'required|email'
+            $validator = Validator::make([
+                'email' => $item->email,
+                'phone' => $item->phone,
+                ],[
+                'email' => 'email',
+                'phone' => 'regex: /^\+?\d{9,11}$/i',
             ]);
-            if($validator->passes()){
-                // send you email here
+            if(!$validator->passes()){
                 continue;
             }
 
@@ -256,5 +267,17 @@ class Customer extends Eloquent
             }
         }
         return $listExcels;
+    }
+    public static function checkFieldStatus($field, $value)
+    {
+        if (empty($value)){
+            return 1;
+        }
+
+    }
+    static function check_trung($field,$value)
+    {
+        $field = self::checkField($field, $value);
+        return 2;
     }
 }
