@@ -159,26 +159,30 @@ class CustomerController extends Controller
     }
     public function viewCheckData(Request $request)
     {
-//        try {
+        try {
             $id_file = $request->input('id_file');
             $listExcel = $this->import->getAll($id_file);
+
+            $listExcelObj = $listExcel->toArray();
+
+            $listExcelObj = [
+                [
+                    "username" => "23",
+                    "full_name" => "nguy345345en dang",
+                    "email" => "thinnd1043.com",
+                    "phone" => 865425129,
+                 ]
+            ];
+//            dd($listExcel);
+
             if (!isset($listExcel)){
                 return back();
             } else {
                 $listExcels = [];
-                foreach ($listExcel as $item) {
-                    foreach (Customer::$list_field_import_required as $field)
+                foreach ($listExcelObj as $item) {
+                    foreach (Customer::$list_field_import as $field=>$config)
                     {
-                        $item['status_check'][$field]['status'] = Customer::checkFieldStatus($field, $item[$field]);
-                    }
-                    foreach (Customer::$list_field_import_check_trung as $field)
-                    {
-                        $item['status_check'][$field]['status'];
-                        $customer = Customer::check_trung($field, $item[$field]);
-                        if($customer)
-                        {
-                            $item['status_check'][$field]['status'] = '';
-                        }
+                        $item['status_check'][$field]['status'] = Customer::checkFieldStatus($field, @$item[$field],$config);
                     }
                     $item['status_check_summary'] = Customer::checkItemStatus($item);
 
@@ -186,15 +190,15 @@ class CustomerController extends Controller
                 }
             }
 //        self::checkExcel($listExcels);
-            return view('admin.check', compact('listExcel','email', 'user', 'id_file','listExcel', 'listExcels'));
+            return view('admin.check', compact('listExcel', 'listExcels'));
 
-//        } catch  (\Exception $ex) {
-//            return redirect()->back()->with('error', 'Lỗi hệ thống')->withInput();
-//        }
+        } catch  (\Exception $ex) {
+            return redirect()->back()->with('error', 'Lỗi hệ thống')->withInput();
+        }
     }
     static function process_status_string($item)
     {
-        $arr_status = [1 => 'Trùng', 2 => 'Trống'];
+        $arr_status = [Customer::STATUS_TRUNG => 'Trùng', Customer::STATUS_EMPTY => 'Trống', Customer::STATUS_SAI => 'Sai', Customer::STATUS_OK => 'Mới'];
         $item['status_check'][$field]['status_str'] = $arr_status[$item['status_check'][$field]];
         return $item;
     }
@@ -228,7 +232,7 @@ class CustomerController extends Controller
 
     public function deleteRecordExcel($id)
     {
-            $this->import->deleteRecord($id);
+        $this->import->deleteRecord($id);
 //            return redirect()->back();
     }
 }

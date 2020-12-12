@@ -24,7 +24,7 @@
 
             <div class="table-responsive">
                 <h3>Tổng số bản ghi là : {{ $listExcel->total() }}</h3>
-                    <input type="hidden" name="id_file" class="js_id_file" value="{{ $id_file }}">
+                    <input type="hidden" name="id_file" class="js_id_file" value="{{ @$id_file }}">
                     <table class="table table-bordered table-hover tablesorter">
                         <thead>
                         <tr>
@@ -42,45 +42,29 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @dump($listExcels)
                         @foreach($listExcels as $index => $list)
                             <tr>
                                 <td>
-                                    <button data-id="{{ $list->id }}" class="btn btn-danger deleteRecordExcel" >Xóa</button>
+                                    <button data-id="{{ @$list['id'] }}" class="btn btn-danger deleteRecordExcel" >Xóa</button>
                                 </td>
                                 <td>{{ $index+1 }}</td>
-                                <td>
-                                    @if($list->mailform == 1)
-                                        <p class="text-danger">Mail sai định dạng</p>
-                                    @elseif($list->statusemail == 1 && $list->statusphone == 1 && $list->statususers == 1)
-                                        <p class="text-danger">Trường users, email, số điện thoại trùng</p>
-                                    @elseif($list->statususers == 1 && $list->statusemail == '' && $list->statusphone == '')
-                                        <p class="text-danger">Trường username trùng, số điện thoại, mail trống</p>
-                                    @elseif($list->statususers == 1 && $list->statusemail == 1 && $list->statusphone == '')
-                                        <p class="text-danger">Trường username trùng, email trùng, số điện thoại trống</p>
-                                    @elseif($list->statususers == '' && $list->statusemail == 1 && $list->statusphone == 1)
-                                        <p class="text-danger">Trường username trống, email trùng, số điện thoại trùng</p>
-                                    @elseif($list->statususers == '' && $list->statusemail == '' && $list->statusphone == 1)
-                                        <p class="text-danger">Trường username trống, email trống, số điện thoại trùng</p>
-                                    @else
-                                        <p class="text-primary">Mới</p>
-                                    @endif
-                                </td>
 
-                                <td> {{ $list['full_name'] }} </td>
-                                <td> {{ $list['username'] }} </td>
-                                <td> {{ $list['email'] }} </td>
-                                <td> {{ $list['phone'] }} </td>
-                                <td> {{ $list['address'] }} </td>
-                                <td> {{ $list['job'] }} </td>
-                                <td> {{ $list['company'] }} </td>
-                                <td> {{ $list['created_at'] }} </td>
+                                <td> {{ @$list['full_name'] }} </td>
+                                <td> {{ @$list['username'] }} </td>
+                                <td> {{ @$list['email'] }} </td>
+                                <td> {{ @$list['phone'] }} </td>
+                                <td> {{ @$list['address'] }} </td>
+                                <td> {{ @$list['job'] }} </td>
+                                <td> {{ @$list['company'] }} </td>
+                                <td> {{ @$list['created_at'] }} </td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
                     {{ $listExcel->links() }}
                     <a href="{{ url()->previous() }}" class="btn btn-primary">Quay lại</a>
-                    <button data-id="{{ $id_file }}" class="btn btn-warning import">Thực hiện import</button>
+                    <button data-id="{{ @$id_file }}" class="btn btn-warning import">Thực hiện import</button>
             </div>
         </div>
     </div>

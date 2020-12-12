@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Libraries\Ultilities;
 use Carbon\Carbon;
+use Cassandra\Custom;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -14,6 +15,11 @@ class Customer extends Eloquent
     protected $connection = 'mongodb';
     protected $collection = 'customers';
 
+    const STATUS_EMPTY = 1;
+    const STATUS_TRUNG = 2;
+    const STATUS_SAI = 3;
+    const STATUS_OK = 4;
+
     protected $fillable = [
         'full_name', 'username', 'email', 'password', 'age', 'gender', 'phone', 'address', 'job', 'role', 'company', 'id_custumor'
     ];
@@ -23,7 +29,23 @@ class Customer extends Eloquent
     static $list_field_import_required = [
          'username', 'email', 'password'
     ];
-
+    static $list_field_import = [
+        'username' => [
+            'check_null' => 1,
+            'check_trung' => 2,
+            'check_sai' => 3,
+            ],
+        'email' => [
+            'check_null' => 1,
+            'check_trung' => 2,
+            'check_sai' => 3,
+        ],
+        'phone' => [
+            'check_null' => 1,
+            'check_trung' => 2,
+            'check_sai' => 3,
+        ],
+    ];
     public function order()
     {
         return $this->hasMany(Order::class, 'id_user');
@@ -157,9 +179,9 @@ class Customer extends Eloquent
         $emails = Customer::where('email', $email)->first();
         return $emails;
     }
-    public function checkField($field, $value)
+    public static function checkField($field, $value)
     {
-        $field = Customer::where('$field', $value)->first();
+        $field = Customer::where($field, $value)->first();
         return $field;
     }
 
@@ -268,16 +290,72 @@ class Customer extends Eloquent
         }
         return $listExcels;
     }
-    public static function checkFieldStatus($field, $value)
+    public static function check_hop_le($field, $value)
     {
-        if (empty($value)){
-            return 1;
+        if ($field == "email"){
+            $validator = Validator::make([
+                $field => $value,
+            ],[
+                $field => 'email',
+            ]);
+            if(!$validator->passes()){
+                return true;
+            }
+        }
+        if ($field == "phone"){
+            $validator = Validator::make([
+                $field => $value,
+            ],[
+                $field => 'regex: /^\+?\d{9,11}$/i',
+            ]);
+            if(!$validator->passes()){
+                return true;
+            }
+        }
+    }
+    public static function checkFieldStatus($field, $value, $config)
+    {
+        // check empty
+        if(@$config['check_null'])
+        {
+            if (empty($value)){
+                // trang thai null
+                return Customer::STATUS_EMPTY;
+            }
         }
 
+        if (@$config['check_sai'])
+        {
+            if(Customer::check_hop_le($field,$value))
+            {
+                return Customer::STATUS_SAI;
+            }
+        }
+        //trang thai trung - done
+        if(@$config['check_trung'])
+        {
+            if(Customer::check_trung($field,$value))
+            {
+                return Customer::STATUS_TRUNG;
+            }
+        }
+        return  Customer::STATUS_OK;
     }
     static function check_trung($field,$value)
     {
-        $field = self::checkField($field, $value);
-        return 2;
+        $is_trung = false;
+        if ($field == "username" ){
+            $is_trung = self::checkField($field, $value);
+        }
+        if ($field == "email"){
+            $is_trung = self::checkField($field, $value);
+        }
+        if ($field == "phone"){
+            $is_trung = self::checkField($field, $value);
+        }
+        return $is_trung;
+    }
+    public static function checkItemStatus()
+    {
     }
 }
