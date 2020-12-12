@@ -46,7 +46,7 @@ class CustomerController extends Controller
     public function listCustomer(Request $request)
     {
         try {
-            $search = trim($request->input('search_user'));
+            $search = $request->input('search_user');
             $listCustomers = $this->customer->listCustomer($search);
             return view('admin.listcustomer', compact('listCustomers', 'search'));
         } catch  (\Exception $ex) {
@@ -94,65 +94,6 @@ class CustomerController extends Controller
             return redirect()->back()->withInput();
         }
     }
-    public function exportCsvCustomer(Request $request, Customer $customer)
-    {
-        $fileName = 'customer.csv';
-        $tasks = Customer::all();
-
-        $headers = array(
-            "Content-Encoding" => "UTF-8",
-            "Content-Type"        => "text/csv;charset=utf-8",
-            "Content-Disposition" => "attachment; filename=$fileName",
-            "Pragma"              => "no-cache",
-            "Content-Transfer-Encoding" => "binary",
-            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-            "Expires"             => "0"
-        );
-
-        $columns = array('Họ và tên', 'Username', 'Email', 'Tuổi', 'Số điện thoại', 'Địa chỉ', 'Nghề nghiệp', 'Công ty');
-
-        $callback = function() use($tasks, $columns, $fileName) {
-
-            $file = fopen('php://output', 'w');
-
-            fputcsv($file, $columns);
-
-            foreach ($tasks as $task) {
-                $row['Họ và tên']     = $task->full_name;
-                $row['Username']      = $task->username;
-                $row['Email']         = $task->email;
-                $row['Tuổi']          = $task->age;
-                $row['Số điện thoại'] = $task->phone;
-                $row['Địa chỉ']       = $task->address;
-                $row['Nghề nghiệp']   = $task->job;
-                $row['Công ty']       = $task->company;
-                fputcsv($file, array($row['Họ và tên'], $row['Username'], $row['Email'], $row['Tuổi'], $row['Số điện thoại'], $row['Địa chỉ'],$row['Nghề nghiệp'], $row['Công ty']));
-            }
-            fclose($file);
-        };
-        return response()->stream($callback, 200, $headers);
-    }
-    public function csvToArray($filename = '', $delimiter = ',')
-    {
-        if (!file_exists($filename) || !is_readable($filename))
-            return false;
-
-        $header = null;
-        $data = array();
-        if (($handle = fopen($filename, 'r')) !== false)
-        {
-            while (($row = fgetcsv($handle, 1000, $delimiter)) !== false)
-            {
-                if (!$header){
-                    $header = $row;
-                } else
-                    $data[] = array_combine($header, $row);
-            }
-            fclose($handle);
-        }
-
-        return $data;
-    }
 
     public function importCsv(ImportCsvRequest $request)
     {
@@ -176,12 +117,13 @@ class CustomerController extends Controller
 
         $import = \Excel::toArray(new CustomersImport, $path);
         $data = [];
+        $id = uniqid();
 
         // read file excel
 
         foreach ($import[0] as $key => $value) {
             if (!isset($value['Tên đăng nhập']) )
-                return redirect()->back()->with('error', 'File excel không đúng form chuẩn')->withInput();
+                return redirect()->back()->with('error', 'File excel không đúng form mẫu')->withInput();
             else{
                 $data[$key]['username']  = $value['Tên đăng nhập'];
                 $data[$key]['full_name'] = $value['Họ tên'];
@@ -207,56 +149,90 @@ class CustomerController extends Controller
                 $customer->address = $value['address'];
                 $customer->job = $value['job'];
                 $customer->company = $value['company'];
-                $customer->id_file = Auth::user()->id;
+                $customer->id_file = $id;
                 $customer->created_at = Carbon::parse($value['created_at']);
 
                 $customer->save();
             }
         }
-        return view('admin.import', compact('data'));
+        return view('admin.import', compact('data', 'id'));
     }
-    public function viewCheckData()
+    public function viewCheckData(Request $request)
     {
-        $listExcel = $this->import->getAll();
-        $totalListExcel = $this->import->getCount();
-        $listExcels = [];
-        foreach ($listExcel as $item) {
-            $email = $this->customer->checkMail($item->email);
-            $phone = $this->customer->checkPhone($item->phone);
-            $item->status = $email ? 1 : 2;
-            $item->statusphone = $phone ? 1 : 2;
+        try {
+            $id_file = $request->input('id_file');
+            $listExcel = $this->import->getAll($id_file);
 
-            $listExcels[] = $item;
+            $listExcelObj = $listExcel->toArray();
+
+            $listExcelObj = [
+                [
+                    "username" => "23",
+                    "full_name" => "nguy345345en dang",
+                    "email" => "thinnd1043.com",
+                    "phone" => 865425129,
+                 ]
+            ];
+//            dd($listExcel);
+
+            if (!isset($listExcel)){
+                return back();
+            } else {
+                $listExcels = [];
+                foreach ($listExcelObj as $item) {
+                    foreach (Customer::$list_field_import as $field=>$config)
+                    {
+                        $item['status_check'][$field]['status'] = Customer::checkFieldStatus($field, @$item[$field],$config);
+                    }
+                    $item['status_check_summary'] = Customer::checkItemStatus($item);
+
+                    $listExcels[] = $item;
+                }
+            }
+//        self::checkExcel($listExcels);
+            return view('admin.check', compact('listExcel', 'listExcels'));
+
+        } catch  (\Exception $ex) {
+            return redirect()->back()->with('error', 'Lỗi hệ thống')->withInput();
         }
-//        self::importExcelCustomer($listExcels);
-
-        return view('admin.check', compact('listExcel','email','listExcels','totalListExcel'));
     }
-    public function checkExcel()
+    static function process_status_string($item)
     {
-        $listExcel = $this->import->getCount();
-        $listExcels = [];
-        foreach ($listExcel as $item) {
-            $email = $this->customer->checkMail($item->email);
-            $phone = $this->customer->checkPhone($item->phone);
-            $item->status = $email ? 1 : 2;
-            $item->statusphone = $phone ? 1 : 2;
+        $arr_status = [Customer::STATUS_TRUNG => 'Trùng', Customer::STATUS_EMPTY => 'Trống', Customer::STATUS_SAI => 'Sai', Customer::STATUS_OK => 'Mới'];
+        $item['status_check'][$field]['status_str'] = $arr_status[$item['status_check'][$field]];
+        return $item;
+    }
 
-            $listExcels[] = $item;
+    public function importExcelCustomer($id)
+    {
+        try {
+            $listExcel = $this->import->getAll($id);
+            $listExcels = [];
+            foreach ($listExcel as $item) {
+                $user = $this->customer->checkUser($item->username);
+                $email = $this->customer->checkMail($item->email);
+                $phone = $this->customer->checkPhone($item->phone);
+                $item->statusemail = $email ? 1 : 2 ;
+                $item->statusphone = $phone ? 1 : 2 ;
+                $item->statususer = $user ? 1 : 2 ;
+                $validatormail = Validator::make(['email' => $item->email],['email' => 'email']);
+                $item->mailform = !$validatormail->passes() ? 1 : 2 ;
+                $validatorphone = Validator::make(['phone' => $item->phone],['phone' => 'regex: /^\+?\d{9,11}$/i']);
+                $item->phoneform = !$validatorphone->passes() ? 1 : 2 ;
+
+                $listExcels[] = $item;
+            }
+            $excelcustomer = $this->customer->importExcelCustomer($listExcels, $id);
+            return $excelcustomer;
+//            return redirect()->route('listcustomer');
+        }catch (\Exception $ex){
+            return redirect()->back()->with('error', 'Mail không đúng định dạng')->withInput();
         }
-        return $listExcels;
-    }
-    public function importExcelCustomer()
-    {
-        $listExcels = $this->checkExcel();
-
-        $this->customer->importExcelCustomer($listExcels);
-        return redirect()->route('listcustomer');
     }
 
     public function deleteRecordExcel($id)
     {
         $this->import->deleteRecord($id);
-        return redirect()->back();
+//            return redirect()->back();
     }
 }

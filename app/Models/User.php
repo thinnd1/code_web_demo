@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
@@ -84,11 +85,15 @@ class User extends Eloquent implements Authenticatable
     }
     public function getUser($search = null)
     {
-        $listUser =  User::orderBy('created_at', 'desc')
+        $listUser =  User::where('_id', '!=', Auth::user()->id)
+            ->orderBy('created_at', 'desc')
             ->paginate(10);
         if ($search) {
-            $listUser = User::where('full_name', 'like', '%' . $search . '%')
+            $listUser = User::where('_id', '!=', Auth::user()->id)
+                ->where('full_name', 'like', '%' . $search . '%')
                 ->orWhere('username', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%')
+                ->orWhere('phone', 'like', '%' . $search . '%')
                 ->paginate(10);
             $listUser->appends(['search' => $search]);
         }

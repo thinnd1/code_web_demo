@@ -22,13 +22,13 @@
                 </div>
             @endif
 
-            @if(isset($errors) && $errors->any())
-                <div class="alert alert-danger" role="alert">
-                    @foreach($errors->all() as $error)
-                        {{ $error }} <br>
-                    @endforeach
-                </div>
-            @endif
+{{--            @if(isset($errors) && $errors->any())--}}
+{{--                <div class="alert alert-danger" role="alert">--}}
+{{--                    @foreach($errors->all() as $error)--}}
+{{--                        {{ $error }} <br>--}}
+{{--                    @endforeach--}}
+{{--                </div>--}}
+{{--            @endif--}}
 
             <div class="row">
                 <div class="col-lg-12">
@@ -36,31 +36,34 @@
                         <div class="col-lg-6 h2">
                             Danh sách khách hàng
                         </div>
-                        <div class="coL-lg-6 text-right h2">
-                            <a class="btn btn-info" href="{{ route('createcustomer') }}">Thêm khách hàng</a>
-                        </div>
                     </div>
 
                 <form action="" method="" enctype="multipart/form-data">
                     @csrf
 
                     <div class="table-responsive">
-                        <div class="row">
-                            <form action="">
-                                <div class="col-lg-6">
-                                    <input type="text" name="search_user" class="form-control" placeholder="Tìm kiếm ..." value="{{  request()->input('search_user', old('search_user')) }}" id="inputname">
-                                </div>
-                                <div class="col-lg-6">
-                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-                                </div>
-                            </form>
-                        </div>
                         <p></p>
-                        <div>
-                            <span id="export" class="btn btn-success btn-sm">Export danh sách khách hàng</span>
-                            <a href="{{ route("readexcel") }}" class="btn btn-success btn-sm">Import từ file excel</a>
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <span id="export" class="btn btn-success">Export danh sách khách hàng</span>
+                                <a href="{{ route("readexcel") }}" class="btn btn-success">Import từ file excel</a>
+                                <a class="btn btn-info" href="{{ route('createcustomer') }}">Thêm khách hàng</a>
+                            </div>
+                            <div class="col-lg-3 col-lg-offset-3">
+                                <form action="">
+                                    <div class="col-lg-10">
+                                        <input type="text" name="search_user" class="form-control" placeholder="Tìm tên , email, số điện thoại ..." value="{{  request()->input('search_user', old('search_user')) }}" id="inputname">
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <h3>Tổng số khách hàng: {{ $listCustomers->total() }}</h3>
+                        <div class="h2">
+
+                        </div>
+                        <h4>Tổng số khách hàng: {{ $listCustomers->total() }}</h4>
                         <table class="table table-bordered table-hover tablesorter">
                             <thead>
                             <tr>
@@ -86,10 +89,10 @@
                             @else
                                 @foreach ($listCustomers as $index => $listCustomer)
                                     <tr>
-                                        <td>{{ $index + 1 }}</td>
+                                        <td><a href="{{ route('viewuserorder', ['id' => $listCustomer->id ]) }}"> {{ $index + 1 }}</a></td>
                                         <td>
                                             <div class="divide-column">
-                                                {{ $listCustomer->full_name }}
+                                                <a href="{{ route('viewuserorder', ['id' => $listCustomer->id ]) }}"> {{ $listCustomer->full_name }} </a>
                                             </div>
                                         </td>
                                         <td>
@@ -130,7 +133,6 @@
                                         @if(Auth::user()->role == 1)
                                             <div class="divide-column">
                                             <td>
-                                                <a class="btn btn-primary" href="{{ route('viewuserorder', ['id' => $listCustomer->id ]) }}">Xem</a>
                                                 <a class="btn btn-warning" href="{{ route('vieweditcustomer', ['id' => $listCustomer->id ]) }}">Sửa</a>
                                                 <button type="button" class="btn btn-danger deleteRecord" data-id="{{ $listCustomer->id }}">Xóa</button>
                                             </td>
@@ -142,7 +144,18 @@
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-center">
-                            {{ $listCustomers->links() }}
+                            @if ($listCustomers->hasPages())
+
+                                {{ $listCustomers->links() }}
+                            @else
+                                <nav>
+                                    <ul class="pagination">
+                                        <li class="page-item active">
+                                            <a href="" class="page-link">1</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            @endif
                         </div>
                     </div>
                 </form>
@@ -161,7 +174,7 @@
                 if (del == true){
                     $.ajax(
                         {
-                            url: 'delete/'+id,
+                            url: encodeURI('delete/'+id),
                             data: {_token: CSRF_TOKEN,id: id},
                             type: 'post',
                             success: function(response){
@@ -176,7 +189,6 @@
             });
         });
         $("#export").click(function(){
-            console.log("3232");
             var ep = confirm("Bạn muốn tải file về máy?");
             if (ep == true)
             {

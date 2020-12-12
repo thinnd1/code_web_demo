@@ -34,10 +34,12 @@
                 <a href="{{ asset('uploads/customers-format.xlsx') }}" class="btn btn-primary">Form mẫu</a>
                 <button type="submit" class="btn btn-primary">Nhập</button>
                 <a href="{{ route("listcustomer") }}" class="btn btn-warning">Quay lại</a>
+                <p></p>
             </form>
 
             <form action="" method="post">
                 @csrf
+                <input type="hidden" value="{{ empty($id) ? '' : $id }}" name="id_file">
                 @if(isset($data))
                     {{--                @dd($data)--}}
                     <div class="table-responsive">
@@ -46,6 +48,7 @@
                             <tr>
                                 <th>Stt</th>
                                 <th>Họ và tên</th>
+                                <th>Username</th>
                                 <th>Email</th>
                                 <th width="10%">Số điện thoại</th>
                                 <th>Địa chỉ</th>
@@ -59,6 +62,7 @@
                                 <tr>
                                     <td> {{ $index + 1 }} </td>
                                     <td> {{ $dt['full_name'] }} </td>
+                                    <td> {{ $dt['username'] }} </td>
                                     <td> {{ $dt['email'] }} </td>
                                     <td> {{ $dt['phone'] }} </td>
                                     <td> {{ $dt['address'] }} </td>
@@ -69,7 +73,7 @@
                             @endforeach
                             </tbody>
                         </table>
-                        <a href="{{ route("viewcheck") }}" type="submit" class="btn btn-primary">Check Trùng</a>
+                        <a href="{{ route("viewcheck", ['id_file' => $id]) }}" type="submit" class="btn btn-primary">Check Trùng</a>
                     </div>
                 @endif
             </form>

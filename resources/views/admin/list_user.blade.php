@@ -23,9 +23,9 @@
 
                     <div class="table-responsive">
                         <div class="row">
-                            <form action="">
+                            <form action="" >
                                 <div class="col-lg-6">
-                                    <input type="text" name="search_user" class="form-control" placeholder="Tìm kiếm ..." value="{{ request()->input('search_user', old('search_user')) }}" id="inputname">
+                                    <input type="text" name="search_account" class="form-control" placeholder="Tìm theo tên, email, số điện thoại ..." value="{{ request()->input('search_account', old('search_account')) }}" id="inputname">
                                 </div>
                                 <div class="col-lg-6">
                                     <button type="submit" class="btn btn-primary">Tìm kiếm</button>

@@ -4,8 +4,10 @@ namespace App\Models;
 
 use App\Libraries\Ultilities;
 use Carbon\Carbon;
+use Cassandra\Custom;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
 class Customer extends Eloquent
@@ -13,8 +15,36 @@ class Customer extends Eloquent
     protected $connection = 'mongodb';
     protected $collection = 'customers';
 
+    const STATUS_EMPTY = 1;
+    const STATUS_TRUNG = 2;
+    const STATUS_SAI = 3;
+    const STATUS_OK = 4;
+
     protected $fillable = [
         'full_name', 'username', 'email', 'password', 'age', 'gender', 'phone', 'address', 'job', 'role', 'company', 'id_custumor'
+    ];
+    static $list_field_import_check_trung = [
+         'username', 'email',  'phone'
+    ];
+    static $list_field_import_required = [
+         'username', 'email', 'password'
+    ];
+    static $list_field_import = [
+        'username' => [
+            'check_null' => 1,
+            'check_trung' => 2,
+            'check_sai' => 3,
+            ],
+        'email' => [
+            'check_null' => 1,
+            'check_trung' => 2,
+            'check_sai' => 3,
+        ],
+        'phone' => [
+            'check_null' => 1,
+            'check_trung' => 2,
+            'check_sai' => 3,
+        ],
     ];
     public function order()
     {
@@ -36,7 +66,7 @@ class Customer extends Eloquent
                 ->orWhere('email', 'like', '%' . $search . '%')
                 ->orWhere('phone', 'like', '%' . $search . '%')
                 ->paginate(10);
-            $listCustomer->appends(['search' => $search]);
+            $listCustomer->appends(request()->input())->links();
         }
         return $listCustomer;
     }
@@ -139,10 +169,20 @@ class Customer extends Eloquent
             }
         }
     }
+    public function checkUser($username)
+    {
+        $user = Customer::where('username', $username)->first();
+        return $user;
+    }
     public function checkMail($email)
     {
         $emails = Customer::where('email', $email)->first();
         return $emails;
+    }
+    public static function checkField($field, $value)
+    {
+        $field = Customer::where($field, $value)->first();
+        return $field;
     }
 
     public function checkPhone($phone)
@@ -150,15 +190,53 @@ class Customer extends Eloquent
         $phone = Customer::where('phone', $phone)->first();
         return $phone;
     }
-    public function importExcelCustomer($listExcels)
+    public function importExcelCustomer($listExcels, $id)
     {
         foreach ($listExcels as $item){
             $email = $this->checkMail($item->email);
-            $item->status = $email ? 1 : 2;
+            $phone = $this->checkPhone($item->phone);
+            $user = $this->checkUser($item->username);
 
-            if ($item->status == 1 ) {
+            $validator = Validator::make([
+                'email' => $item->email,
+                'phone' => $item->phone,
+                ],[
+                'email' => 'email',
+                'phone' => 'regex: /^\+?\d{9,11}$/i',
+            ]);
+            if(!$validator->passes()){
+                continue;
+            }
+
+            if ($item->statususer == 1 && $item->statusemail == 1 && $item->statusphone == 1) {
                 $data = [
-                    'username' => $item->username,
+//                    'username' => $item->username,
+                    'full_name' => $item->full_name,
+//                    'email' => $item->email,
+//                    'phone' => (int)$item->phone,
+                    'address' => $item->address,
+                    'job' => $item->job,
+                    'company' => $item->company,
+                    'updated_at' => Carbon::now(),
+                ];
+                $this->where('_id', $email->id)->update($data);
+
+            } elseif ($item->statususer == 1 && $item->statusemail == 1 && $item->statusphone == 2 ) {
+                $data = [
+//                    'username' => $item->username,
+                    'full_name' => $item->full_name,
+//                    'email' => $item->email,
+                    'phone' => (int)$item->phone,
+                    'address' => $item->address,
+                    'job' => $item->job,
+                    'company' => $item->company,
+                    'updated_at' => Carbon::now(),
+                ];
+                $this->where('_id', $email->id)->update($data);
+
+            } elseif ($item->statususer == 1 && $item->statusemail == 2 && $item->statusphone == 2 ) {
+                $data = [
+//                    'username' => $item->username,
                     'full_name' => $item->full_name,
                     'email' => $item->email,
                     'phone' => (int)$item->phone,
@@ -167,8 +245,35 @@ class Customer extends Eloquent
                     'company' => $item->company,
                     'updated_at' => Carbon::now(),
                 ];
+                $this->where('_id', $user->id)->update($data);
+
+            } elseif ($item->statususer == 2 && $item->statusemail == 1 && $item->statusphone == 1 ) {
+                $data = [
+//                    'username' => $item->username,
+                    'full_name' => $item->full_name,
+//                    'email' => $item->email,
+//                    'phone' => (int)$item->phone,
+                    'address' => $item->address,
+                    'job' => $item->job,
+                    'company' => $item->company,
+                    'updated_at' => Carbon::now(),
+                ];
                 $this->where('_id', $email->id)->update($data);
-            } elseif ($item->status == 2) {
+
+            } elseif ($item->statususer == 2 && $item->statusemail == 2 && $item->statusphone == 1) {
+                $data = [
+                    'username' => $item->username,
+                    'full_name' => $item->full_name,
+                    'email' => $item->email,
+//                    'phone' => (int)$item->phone,
+                    'address' => $item->address,
+                    'job' => $item->job,
+                    'company' => $item->company,
+                    'updated_at' => Carbon::now(),
+                ];
+                $this->where('_id', $phone->id)->update($data);
+
+            } elseif ($item->statususer == 2 && $item->statusemail == 2 && $item->statusphone == 2) {
                 $data = [
                     'username' => $item->username,
                     'full_name' => $item->full_name,
@@ -182,7 +287,75 @@ class Customer extends Eloquent
                 ];
                 Customer::create($data);
             }
-            Import::where('id_file', Auth::user()->id)->delete();
         }
+        return $listExcels;
+    }
+    public static function check_hop_le($field, $value)
+    {
+        if ($field == "email"){
+            $validator = Validator::make([
+                $field => $value,
+            ],[
+                $field => 'email',
+            ]);
+            if(!$validator->passes()){
+                return true;
+            }
+        }
+        if ($field == "phone"){
+            $validator = Validator::make([
+                $field => $value,
+            ],[
+                $field => 'regex: /^\+?\d{9,11}$/i',
+            ]);
+            if(!$validator->passes()){
+                return true;
+            }
+        }
+    }
+    public static function checkFieldStatus($field, $value, $config)
+    {
+        // check empty
+        if(@$config['check_null'])
+        {
+            if (empty($value)){
+                // trang thai null
+                return Customer::STATUS_EMPTY;
+            }
+        }
+
+        if (@$config['check_sai'])
+        {
+            if(Customer::check_hop_le($field,$value))
+            {
+                return Customer::STATUS_SAI;
+            }
+        }
+        //trang thai trung - done
+        if(@$config['check_trung'])
+        {
+            if(Customer::check_trung($field,$value))
+            {
+                return Customer::STATUS_TRUNG;
+            }
+        }
+        return  Customer::STATUS_OK;
+    }
+    static function check_trung($field,$value)
+    {
+        $is_trung = false;
+        if ($field == "username" ){
+            $is_trung = self::checkField($field, $value);
+        }
+        if ($field == "email"){
+            $is_trung = self::checkField($field, $value);
+        }
+        if ($field == "phone"){
+            $is_trung = self::checkField($field, $value);
+        }
+        return $is_trung;
+    }
+    public static function checkItemStatus()
+    {
     }
 }
