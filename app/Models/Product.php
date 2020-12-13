@@ -29,7 +29,7 @@ class Product extends Eloquent
             $listProduct = Product::where('name', 'like', '%' . $search . '%')
                 ->orWhere('title', 'like', '%' . $search . '%')
                 ->paginate(10);
-            $listProduct->appends(['search' => $search]);
+            $listProduct->appends(request()->input())->links();
         }
         return $listProduct;
     }

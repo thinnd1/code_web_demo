@@ -34,7 +34,7 @@ class Order extends Eloquent
             $listOrder = Order::where('id_user', 'like', '%' . $search . '%')
                 ->orWhere('id_product', 'like', '%' . $search . '%')
                 ->paginate(10);
-            $listOrder->appends(['search' => $search]);
+            $listOrder->appends(request()->input())->links();
         }
         return $listOrder;
     }

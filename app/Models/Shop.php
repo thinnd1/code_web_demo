@@ -26,7 +26,7 @@ class Shop extends Eloquent
                 ->orWhere('address', 'like', '%' . $search . '%')
                 ->orWhere('email', 'like', '%' . $search . '%')
                 ->paginate(10);
-            $listCompany->appends(['search' => $search]);
+            $listCompany->appends(request()->input())->links();
         }
         return $listCompany;
     }

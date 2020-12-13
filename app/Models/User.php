@@ -95,7 +95,7 @@ class User extends Eloquent implements Authenticatable
                 ->orWhere('email', 'like', '%' . $search . '%')
                 ->orWhere('phone', 'like', '%' . $search . '%')
                 ->paginate(10);
-            $listUser->appends(['search' => $search]);
+            $listUser->appends(request()->input())->links();
         }
         return $listUser;
     }
