@@ -17,7 +17,7 @@
                     {{ session('success') }}
                 </div>
             @elseif(session('error'))
-                <div cl   ass="alert alert-danger" role="alert">
+                <div class="alert alert-danger" role="alert">
                     {{ session('error') }}
                 </div>
          @endif
@@ -42,7 +42,6 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @dump($listExcels)
                         @foreach($listExcels as $index => $list)
                             <tr>
                                 <td>

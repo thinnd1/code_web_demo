@@ -167,12 +167,11 @@ class CustomerController extends Controller
             $listExcelObj = [
                 [
                     "username" => "23",
-                    "full_name" => "nguy345345en dang",
+                    "full_name" => "nguyen dang",
                     "email" => "thinnd1043.com",
                     "phone" => 865425129,
                  ]
             ];
-//            dd($listExcel);
 
             if (!isset($listExcel)){
                 return back();

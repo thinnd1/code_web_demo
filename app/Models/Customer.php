@@ -355,7 +355,8 @@ class Customer extends Eloquent
         }
         return $is_trung;
     }
-    public static function checkItemStatus()
+    public static function checkItemStatus($item)
     {
+//        dd($item);
     }
 }
